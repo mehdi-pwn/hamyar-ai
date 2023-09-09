@@ -9,8 +9,10 @@ module.exports = {
     extend: {
       backgroundColor: {
         main: "#11131E",
+        light: "#616161",
       },
     },
   },
   plugins: [],
+  darkMode: "class",
 };

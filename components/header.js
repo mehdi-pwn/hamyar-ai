@@ -1,7 +1,9 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdOutlineDarkMode } from "react-icons/md";
+import { BsFillSunFill } from "react-icons/bs";
 import { useStateContext } from "@context/ContextProvider";
 import Image from "next/image";
+import Link from "next/link";
 import unknownUser from "@image/unknownUser.jpg";
 
 const HeaderButton = ({ icon, func }) => {
@@ -13,7 +15,16 @@ const HeaderButton = ({ icon, func }) => {
 };
 
 const Header = () => {
-  const { sidebarActive, setSidebarActive } = useStateContext();
+  const {
+    sidebarActive,
+    setSidebarActive,
+    themeMode,
+    setMode,
+    profileBarActive,
+    setProfileBarActive,
+    profileBarRef,
+  } = useStateContext();
+
   return (
     <div className="w-full static bg-slate-800">
       <div className="flex justify-between text-white p-2 relative">
@@ -26,9 +37,27 @@ const Header = () => {
           />
         </div>
         <div className="flex gap-2">
-          <HeaderButton icon={<MdOutlineDarkMode />} />
-          {/* BsFillSunFill for sun */}
-          <button type="button" className="p-2 text-xl">
+          <HeaderButton
+            icon={
+              themeMode == "dark" ? <MdOutlineDarkMode /> : <BsFillSunFill />
+            }
+            func={() => {
+              if (themeMode == "dark") {
+                setMode("light");
+              } else {
+                setMode("dark");
+              }
+            }}
+          />
+          <button
+            type="button"
+            className="p-2 text-xl"
+            onClick={() =>
+              setProfileBarActive(
+                (prevProfileBarActive) => !prevProfileBarActive
+              )
+            }
+          >
             <Image
               src={unknownUser.src}
               alt="User Avatar"
@@ -38,6 +67,34 @@ const Header = () => {
             />
           </button>
         </div>
+        {profileBarActive && (
+          <div ref={profileBarRef} className="absolute top-16 left-4">
+            <div className="bg-white p-2 flex flex-col gap-2 rounded-lg">
+              <Link
+                href={"/profile"}
+                className="text-center hover:bg-gray-300 rounded-lg py-2 px-3 text-gray-900"
+                onClick={() =>
+                  setProfileBarActive(
+                    (prevProfileBarActive) => !prevProfileBarActive
+                  )
+                }
+              >
+                پروفایل
+              </Link>
+              <button
+                className="text-center hover:bg-gray-300 rounded-lg py-2 px-3 text-red-500"
+                onClick={() => {
+                  setProfileBarActive(
+                    (prevProfileBarActive) => !prevProfileBarActive
+                  );
+                  console.log("UserLogOut");
+                }}
+              >
+                خروج از حساب کاربری
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
