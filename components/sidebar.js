@@ -112,12 +112,14 @@ const Sidebar = () => {
   const sidebar_animation_settings = {
     open: {
       width: "18rem",
+      visibility: "visible",
       transition: {
         damping: 40,
       },
     },
     closed: {
       width: "0px",
+      visibility: "hidden",
       transition: {
         damping: 40,
       },
@@ -127,7 +129,7 @@ const Sidebar = () => {
     <motion.div
       variants={sidebar_animation_settings}
       animate={sidebarActive ? "open" : "closed"}
-      className="bg-transparent w-72 h-screen relative z-[9999] text-white py-4 border-l border-gray-800"
+      className="text-white py-4"
     >
       <div className="flex justify-between items-center px-3 pb-4 border-b border-gray-800">
         <Link
