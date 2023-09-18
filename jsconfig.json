@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
+      "@layout/*": ["./components/layouts/*"],
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],
       "@context/*": ["./contexts/*"],

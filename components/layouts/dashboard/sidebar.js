@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "@context/ContextProvider";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaShopware } from "react-icons/fa";
