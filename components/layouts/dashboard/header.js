@@ -5,6 +5,8 @@ import { useStateContext } from "@context/ContextProvider";
 import Image from "next/image";
 import Link from "next/link";
 import unknownUser from "@image/unknownUser.jpg";
+import { isLoggedIn } from "@utils/isLoggedIn";
+import { signOut } from "next-auth/react";
 
 const HeaderButton = ({ icon, func }) => {
   return (
@@ -24,6 +26,8 @@ const Header = () => {
     setProfileBarActive,
     profileBarRef,
   } = useStateContext();
+
+  const isLogged = isLoggedIn();
 
   return (
     <div className="w-full static bg-slate-800">
@@ -49,25 +53,34 @@ const Header = () => {
               }
             }}
           />
-          <button
-            type="button"
-            className="p-2 text-xl"
-            onClick={() =>
-              setProfileBarActive(
-                (prevProfileBarActive) => !prevProfileBarActive
-              )
-            }
-          >
-            <Image
-              src={unknownUser.src}
-              alt="User Avatar"
-              width={35}
-              height={35}
-              className="rounded-full"
-            />
-          </button>
+          {!isLogged ? (
+            <Link
+              href={"/register"}
+              className="bg-blue-400 rounded-full py-2 px-4 text-sm"
+            >
+              ورود | ثبت نام
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="p-2 text-xl"
+              onClick={() =>
+                setProfileBarActive(
+                  (prevProfileBarActive) => !prevProfileBarActive
+                )
+              }
+            >
+              <Image
+                src={unknownUser.src}
+                alt="User Avatar"
+                width={35}
+                height={35}
+                className="rounded-full"
+              />
+            </button>
+          )}
         </div>
-        {profileBarActive && (
+        {profileBarActive && isLogged && (
           <div ref={profileBarRef} className="absolute top-16 left-4">
             <div className="bg-white p-2 flex flex-col gap-2 rounded-lg">
               <Link
@@ -87,7 +100,7 @@ const Header = () => {
                   setProfileBarActive(
                     (prevProfileBarActive) => !prevProfileBarActive
                   );
-                  console.log("UserLogOut");
+                  signOut({ callbackUrl: "/" });
                 }}
               >
                 خروج از حساب کاربری

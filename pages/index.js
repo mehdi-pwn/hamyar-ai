@@ -1,5 +1,6 @@
 import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
+import Link from "next/link";
 import screenShot from "@image/app-screenshot.webp";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -20,23 +21,27 @@ const Index = () => {
             داشته باشید و سرعت تولید محتوای کسب و کار خود را چند برابر کنید
           </div>
           <div className="flex justify-center flex-row-reverse mt-8 gap-8">
-            <Button
-              variant="text"
-              color="success"
-              size="large"
-              sx={{ fontSize: "18px" }}
-            >
-              بیشتر بدانید
-            </Button>
-            <Button
-              variant="contained"
-              color="success"
-              size="large"
-              endIcon={<AiOutlineArrowLeft />}
-              sx={{ fontSize: "18px" }}
-            >
-              شروع
-            </Button>
+            <Link href={"/features"}>
+              <Button
+                variant="text"
+                color="success"
+                size="large"
+                sx={{ fontSize: "18px" }}
+              >
+                بیشتر بدانید
+              </Button>
+            </Link>
+            <Link href={"/price"}>
+              <Button
+                variant="contained"
+                color="success"
+                size="large"
+                endIcon={<AiOutlineArrowLeft />}
+                sx={{ fontSize: "18px" }}
+              >
+                شروع
+              </Button>
+            </Link>
           </div>
         </div>
         <div>
@@ -45,7 +50,7 @@ const Index = () => {
             alt="Mihan AI app dashboard screen shot"
             className="rounded-xl"
             width={1200}
-            height={50}
+            height={1}
           />
         </div>
       </div>

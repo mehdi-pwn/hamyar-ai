@@ -5,7 +5,9 @@
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],
       "@context/*": ["./contexts/*"],
-      "@image/*": ["./assets/images/*"]
+      "@image/*": ["./assets/images/*"],
+      "@utils/*": ["./utils/*"],
+      "@lib/*": ["./lib/*"]
     }
   }
 }
