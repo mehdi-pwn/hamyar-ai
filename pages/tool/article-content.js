@@ -9,6 +9,8 @@ const {
 } = require("@components/tool-design");
 
 import Grid from "@mui/material/Grid";
+import { getAiResponse } from "@utils/getAiResponse";
+import { getToolName } from "@utils/getToolName";
 import { useState } from "react";
 
 const ArticleContent = () => {
@@ -16,9 +18,12 @@ const ArticleContent = () => {
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
 
-  console.log(keyword);
-  console.log(tone);
-  console.log(lang);
+  const data = {
+    tool: getToolName(),
+    keyword,
+    tone,
+    lang,
+  };
 
   return (
     <>
@@ -39,7 +44,14 @@ const ArticleContent = () => {
               langChange={(e) => setLang(e.target.value)}
             />
             <Grid item xs={12} md={12}>
-              <GenerateButton onClick={() => alert("hoora!")} />
+              <GenerateButton
+                onClick={() => {
+                  const response = getAiResponse(data);
+                  response.then((result) => {
+                    console.log(result.response);
+                  });
+                }}
+              />
             </Grid>
           </Grid>
         </Form>

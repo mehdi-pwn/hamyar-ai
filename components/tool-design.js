@@ -94,7 +94,7 @@ export const ToneAndLang = ({ toneVal, toneChange, langVal, langChange }) => {
   );
 };
 export const GenerateButton = ({ onClick }) => {
-  const isLogged = isLoggedIn();
+  const isLogged = true; //isLoggedIn();
   return (
     <>
       {!isLogged ? (
