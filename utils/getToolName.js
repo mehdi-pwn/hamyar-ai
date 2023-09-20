@@ -1,6 +1,9 @@
 import path from "path";
+//import { useEffect } from "react";
 
 export function getToolName() {
+  var fileNameWithoutExtension;
+  //useEffect(() => {
   const url = window.location.pathname;
   const filePath = url;
 
@@ -9,7 +12,8 @@ export function getToolName() {
   const fileName = segments[segments.length - 1];
 
   // Remove file extension if present
-  const fileNameWithoutExtension = path.basename(fileName, ".js");
+  fileNameWithoutExtension = path.basename(fileName, ".js");
+  //}, []);
 
   return fileNameWithoutExtension;
 }

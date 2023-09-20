@@ -15,8 +15,8 @@ export default async function handler(req, res) {
 
       const results = await query(
         `
-        INSERT INTO users (phone, code, plan_history)
-        VALUES (?, ?, '{}')
+        INSERT INTO users (phone, code, plan_history, tool_limits)
+        VALUES (?, ?, '[]', '{}')
         `,
         [num, randomNumber]
       );

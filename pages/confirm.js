@@ -48,12 +48,12 @@ export default function Confirm() {
             "Content-Type": "application/json",
           },
         });
+
+        const isBuying = localStorage.getItem("from:price");
+        if (isBuying) localStorage.setItem("from:price", true);
         signIn("credentials", {
           phoneNumber,
-          callbackUrl: `/`,
-        });
-        router.replace({
-          pathname: "/",
+          callbackUrl: isBuying ? "/price" : "/",
         });
       } else {
         Swal.fire("Incorrrect code");

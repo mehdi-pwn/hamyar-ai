@@ -11,9 +11,13 @@ const {
 import Grid from "@mui/material/Grid";
 import { getAiResponse } from "@utils/getAiResponse";
 import { getToolName } from "@utils/getToolName";
+import { showResponse } from "@utils/showResponse";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const ArticleContent = () => {
+  const router = useRouter();
   const [keyword, setKeyword] = useState("");
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
@@ -48,7 +52,7 @@ const ArticleContent = () => {
                 onClick={() => {
                   const response = getAiResponse(data);
                   response.then((result) => {
-                    console.log(result.response);
+                    showResponse(result);
                   });
                 }}
               />
