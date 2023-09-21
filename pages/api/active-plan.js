@@ -3,7 +3,7 @@ export default async function handler(req, res) {
   const userId = req.body.userId;
   const user = await query(
     `
-        SELECT plan FROM users WHERE phone = ?
+        SELECT * FROM users WHERE id = ?
         `,
     [userId]
   );

@@ -83,9 +83,9 @@ export default async function handler(req, res) {
           expireDateParts[1] - 1,
           expireDateParts[2]
         );
-        const isExpireDatePasses = today > date;
+        const isExpireDatePassed = today > date;
 
-        if (isExpireDatePasses) {
+        if (isExpireDatePassed) {
           addToHistory(
             user.plan_history,
             {
