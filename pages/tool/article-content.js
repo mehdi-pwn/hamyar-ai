@@ -49,11 +49,9 @@ const ArticleContent = () => {
             />
             <Grid item xs={12} md={12}>
               <GenerateButton
-                onClick={() => {
-                  const response = getAiResponse(data);
-                  response.then((result) => {
-                    showResponse(result);
-                  });
+                onClick={async () => {
+                  const response = await getAiResponse(data);
+                  console.log(JSON.stringify(response));
                 }}
               />
             </Grid>

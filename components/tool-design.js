@@ -98,7 +98,7 @@ export const GenerateButton = ({ onClick }) => {
   return (
     <>
       {!isLogged ? (
-        <Link href={"/register"}>
+        <Link href={"/signin"}>
           <FormControl fullWidth>
             <Button variant="contained" color="warning">
               ثبت نام رایگان

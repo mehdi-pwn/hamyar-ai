@@ -10,16 +10,27 @@ import {
   SubmitForm,
 } from "@components/signin-design";
 import Logins from "@layout/logins";
+import Link from "next/link";
 
 export default function Confirm() {
   const router = useRouter();
   const [code, setCode] = useState("");
   const { status } = useSession();
+
   const phoneNumber = localStorage.getItem("phone");
+
+  if (
+    isNaN(phoneNumber) ||
+    !phoneNumber ||
+    phoneNumber.length != 11 ||
+    !phoneNumber.startsWith("09")
+  ) {
+    localStorage.setItem("phone", null);
+    return router.push("/signin");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //TODO: CHECK IF PHONE PROVIDED OR NOT AND ALSO CHECK IF USER EXISTS
     if (
       isNaN(code) ||
       !code ||
@@ -40,7 +51,7 @@ export default function Confirm() {
 
       const responseData = await response.json();
 
-      if (responseData.accepted) {
+      if (responseData.status === "success") {
         const verified = await fetch("/api/send-code", {
           method: "POST",
           body: JSON.stringify({ request: "verified", phoneNumber }),
@@ -51,43 +62,102 @@ export default function Confirm() {
 
         const isBuying = localStorage.getItem("from:price");
         if (isBuying) localStorage.setItem("from:price", false);
+        localStorage.setItem("phone", null);
+
         signIn("credentials", {
           phoneNumber,
           callbackUrl: isBuying ? "/price" : "/",
         });
       } else {
-        Swal.fire("Incorrrect code");
-        return;
+        console.log(JSON.stringify(responseData));
+        const error = responseData.error;
+        if (error === "not-found") {
+          return Swal.fire("User not found");
+        } else if (error === "not-valid-number") {
+          return Swal.fire(
+            "Phone number or code is doesn't have a valid syntax"
+          );
+        } else if (error === "code-banned-5") {
+          return Swal.fire(
+            "You cannot accept new code. Try again 5 minutes later"
+          );
+        } else if (error === "code-expired") {
+          return Swal.fire("Code expired");
+        } else if (error === "code-incorrect") {
+          return Swal.fire("Code incorrect");
+        } else alert(error);
       }
     } catch (error) {
       console.error("Failed to check confirmation code:", error);
+      return alert(error);
     }
-
-    //TODO:if no phone detected, navigate to /register
-    //send error and if tried to enter more than 5 times below 2 mins, then disallow user to enter more code for 15 mins
-    //this features will be added:
-    //return to login or reg page and change number //// resend code //// boxed numbers //// banip when user tried to login more than 5 times with same number and failed //// show number which user can check if entered number is correct or not	}
 
     if (status === "authenticated") {
       router.push("/");
       return null;
     }
   };
+  const resendCode = async () => {
+    try {
+      const response = await fetch("/api/send-code", {
+        method: "POST",
+        body: JSON.stringify({ request: "resend", phoneNumber }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const resendResponse = await response.json();
+
+      if (resendResponse.status === "success") {
+        console.log(resendResponse.code);
+      } else {
+        const error = resendResponse.error;
+        if (error === "not-found" || error === "no-phone") {
+          localStorage.setItem("phone", null);
+          router.push("/signin");
+        } else if (error === "code-banned-5") {
+          return Swal.fire(
+            "You cannot accept new request. Try again 5 minutes later"
+          );
+        } else if (error === "code-not-expired") {
+          Swal.fire(
+            "Your old code is still available to submit. Try again this option in 2 minutes"
+          );
+        } else {
+          alert(resendResponse.error);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to resend code:", e);
+      return alert(e);
+    }
+  };
   return (
-    <FormContainer>
-      <FormHeader
-        title="ورود کد فعالسازی"
-        text="کد فعالسازی ارسال شده به تلفن همراه خود را وارد نمایید"
-      />
-      <Form onSubmit={handleSubmit}>
-        <NumericInput
-          placeholder="کد فعالسازی"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
+    <>
+      <FormContainer>
+        <FormHeader
+          title="ورود کد فعالسازی"
+          text="کد فعالسازی ارسال شده به تلفن همراه خود را وارد نمایید"
         />
-        <SubmitForm title="تایید" />
-      </Form>
-    </FormContainer>
+        <Form onSubmit={handleSubmit}>
+          <NumericInput
+            placeholder="کد فعالسازی"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <SubmitForm title="تایید" />
+        </Form>
+        <div className="mt-5">
+          <p onClick={resendCode} className="p-1 cursor-pointer">
+            ارسال دوباره کد
+          </p>
+        </div>
+        <div className="text-base mt-10">
+          <span>شماره تلفنتان اشتباه است؟</span>
+          <Link href="/signin">ثبت نام</Link>
+        </div>
+      </FormContainer>
+    </>
   );
 }
 

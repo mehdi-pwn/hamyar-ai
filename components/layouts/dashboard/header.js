@@ -55,7 +55,7 @@ const Header = () => {
           />
           {!isLogged ? (
             <Link
-              href={"/register"}
+              href={"/signin"}
               className="bg-blue-400 rounded-full py-2 px-4 text-sm"
             >
               ورود | ثبت نام

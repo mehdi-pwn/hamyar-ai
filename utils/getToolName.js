@@ -4,7 +4,7 @@ import path from "path";
 export function getToolName() {
   var fileNameWithoutExtension;
   //useEffect(() => {
-  const url = window.location.pathname;
+  const url = window.location.pathname; //TOdo
   const filePath = url;
 
   // Extract the last segment of the URL path

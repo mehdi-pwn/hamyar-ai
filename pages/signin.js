@@ -20,7 +20,6 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //5859831161125587 حامد بیرانوند
     if (
       isNaN(phoneNumber) ||
       !phoneNumber ||
@@ -31,21 +30,6 @@ export default function Register() {
       return Swal.fire("Enter valid number");
 
     try {
-      const userExists = await fetch("/api/user-exist", {
-        method: "POST",
-        body: JSON.stringify({ phoneNumber }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const user = await userExists.json();
-
-      if (user.status == "found") {
-        Swal.fire("User already exists. please login");
-        return;
-      }
-
-      //TODO: Handle if not verified but code sent less than 2 minutes before
       const response = await fetch("/api/send-code", {
         method: "POST",
         body: JSON.stringify({ request: "send", phoneNumber }),
@@ -58,14 +42,16 @@ export default function Register() {
       if (responseData.status == "success") {
         console.log(responseData.code);
         localStorage.setItem("phone", phoneNumber);
-        router.replace({
-          pathname: "/confirm",
-        });
+        router.push("/confirm");
       } else {
-        console.error("Failed to send confirmation code");
+        console.log(JSON.stringify(responseData));
+        console.error(
+          "Failed to send confirmation code: " + responseData.error
+        );
       }
     } catch (error) {
       console.error("Failed to send confirmation code: ", error);
+      return alert(error);
     }
   };
 
@@ -76,7 +62,10 @@ export default function Register() {
 
   return (
     <FormContainer>
-      <FormHeader title="ثبت نام" text="برای کار با سامانه، ثبت نام کنید" />
+      <FormHeader
+        title="ورود | ثبت نام"
+        text="برای کار با سامانه، تلفن همراه خورد را وارد نمایید"
+      />
       <Form onSubmit={handleSubmit}>
         <NumericInput
           placeholder="با 09 شروع شود"
@@ -85,9 +74,6 @@ export default function Register() {
         />
         <SubmitForm title="دریافت کد فعالسازی" />
       </Form>
-      <div className="text-base mt-5">
-        <span>ﻗﺒﻼ ﻗﺒﺖ ﻧﺎﻡ ﮐﺮﺩﻩ اﯾﺪ؟ </span> <Link href="/login">ﻭﺭﻭﺩ</Link>
-      </div>
     </FormContainer>
   );
 }

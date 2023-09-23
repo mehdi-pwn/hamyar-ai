@@ -1,3 +1,4 @@
+import { isLoggedIn } from "@utils/isLoggedIn";
 import { useSession } from "next-auth/react";
 import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
@@ -5,20 +6,17 @@ import screenShot from "@image/app-screenshot.webp";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
-import { isLoggedIn } from "@utils/isLoggedIn";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
 const Price = () => {
-  const { data: session } = useSession();
-  console.log(JSON.stringify(session));
+  const isLogged = isLoggedIn();
 
   const router = useRouter();
   const handleBuy = async () => {
-    const isLogged = isLoggedIn();
-    const userId = 1;
-    if (isLogged) {
-      try {
+    try {
+      const userId = 1;
+      if (isLogged) {
         const active = await fetch("/api/active-plan", {
           method: "POST",
           body: JSON.stringify({ userId }),
@@ -61,23 +59,24 @@ const Price = () => {
             Swal.fire("خطا در ارتباط با درگاه پرداخت");
           }
         }
-      } catch (error) {
-        console.error("Failed to buy plan: ", error);
+      } else {
+        Swal.fire({
+          icon: "info",
+          title: "شما هنوز ثبت نام نکردید یا وارد نشده اید",
+          text: "برای خرید این پلن، لطفا در ابتدا وارد سایت شده و سپس اقدام به خرید نمایید",
+          confirmButtonText: "ثبت نام | ورود",
+          showCancelButton: true,
+          cancelButtonText: "بستن",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.setItem("from:price", true);
+            router.push("/signin");
+          }
+        });
       }
-    } else {
-      Swal.fire({
-        icon: "info",
-        title: "شما هنوز ثبت نام نکردید یا وارد نشده اید",
-        text: "برای خرید این پلن، لطفا در ابتدا وارد سایت شده و سپس اقدام به خرید نمایید",
-        confirmButtonText: "ثبت نام | ورود",
-        showCancelButton: true,
-        cancelButtonText: "بستن",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          localStorage.setItem("from:price", true);
-          router.push("/register");
-        }
-      });
+    } catch (error) {
+      console.error("Failed to buy plan: ", error);
+      return alert(error);
     }
   };
   return (

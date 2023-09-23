@@ -126,6 +126,7 @@ const Verify = async () => {
       return <Verified ref_id={verified.data.ref_id} />;
     } catch (error) {
       console.log("Error: " + error);
+      return alert(error);
     }
   }
 };

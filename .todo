@@ -1,3 +1,15 @@
 #is /tools and /tool seo and user friendly?
 #cancel operation function: if ai response from any ai source is not compeleted or have error, cancel latest operation
 #if any tool limit ended, user can charge it in two way: ticket and buy new credits | convert another credits from other non-used tools
+#banip user on many code requests
+#clear !.. if statemnts
+#ui:/confirm: show number + boxed_number?
+
+#localStorage and window not defined on foirst load
+
+#handle sql SELECTs (remove *s) to get less data
+
+sms:
+codes
+notify ending plan (cron_job)
+verify payment success
