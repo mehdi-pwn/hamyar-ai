@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
 import screenShot from "@image/app-screenshot.webp";
@@ -9,9 +10,12 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
 const Price = () => {
+  const { data: session } = useSession();
+  console.log(JSON.stringify(session));
+
   const router = useRouter();
   const handleBuy = async () => {
-    const isLogged = true; //TODO
+    const isLogged = isLoggedIn();
     const userId = 1;
     if (isLogged) {
       try {

@@ -50,7 +50,7 @@ export default function Confirm() {
         });
 
         const isBuying = localStorage.getItem("from:price");
-        if (isBuying) localStorage.setItem("from:price", true);
+        if (isBuying) localStorage.setItem("from:price", false);
         signIn("credentials", {
           phoneNumber,
           callbackUrl: isBuying ? "/price" : "/",

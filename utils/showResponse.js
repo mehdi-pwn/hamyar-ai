@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 export const showResponse = (result) => {
   switch (result.status) {
     case "error":
+      console.log(result.text);
       Swal.fire({
         icon: "error",
         title: result.title,

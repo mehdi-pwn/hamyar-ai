@@ -1,5 +1,6 @@
 //import { ChatGPTUnofficialProxyAPI } from "chatgpt";
 import { query } from "@lib/db";
+import { Bard } from "googlebard";
 
 export default async function handler(req, res) {
   //   const api = new ChatGPTUnofficialProxyAPI({
@@ -27,16 +28,21 @@ export default async function handler(req, res) {
     );
   };
 
-  const getAiResponse = (prompt) => {
+  const getAiResponse = async (prompt) => {
     try {
-      //   const responseFromOpenAI = await api.sendMessage(prompt);
+      console.log(response);
+
       return res.status(200).json({
         status: "success",
-        response: prompt,
+        response: "response",
         // response: responseFromOpenAI.text,
       });
     } catch (error) {
-      return error("خطایی رخ داد");
+      return res.status(500).json({
+        status: "error",
+        title: "متاسفانه خطایی رخ داد",
+        text: error,
+      });
     }
   };
 
@@ -61,7 +67,7 @@ export default async function handler(req, res) {
       } else if (plan == 1) {
         var updatePlan = await query(
           `
-        UPDATE users SET plan = 0 WHERE id = ?
+        UPDATE users SET plan = 1 WHERE id = ?
         `,
           [userId]
         );
@@ -148,7 +154,7 @@ export default async function handler(req, res) {
     switch (req.body.tool) {
       case "article-content": {
         const { keyword, tone, lang } = req.body;
-        prompt = `prompt: ${keyword} / ${tone} / ${lang}`;
+        prompt = `${keyword}`;
         handlePrompt("article-content", prompt);
         break;
       }

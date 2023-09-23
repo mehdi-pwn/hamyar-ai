@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { query } from "@lib/db";
 
 export default NextAuth({
+  secret: process.env.AUTH_SECRET,
+
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -12,7 +14,6 @@ export default NextAuth({
         phone: {
           label: "phone",
           type: "text",
-          placeholder: "Enter your phone",
         },
       },
       async authorize(credentials) {
@@ -29,14 +30,31 @@ export default NextAuth({
           if (!user[0]) {
             throw new Error("User not found: " + phoneNumber);
           }
+          if (user[0].code != -1) {
+            throw new Error("User not verified: " + phoneNumber);
+          }
 
           return {
-            id: user[0].id,
-            phone: user[0].phone,
+            user: {
+              id: 1,
+            },
           };
         } catch (error) {
           throw new Error(error.message);
         }
+      },
+      callbacks: {
+        async jwt({ token, user }) {
+          return { ...token, id: user.id };
+        },
+        async session({ session, token }) {
+          const id = token.id;
+          return { ...session, id };
+        },
+      },
+      session: {
+        jwt: true,
+        maxAge: 30 * 24 * 60 * 60,
       },
     }),
   ],
