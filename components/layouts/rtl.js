@@ -13,7 +13,8 @@ const cacheRtl = createCache({
 const theme = createTheme({
   direction: "rtl",
   typography: {
-    fontFamily: "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont",
+    fontFamily:
+      "Vazir, sans-serif, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont",
   },
 });
 

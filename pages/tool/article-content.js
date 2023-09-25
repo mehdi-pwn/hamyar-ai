@@ -51,7 +51,9 @@ const ArticleContent = () => {
               <GenerateButton
                 onClick={async () => {
                   const response = await getAiResponse(data);
-                  console.log(JSON.stringify(response));
+                  if (response.status === "success") {
+                    await showResponse(response);
+                  }
                 }}
               />
             </Grid>

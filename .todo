@@ -9,6 +9,8 @@
 
 #handle sql SELECTs (remove *s) to get less data
 
+#someties next auth loads data more than expected time, so check if data === "loading" and handle relative things
+
 sms:
 codes
 notify ending plan (cron_job)

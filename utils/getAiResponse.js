@@ -12,7 +12,7 @@ export async function getAiResponse(data) {
     const response = await fetch("/api/ai-response", options);
 
     const result = await response.json();
-
+    console.log(result);
     return result;
   } catch (error) {
     console.log(error);

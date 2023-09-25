@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
+import { saveResponse } from "./saveResponse";
 
-export const showResponse = (result) => {
+export const showResponse = async (result) => {
   switch (result.status) {
     case "error":
       console.log(result.text);
@@ -40,8 +41,9 @@ export const showResponse = (result) => {
         icon: "success",
         title: "پاسخ هوش مصنوعی آماده است",
         confirmButtonText: "بستن",
-        html: `<div>${result.response}</div>`,
+        html: `<div>${result.response.text}</div>`,
       });
+      await saveResponse(1, result.prompt, result.response.text);
       break;
   }
 };

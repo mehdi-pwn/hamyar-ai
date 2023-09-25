@@ -1,11 +1,13 @@
-//import { ChatGPTUnofficialProxyAPI } from "chatgpt";
+import { ChatGPTUnofficialProxyAPI } from "chatgpt";
 import { query } from "@lib/db";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(req, res) {
-  //   const api = new ChatGPTUnofficialProxyAPI({
-  //     accessToken: process.env.OPENAI_ACCESS_TOKEN,
-  //     apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
-  //   });
+  const gptAPI = new ChatGPTUnofficialProxyAPI({
+    accessToken: process.env.OPENAI_ACCESS_TOKEN,
+    apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
+  });
+  const token = await getToken({ req });
 
   const error = (text = "") => {
     return res.status(500).json({
@@ -30,10 +32,12 @@ export default async function handler(req, res) {
 
   const getAiResponse = async (prompt) => {
     try {
+      const gptResponse = await gptAPI.sendMessage(prompt);
+
       return res.status(200).json({
         status: "success",
-        response: "response",
-        // response: responseFromOpenAI.text,
+        response: gptResponse,
+        prompt,
       });
     } catch (e) {
       return error(e);

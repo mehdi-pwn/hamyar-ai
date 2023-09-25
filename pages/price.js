@@ -1,4 +1,3 @@
-import { isLoggedIn } from "@utils/isLoggedIn";
 import { useSession } from "next-auth/react";
 import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
@@ -10,13 +9,14 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
 const Price = () => {
-  const isLogged = isLoggedIn();
-
   const router = useRouter();
+
+  const { data: session } = useSession();
   const handleBuy = async () => {
     try {
       const userId = 1;
-      if (isLogged) {
+      if (session) {
+        return console.log(JSON.stringify(session));
         const active = await fetch("/api/active-plan", {
           method: "POST",
           body: JSON.stringify({ userId }),
@@ -139,5 +139,18 @@ const Price = () => {
 };
 
 Price.Layout = MainLayout;
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      props: {},
+    };
+  }
+  const { user } = session;
+  return {
+    props: { user },
+  };
+}
 
 export default Price;

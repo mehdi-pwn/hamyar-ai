@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.8",
     "autoprefixer": "10.4.15",
+    "chatgpt": "^5.2.5",
     "framer-motion": "^10.16.4",
     "mysql2": "^3.5.2",
     "next": "13.4.19",

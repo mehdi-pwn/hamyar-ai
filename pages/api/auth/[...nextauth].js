@@ -7,8 +7,6 @@ export default NextAuth({
 
   providers: [
     CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
       type: "credentials",
       credentials: {
         phone: {
@@ -36,7 +34,9 @@ export default NextAuth({
 
           return {
             user: {
-              id: 1,
+              _id: 2,
+              fN: "m",
+              lN: "s",
             },
           };
         } catch (error) {
@@ -45,16 +45,15 @@ export default NextAuth({
       },
       callbacks: {
         async jwt({ token, user }) {
-          return { ...token, id: user.id };
+          if (user) {
+            token.user = user;
+          }
+          return token;
         },
-        async session({ session, token }) {
-          const id = token.id;
-          return { ...session, id };
+        async session(session, token) {
+          session.token = token;
+          return session;
         },
-      },
-      session: {
-        jwt: true,
-        maxAge: 30 * 24 * 60 * 60,
       },
     }),
   ],
