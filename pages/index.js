@@ -19,6 +19,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { FaAngleDown } from "react-icons/fa";
+import { GoArrowLeft } from "react-icons/go";
 
 const Index = () => {
   return (
@@ -74,8 +75,9 @@ const Index = () => {
               </Btn>
             </Link>
             <Link href={"/signin"}>
-              <Btn colors="text-xl bg-primary border-primary text-white">
+              <Btn colors="text-xl bg-primary border-primary text-white flex items-center gap-3">
                 امتحان رایگان
+                <GoArrowLeft />
               </Btn>
             </Link>
           </div>
@@ -101,7 +103,14 @@ const Index = () => {
           height={180}
         />
       </div>
-      <div className="h-screen px-14">
+      <div className="h-screen px-14 text-center">
+        <div className="py-5">
+          <Typography variant="h3">
+            <strong className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 text-transparent bg-clip-text">
+              انواع ابزار ها در همیار اِی آی
+            </strong>
+          </Typography>
+        </div>
         <div className="grid grid-cols-3 gap-8">
           <IndexToolCard
             icon={<BsInstagram />}
@@ -170,7 +179,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-screen grid grid-cols-2 gap-5 px-28 py-5">
+      <div className="h-screen grid grid-cols-2 gap-5 px-28 py-5 mt-20">
         <div className="bg-gradient-to-br from-blue-300 to-red-300 h-fit py-20 pl-20 pr-3 rounded-lg shadow-lg">
           <Image
             src={screenShot.src}
@@ -305,7 +314,7 @@ const Index = () => {
       </div>
       <div className="h-screen py-5 -mt-72 px-32 text-center w-full">
         <div className="rounded-2xl shadow-2xl bg-gradient-to-br bg-grad from-cyan-700 to-purple-700 py-10">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-center">
             <div>
               <Typography variant="h3">
                 <strong className="font-ordibehesht text-white">
@@ -319,11 +328,12 @@ const Index = () => {
               </p>
             </div>
             <div>
-              <Btn colors="bg-amber-500 border-transparent mt-5">
+              <Btn colors="bg-amber-500 border-transparent mt-5 flex gap-3 items-center">
                 امتحان رایگان
+                <GoArrowLeft />
               </Btn>
             </div>
-            <div className="flex justify-around text-slate-200 mt-8">
+            <div className="flex justify-around gap-20 text-slate-200 mt-8">
               <span className="flex gap-2 items-center">
                 <BsFillCheckCircleFill color="#00ff00" />
                 <span>پرامپت قوی</span>

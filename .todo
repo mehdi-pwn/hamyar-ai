@@ -13,6 +13,8 @@
 
 #when clicking on Try For Free btns, check if loggedin->/tools else->/signin
 
+#disable items if not logged in
+
 sms:
 codes
 notify ending plan (cron_job)

@@ -5,24 +5,24 @@ import Link from "next/link";
 import { FaShopware } from "react-icons/fa";
 import { MdOutlineCancel } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
+import { useRouter } from "next/router";
 
 const itemClass =
   "flex items-center gap-2 text-white rounded-md cursor-pointer font-medium hover:bg-slate-800 bg-opacity-8 px-3 py-2 mt-2";
 
 const NavItem = ({ path, icon, title }) => {
   const { sidebarActive, setSidebarActive, screenSize } = useStateContext();
+  const pathname = useRouter().pathname;
+
   const handleCloseSideBar = () => {
     if (sidebarActive && screenSize < 900) {
       setSidebarActive(false);
     }
   };
+  const liClass = pathname === path ? itemClass + " bg-slate-800" : itemClass;
   return (
     <li>
-      <Link
-        href={"/" + path}
-        className={itemClass}
-        onClick={handleCloseSideBar}
-      >
+      <Link href={path} className={liClass} onClick={handleCloseSideBar}>
         <span className="text-gray-400">{icon}</span>
         <span className="text-white">{title}</span>
       </Link>
@@ -32,6 +32,7 @@ const NavItem = ({ path, icon, title }) => {
 
 const SubMenu = ({ data }) => {
   const { sidebarActive, setSidebarActive, screenSize } = useStateContext();
+  const pathname = useRouter().pathname;
   const handleCloseSideBar = () => {
     if (sidebarActive && screenSize < 900) {
       setSidebarActive(false);
@@ -69,7 +70,11 @@ const SubMenu = ({ data }) => {
           <li key={i}>
             <Link
               href={subitem.path}
-              className={itemClass + " mr-5 w-full"}
+              className={
+                pathname === subitem.path
+                  ? itemClass + " mr-5 w-full bg-slate-800"
+                  : itemClass + " mr-5 w-full"
+              }
               onClick={handleCloseSideBar}
             >
               <span className="text-gray-300">{subitem.icon}</span>
@@ -112,16 +117,14 @@ const Sidebar = () => {
   const sidebarAnimationSettings = {
     open: {
       width: "18rem",
-      display: "block",
+      visibility: "visible",
       transition: {
         damping: 40,
       },
     },
     closed: {
       width: "0px",
-      transitionEnd: {
-        display: "none",
-      },
+      visibility: "hidden",
       transition: {
         damping: 40,
       },
@@ -133,7 +136,7 @@ const Sidebar = () => {
       animate={sidebarActive ? "open" : "closed"}
       className="text-white py-4"
     >
-      <div className="flex justify-between items-center px-3 pb-4 border-b border-gray-800">
+      <div className="flex justify-between items-center h-12 pb-6 px-3 border-b border-gray-800">
         <Link
           href="/"
           onClick={handleCloseSideBar}
@@ -154,7 +157,7 @@ const Sidebar = () => {
       <div className="flex flex-col h-full">
         <ul className="px-4 py-3">
           <NavItem
-            path={"tools"}
+            path={"/tools"}
             icon={<FaShopware />}
             title={"همه ابزار ها"}
           />

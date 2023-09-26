@@ -16,9 +16,11 @@ import Link from "next/link";
 export default function Register() {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [processing, setProcessing] = useState(false);
   const { status } = useSession();
 
   const handleSubmit = async (e) => {
+    setProcessing(true);
     e.preventDefault();
     if (
       isNaN(phoneNumber) ||
@@ -26,8 +28,10 @@ export default function Register() {
       phoneNumber == null ||
       phoneNumber.length != 11 ||
       !phoneNumber.startsWith("09")
-    )
+    ) {
+      setProcessing(true);
       return Swal.fire("Enter valid number");
+    }
 
     try {
       const response = await fetch("/api/send-code", {
@@ -44,12 +48,16 @@ export default function Register() {
         localStorage.setItem("phone", phoneNumber);
         router.push("/confirm");
       } else {
+        setProcessing(false);
+
         console.log(JSON.stringify(responseData));
         console.error(
           "Failed to send confirmation code: " + responseData.error
         );
       }
     } catch (error) {
+      setProcessing(false);
+
       console.error("Failed to send confirmation code: ", error);
       return alert(error);
     }
@@ -72,7 +80,7 @@ export default function Register() {
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
-        <SubmitForm title="دریافت کد فعالسازی" />
+        <SubmitForm disabled={processing} title="دریافت کد فعالسازی" />
       </Form>
     </FormContainer>
   );

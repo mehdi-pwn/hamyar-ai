@@ -30,7 +30,7 @@ const Header = () => {
   const isLogged = isLoggedIn();
 
   return (
-    <div className="w-full static bg-slate-800">
+    <div className="w-full static bg-slate-800 h-16 flex flex-col justify-center">
       <div className="flex justify-between text-white p-2 relative">
         <div className="flex items-center">
           <HeaderButton

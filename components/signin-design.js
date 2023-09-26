@@ -43,14 +43,46 @@ export function NumericInput({ placeholder, labeled = "", value, onChange }) {
   );
 }
 
-export function SubmitForm({ title }) {
+export function SubmitForm({ disabled, title }) {
   return (
     <div className="px-10">
-      <input
+      <button
         type="submit"
-        value={title}
-        className="rounded-full bg-primary text-white py-5 mt-8 w-full hover:bg-secondary hover:cursor-pointer"
-      />
+        disabled={disabled}
+        className={`rounded-full bg-primary text-white py-5 mt-8 w-full  ${
+          disabled
+            ? "bg-opacity-50 cursor-not-allowed flex justify-center items-center"
+            : "hover:bg-secondary"
+        }`}
+      >
+        {disabled ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-7 h-7"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M22 12c0-5.523-4.477-10-10-10" stroke="black">
+              <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                dur="1s"
+                from="0 12 12"
+                to="360 12 12"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+        ) : (
+          title
+        )}
+      </button>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import path from "path";
 //import { useEffect } from "react";
 
 export function getToolName() {
+  return "article-content";
   var fileNameWithoutExtension;
   //useEffect(() => {
   const url = window.location.pathname; //TOdo

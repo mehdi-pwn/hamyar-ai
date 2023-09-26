@@ -5,9 +5,9 @@ import Link from "next/link";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { isLoggedIn } from "@utils/isLoggedIn";
 import Swal from "sweetalert2";
+import Typography from "@mui/material/Typography";
 
 export const Page = ({ children }) => {
   return <div className="text-white text-center py-8 px-20">{children}</div>;
@@ -15,13 +15,13 @@ export const Page = ({ children }) => {
 
 export const Title = ({ children }) => {
   return (
-    <h1 className="text-4xl">
+    <Typography variant="h3">
       <strong>{children}</strong>
-    </h1>
+    </Typography>
   );
 };
 export const Description = ({ children }) => {
-  return <p className="mt-4 text-sm">{children}</p>;
+  return <p className="mt-4 text-sm text-gray-300">{children}</p>;
 };
 export const Form = ({ children }) => {
   return <div className="mt-6 text-white">{children}</div>;
@@ -93,25 +93,67 @@ export const ToneAndLang = ({ toneVal, toneChange, langVal, langChange }) => {
     </>
   );
 };
-export const GenerateButton = ({ onClick }) => {
+export const GenerateButton = ({ processing, onClick }) => {
   const isLogged = isLoggedIn();
   return (
     <>
       {!isLogged ? (
         <Link href={"/signin"}>
           <FormControl fullWidth>
-            <Button variant="contained" color="warning">
+            <Button colors={`bg-amber-500 border-amber-500`}>
               ثبت نام رایگان
             </Button>
           </FormControl>
         </Link>
       ) : (
         <FormControl fullWidth>
-          <Button onClick={onClick} variant="contained">
-            بساز!
+          <Button
+            disabled={processing}
+            onClick={onClick}
+            colors={`bg-primary border-primary ${
+              processing
+                ? "bg-opacity-50 cursor-not-allowed flex justify-center items-center border-none"
+                : ""
+            }`}
+          >
+            {processing ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-7 h-7"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M22 12c0-5.523-4.477-10-10-10" stroke="black">
+                  <animateTransform
+                    attributeName="transform"
+                    attributeType="XML"
+                    type="rotate"
+                    dur="1s"
+                    from="0 12 12"
+                    to="360 12 12"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            ) : (
+              "بساز!"
+            )}
           </Button>
         </FormControl>
       )}
     </>
+  );
+};
+const Button = ({ children, colors, onClick }) => {
+  const c = "rounded-lg py-2 px-4 border " + colors;
+  return (
+    <button onClick={onClick} className={c}>
+      {children}
+    </button>
   );
 };

@@ -15,6 +15,8 @@ import Link from "next/link";
 export default function Confirm() {
   const router = useRouter();
   const [code, setCode] = useState("");
+  const [processing, setProcessing] = useState(false);
+
   const { status } = useSession();
 
   const phoneNumber = localStorage.getItem("phone");
@@ -30,6 +32,8 @@ export default function Confirm() {
   }
 
   const handleSubmit = async (e) => {
+    setProcessing(true);
+
     e.preventDefault();
     if (
       isNaN(code) ||
@@ -37,8 +41,10 @@ export default function Confirm() {
       code == undefined ||
       code.length < 4 ||
       code.length > 5
-    )
+    ) {
+      setProcessing(false);
       return Swal.fire("Enter valid code");
+    }
 
     try {
       const response = await fetch("/api/send-code", {
@@ -69,6 +75,7 @@ export default function Confirm() {
           callbackUrl: isBuying ? "/price" : "/",
         });
       } else {
+        setProcessing(false);
         console.log(JSON.stringify(responseData));
         const error = responseData.error;
         if (error === "not-found") {
@@ -88,6 +95,7 @@ export default function Confirm() {
         } else alert(error);
       }
     } catch (error) {
+      setProcessing(false);
       console.error("Failed to check confirmation code:", error);
       return alert(error);
     }
@@ -145,7 +153,7 @@ export default function Confirm() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />
-          <SubmitForm title="تایید" />
+          <SubmitForm disabled={processing} title="تایید" />
         </Form>
         <div className="mt-5">
           <p onClick={resendCode} className="p-1 cursor-pointer">

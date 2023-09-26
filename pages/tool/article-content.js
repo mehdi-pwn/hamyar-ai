@@ -18,9 +18,17 @@ import Swal from "sweetalert2";
 
 const ArticleContent = () => {
   const router = useRouter();
+  const [processing, setProcessing] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
+
+  const handleClick = async () => {
+    setProcessing(true);
+    const response = await getAiResponse(data);
+    setProcessing(false);
+    await showResponse(response);
+  };
 
   const data = {
     tool: getToolName(),
@@ -48,14 +56,7 @@ const ArticleContent = () => {
               langChange={(e) => setLang(e.target.value)}
             />
             <Grid item xs={12} md={12}>
-              <GenerateButton
-                onClick={async () => {
-                  const response = await getAiResponse(data);
-                  if (response.status === "success") {
-                    await showResponse(response);
-                  }
-                }}
-              />
+              <GenerateButton processing={processing} onClick={handleClick} />
             </Grid>
           </Grid>
         </Form>
@@ -64,4 +65,4 @@ const ArticleContent = () => {
   );
 };
 
-export default ArticleContent; //next: get ai response utils and api, and in api handle user plan
+export default ArticleContent;
