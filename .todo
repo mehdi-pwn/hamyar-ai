@@ -11,6 +11,8 @@
 
 #someties next auth loads data more than expected time, so check if data === "loading" and handle relative things
 
+#when clicking on Try For Free btns, check if loggedin->/tools else->/signin
+
 sms:
 codes
 notify ending plan (cron_job)

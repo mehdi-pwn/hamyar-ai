@@ -64,7 +64,7 @@ export default function Register() {
     <FormContainer>
       <FormHeader
         title="ورود | ثبت نام"
-        text="برای کار با سامانه، تلفن همراه خورد را وارد نمایید"
+        text="برای کار با همیار اِی آی، تلفن همراه خود را وارد نمایید"
       />
       <Form onSubmit={handleSubmit}>
         <NumericInput

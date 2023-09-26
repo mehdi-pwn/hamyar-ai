@@ -7,10 +7,11 @@ import Link from "next/link";
 import unknownUser from "@image/unknownUser.jpg";
 import { isLoggedIn } from "@utils/isLoggedIn";
 import { signOut } from "next-auth/react";
+import { SigninButton } from "@layout/shared";
 
 const HeaderLink = ({ href, title }) => {
   return (
-    <Link href={href} className="text-white">
+    <Link href={href} className="text-black">
       <span>{title}</span>
     </Link>
   );
@@ -18,7 +19,11 @@ const HeaderLink = ({ href, title }) => {
 
 const HeaderButton = ({ icon, func }) => {
   return (
-    <button onClick={func} type="button" className="p-2 rounded-full text-xl">
+    <button
+      onClick={func}
+      type="button"
+      className="p-2 rounded-full text-xl text-gray-500"
+    >
       {icon}
     </button>
   );
@@ -36,20 +41,20 @@ const Header = () => {
   const isLogged = isLoggedIn();
 
   return (
-    <div className="w-full fixed bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg z-[9999]">
+    <div className="w-full fixed bg-primary bg-opacity-10 backdrop-filter backdrop-blur-lg z-[9999] h-16 flex flex-col justify-center">
       <div className="flex justify-between text-white py-2 px-5 relative">
         <div className="flex justify-between items-center">
           <Link
             href="/"
-            className="flex flex-row text-2xl items-center font-extrabold text-white gap-3 mx-auto"
+            className="flex flex-row text-2xl items-center font-extrabold text-black gap-3 mx-auto"
           >
-            <FaShopware /> <span>میهن اِی آی</span>
+            <FaShopware /> <span>همیار اِی آی</span>
           </Link>
         </div>
         <div className="flex justify-between items-center gap-14">
           <HeaderLink href={"/features"} title={"قابلیت ها"} />
-          <HeaderLink href={"/price"} title={"قیمت ها"} />
           <HeaderLink href={"/tools"} title={"ابزار ها"} />
+          <HeaderLink href={"/price"} title={"خرید اشتراک"} />
         </div>
         <div className="flex gap-2">
           <HeaderButton
@@ -65,12 +70,7 @@ const Header = () => {
             }}
           />
           {!isLogged ? (
-            <Link
-              href={"/signin"}
-              className="bg-blue-400 rounded-full py-2 px-4 text-sm"
-            >
-              ورود | ثبت نام
-            </Link>
+            <SigninButton />
           ) : (
             <button
               type="button"

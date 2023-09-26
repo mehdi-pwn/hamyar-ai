@@ -152,9 +152,15 @@ export default function Confirm() {
             ارسال دوباره کد
           </p>
         </div>
-        <div className="text-base mt-10">
+        <div className="text-base mt-3">
           <span>شماره تلفنتان اشتباه است؟</span>
-          <Link href="/signin">ثبت نام</Link>
+          &nbsp;
+          <Link
+            className="text-primary underline underline-offset-8"
+            href="/signin"
+          >
+            بازگشت
+          </Link>
         </div>
       </FormContainer>
     </>

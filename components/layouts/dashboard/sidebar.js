@@ -109,17 +109,19 @@ const Sidebar = () => {
     }
   };
 
-  const sidebar_animation_settings = {
+  const sidebarAnimationSettings = {
     open: {
       width: "18rem",
-      visibility: "visible",
+      display: "block",
       transition: {
         damping: 40,
       },
     },
     closed: {
       width: "0px",
-      visibility: "hidden",
+      transitionEnd: {
+        display: "none",
+      },
       transition: {
         damping: 40,
       },
@@ -127,7 +129,7 @@ const Sidebar = () => {
   };
   return (
     <motion.div
-      variants={sidebar_animation_settings}
+      variants={sidebarAnimationSettings}
       animate={sidebarActive ? "open" : "closed"}
       className="text-white py-4"
     >
