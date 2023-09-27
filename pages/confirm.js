@@ -125,19 +125,18 @@ export default function Confirm() {
           router.push("/signin");
         } else if (error === "code-banned-5") {
           return Swal.fire(
-            "You cannot accept new request. Try again 5 minutes later"
+            "شما 5 بار کد فعالسازی را اشتباه وارد کردید. لطفا 5 دقیقه دیگر، دوباره امتحان کنید"
           );
         } else if (error === "code-not-expired") {
           Swal.fire(
-            "Your old code is still available to submit. Try again this option in 2 minutes"
+            "کد ارسال شده قبلی، هنوز قابل استفاده است. برای دریافت کد جدید، لطفا 2 دقیقه صبر کنید"
           );
         } else {
-          alert(resendResponse.error);
+          Swal.fire("خطایی رخ داد");
         }
       }
     } catch (e) {
-      console.error("Failed to resend code:", e);
-      return alert(e);
+      return Swal.fire("خطایی رخ داد");
     }
   };
   return (

@@ -49,17 +49,11 @@ export default function Register() {
         router.push("/confirm");
       } else {
         setProcessing(false);
-
-        console.log(JSON.stringify(responseData));
-        console.error(
-          "Failed to send confirmation code: " + responseData.error
-        );
+        return Swal.fire("خطا در ارسال کد فعالسازی");
       }
     } catch (error) {
       setProcessing(false);
-
-      console.error("Failed to send confirmation code: ", error);
-      return alert(error);
+      return Swal.fire("خطا در ارسال کد فعالسازی");
     }
   };
 

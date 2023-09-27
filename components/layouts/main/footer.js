@@ -16,9 +16,9 @@ const Footer = () => {
               </Typography>
             </div>
             <Typography variant="body1">
-              <p>
-                <strong>محتوا ساز قدرت گرفته از هوش مصنوعی.</strong>
-              </p>
+              <strong>
+                <p>محتوا ساز</p>
+              </strong>
             </Typography>
             <Typography variant="body2">
               <p className="text-gray-600">

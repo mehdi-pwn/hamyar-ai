@@ -8,6 +8,7 @@ import unknownUser from "@image/unknownUser.jpg";
 import { isLoggedIn } from "@utils/isLoggedIn";
 import { signOut } from "next-auth/react";
 import { SigninButton } from "@layout/shared";
+import { CgProfile } from "react-icons/cg";
 
 const HeaderLink = ({ href, title }) => {
   return (
@@ -41,7 +42,7 @@ const Header = () => {
   const isLogged = isLoggedIn();
 
   return (
-    <div className="w-full fixed bg-primary bg-opacity-10 backdrop-filter backdrop-blur-lg z-[9999] h-16 flex flex-col justify-center">
+    <header className="w-full fixed bg-primary bg-opacity-10 backdrop-filter backdrop-blur-lg z-[9999] h-16 flex flex-col justify-center">
       <div className="flex justify-between text-white py-2 px-5 relative">
         <div className="flex justify-between items-center">
           <Link
@@ -81,19 +82,16 @@ const Header = () => {
                 )
               }
             >
-              <Image
-                src={unknownUser.src}
-                alt="User Avatar"
-                width={35}
-                height={35}
-                className="rounded-full"
-              />
+              <CgProfile color="gray" size={40} />
             </button>
           )}
         </div>
         {profileBarActive && isLogged && (
-          <div ref={profileBarRef} className="absolute top-16 left-4">
-            <div className="bg-white p-2 flex flex-col gap-2 rounded-lg">
+          <div
+            ref={profileBarRef}
+            className="absolute top-[3.8rem] left-4 shadow-lg"
+          >
+            <div className="bg-slate-100 p-2 flex flex-col gap-2 rounded-lg">
               <Link
                 href={"/profile"}
                 className="text-center hover:bg-gray-300 rounded-lg py-2 px-3 text-gray-900"
@@ -120,7 +118,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </div>
+    </header>
   );
 };
 

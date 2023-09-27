@@ -56,6 +56,7 @@ const Price = () => {
             //router.push(paymentUrl);
             console.log(paymentData);
           } else {
+            console.log(paymentData);
             Swal.fire("خطا در ارتباط با درگاه پرداخت");
           }
         }

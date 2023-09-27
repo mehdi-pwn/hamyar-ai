@@ -7,6 +7,7 @@ import Link from "next/link";
 import unknownUser from "@image/unknownUser.jpg";
 import { isLoggedIn } from "@utils/isLoggedIn";
 import { signOut } from "next-auth/react";
+import { CgProfile } from "react-icons/cg";
 
 const HeaderButton = ({ icon, func }) => {
   return (
@@ -30,7 +31,7 @@ const Header = () => {
   const isLogged = isLoggedIn();
 
   return (
-    <div className="w-full static bg-slate-800 h-16 flex flex-col justify-center">
+    <header className="w-full static bg-slate-800 h-16 flex flex-col justify-center">
       <div className="flex justify-between text-white p-2 relative">
         <div className="flex items-center">
           <HeaderButton
@@ -70,18 +71,12 @@ const Header = () => {
                 )
               }
             >
-              <Image
-                src={unknownUser.src}
-                alt="User Avatar"
-                width={35}
-                height={35}
-                className="rounded-full"
-              />
+              <CgProfile color="gray" size={40} />
             </button>
           )}
         </div>
         {profileBarActive && isLogged && (
-          <div ref={profileBarRef} className="absolute top-16 left-4">
+          <div ref={profileBarRef} className="absolute top-16 left-4 shadow-lg">
             <div className="bg-white p-2 flex flex-col gap-2 rounded-lg">
               <Link
                 href={"/profile"}
@@ -109,7 +104,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </div>
+    </header>
   );
 };
 

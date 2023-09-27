@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const NotVerified = ({
   errorMessage = "متاسفانه خرید، موفقیت آمیز نبوده و یا توسط کاربر لغو شده است.",
@@ -126,7 +127,9 @@ const Verify = async () => {
       return <Verified ref_id={verified.data.ref_id} />;
     } catch (error) {
       console.log("Error: " + error);
-      return alert(error);
+      return Swal.fire(
+        "خطا در تایید تراکنش. در صورت کم شدن وجه، به طور خودکار پس از 48 ساعت به حسابتان باز خواهد گشت"
+      );
     }
   }
 };
