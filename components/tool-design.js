@@ -98,53 +98,57 @@ export const GenerateButton = ({ processing, onClick }) => {
   return (
     <>
       {!isLogged ? (
-        <Link href={"/signin"}>
+        <Grid item xs={12} md={12}>
+          <Link href={"/signin"}>
+            <FormControl fullWidth>
+              <Button colors={`bg-amber-500 border-amber-500`}>
+                ثبت نام رایگان
+              </Button>
+            </FormControl>
+          </Link>
+        </Grid>
+      ) : (
+        <Grid item xs={12} md={12}>
           <FormControl fullWidth>
-            <Button colors={`bg-amber-500 border-amber-500`}>
-              ثبت نام رایگان
+            <Button
+              disabled={processing}
+              onClick={onClick}
+              colors={`bg-primary border-primary ${
+                processing
+                  ? "bg-opacity-50 cursor-not-allowed flex justify-center items-center border-none"
+                  : ""
+              }`}
+            >
+              {processing ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-7 h-7"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M22 12c0-5.523-4.477-10-10-10" stroke="black">
+                    <animateTransform
+                      attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      dur="1s"
+                      from="0 12 12"
+                      to="360 12 12"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </svg>
+              ) : (
+                "بساز!"
+              )}
             </Button>
           </FormControl>
-        </Link>
-      ) : (
-        <FormControl fullWidth>
-          <Button
-            disabled={processing}
-            onClick={onClick}
-            colors={`bg-primary border-primary ${
-              processing
-                ? "bg-opacity-50 cursor-not-allowed flex justify-center items-center border-none"
-                : ""
-            }`}
-          >
-            {processing ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-7 h-7"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M22 12c0-5.523-4.477-10-10-10" stroke="black">
-                  <animateTransform
-                    attributeName="transform"
-                    attributeType="XML"
-                    type="rotate"
-                    dur="1s"
-                    from="0 12 12"
-                    to="360 12 12"
-                    repeatCount="indefinite"
-                  />
-                </path>
-              </svg>
-            ) : (
-              "بساز!"
-            )}
-          </Button>
-        </FormControl>
+        </Grid>
       )}
     </>
   );

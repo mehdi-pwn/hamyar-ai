@@ -17,7 +17,6 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 const ArticleContent = () => {
-  const router = useRouter();
   const [processing, setProcessing] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [tone, setTone] = useState("s1");
@@ -55,9 +54,8 @@ const ArticleContent = () => {
               lang={lang}
               langChange={(e) => setLang(e.target.value)}
             />
-            <Grid item xs={12} md={12}>
-              <GenerateButton processing={processing} onClick={handleClick} />
-            </Grid>
+
+            <GenerateButton processing={processing} onClick={handleClick} />
           </Grid>
         </Form>
       </Page>

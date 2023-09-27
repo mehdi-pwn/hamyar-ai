@@ -3,10 +3,11 @@ import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
 import screenShot from "@image/app-screenshot.webp";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { Button } from "@components/main-design";
+import { GoArrowLeft } from "react-icons/go";
 
 const Price = () => {
   const router = useRouter();
@@ -81,47 +82,75 @@ const Price = () => {
   return (
     <div className="pt-16">
       <div className="flex flex-col items-center gap-4 px-28 pt-16">
-        <h1 className="font-extrabold text-3xl">قیمت سرویس میهن اِی آی</h1>
-        <p>در میهن اِی آی، برای راحتی، از یک پلن استفاده شده است</p>
+        <h1 className="font-extrabold text-3xl"></h1>
+        <Typography variant="h3">
+          <span>
+            اشتراک{" "}
+            <strong className="bg-gradient-to-r from-blue-800 to-purple-950 text-transparent bg-clip-text">
+              الماس
+            </strong>{" "}
+            همیار اِی آی
+          </span>
+        </Typography>
+        <p>
+          در همیار اِی آی، برای راحتی مشتریان گرامی، از یک پلن استفاده کردیم. با
+          خیال راحت خرید کنین!
+        </p>
       </div>
-      <div className="mt-10 flex justify-center items-stretch gap-5 p-10">
-        <div className="flex-grow py-4">
-          <div className="border-2 border-blue-800 rounded-2xl flex flex-col items-center gap-3 p-4">
+      <div className="flex gap-5 p-10 mt-10">
+        <div className="flex-grow">
+          <div className="h-full bg-gradient-to-br from-blue-600 to-purple-600 border-4 border-amber-500 rounded-2xl flex flex-col items-center gap-3 p-4 text-white">
             <div className="text-center">
-              <Typography variant="h5">
-                <span className="font-extrabold">پلن اصلی</span>
+              <Typography variant="h4" component="h5">
+                <strong className="font-extrabold">پلن الماس</strong>
               </Typography>
               <div className="mt-2">
                 <Typography variant="body1">
-                  دسترسی به ابزار های میهن اِی آی &nbsp;
-                  <span className="underline">برای یک ماه</span>
+                  <span className="text-gray-300">
+                    دسترسی به همه ابزار های همیار اِی آی &nbsp;
+                    <span className="underline underline-offset-8">
+                      برای یک ماه
+                    </span>
+                  </span>
                 </Typography>
               </div>
             </div>
-            <div className="py-2">
-              <Typography variant="h5">
-                <span className="font-extrabold">55 هزار تومان</span>
+            <div className="py-2 mt-8 flex gap-2 items-end">
+              <Typography variant="h4" component="h5">
+                <strong className="font-extrabold">55 هزار تومان</strong>
+              </Typography>
+              <Typography variant="body2">
+                <p className="mb-1">/ یک ماه</p>
               </Typography>
             </div>
-            <div className="px-3">
+            <div className="px-3 mt-10 flex-grow">
               <ul className="flex flex-col gap-3 h-full">
-                <li>بیشتر از 20 ابزار هوش مصنوعی تولید محتوا</li>
-                <li>ساخت مقاله با هر استایل متن</li>
-                <li>آموزش تبدیل متن هوش مصنوعی به شبه انسانی و انسانی</li>
-                <li>پشتیبانی رایگان</li>
-                <li>لغو پلن و بازگشت وجه در هر زمان</li>
+                <Pro>بیشتر از 20 ابزار هوش مصنوعی تولید محتوا</Pro>
+                <Pro>ساخت مقاله با هر استایل متن</Pro>
+                <Pro>آموزش تبدیل متن هوش مصنوعی به شبه انسانی و انسانی</Pro>
+                <Pro>پشتیبانی رایگان</Pro>
+                <Pro>لغو پلن و بازگشت وجه در هر زمان</Pro>
               </ul>
             </div>
-            <div className="mt-2 w-full">
-              <FormControl fullWidth>
-                <Button onClick={handleBuy} variant="contained" color="warning">
-                  خرید
-                </Button>
-              </FormControl>
+            <div className="w-full">
+              <Button
+                onClick={handleBuy}
+                colors="bg-gradient-to-l from-orange-600 to-yellow-600 border-none w-full flex gap-2 items-center justify-center !rounded-full py-2 text-lg"
+              >
+                خرید
+                <GoArrowLeft />
+              </Button>
             </div>
           </div>
         </div>
-        <div className="flex-grow py-4">
+        <div className="flex-grow rounded-xl bg-gradient-to-br from-amber-300 to-green-300 flex flex-col items-center justify-center gap-10 pt-10 pb-8">
+          <div>
+            <Typography variant="h5">
+              <strong className="bg-gradient-to-l from-yellow-600 via-green-500 via-cyan-500 to-blue-600 text-white p-3 rounded-full">
+                همیار اِی آی: هوشِتو مصنوعی کن!
+              </strong>
+            </Typography>
+          </div>
           <div>
             <Image
               src={screenShot.src}
@@ -134,6 +163,15 @@ const Price = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Pro = ({ children }) => {
+  return (
+    <li className="flex gap-2 items-center">
+      <BsFillCheckCircleFill color="#3ABC51" />
+      {children}
+    </li>
   );
 };
 

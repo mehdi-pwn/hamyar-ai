@@ -1,9 +1,13 @@
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { GoArrowLeft } from "react-icons/go";
-export const Button = ({ children, colors }) => {
+export const Button = ({ children, colors, onClick = null }) => {
   const c = "rounded-lg py-2 px-4 border " + colors;
-  return <button className={c}>{children}</button>;
+  return (
+    <button onClick={onClick && onClick} className={c}>
+      {children}
+    </button>
+  );
 };
 export const IndexToolCard = ({
   icon,
