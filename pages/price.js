@@ -120,9 +120,7 @@ const Price = () => {
               <Typography variant="h4" component="h5">
                 <strong className="font-extrabold">55 هزار تومان</strong>
               </Typography>
-              <Typography variant="body2">
-                <p className="mb-1">/ یک ماه</p>
-              </Typography>
+              <p className="mb-1">/ یک ماه</p>
             </div>
             <div className="px-3 mt-10 flex-grow">
               <ul className="flex flex-col gap-3 h-full">
@@ -147,7 +145,7 @@ const Price = () => {
         <div className="flex-grow rounded-xl bg-gradient-to-br from-amber-300 to-green-300 flex flex-col items-center justify-center gap-10 pt-10 pb-8">
           <div>
             <Typography variant="h5">
-              <strong className="bg-gradient-to-l from-yellow-600 via-green-500 via-cyan-500 to-blue-600 text-white p-3 rounded-full">
+              <strong className="bg-gradient-to-l from-yellow-600 via-green-500 to-blue-600 text-white p-3 rounded-full">
                 همیار اِی آی: هوشِتو مصنوعی کن!
               </strong>
             </Typography>

@@ -1,10 +1,10 @@
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { GoArrowLeft } from "react-icons/go";
-export const Button = ({ children, colors, onClick = null }) => {
+export const Button = ({ children, colors, onClick = null, disabled }) => {
   const c = "rounded-lg py-2 px-4 border " + colors;
   return (
-    <button onClick={onClick && onClick} className={c}>
+    <button onClick={onClick && onClick} className={c} disabled={disabled}>
       {children}
     </button>
   );

@@ -15,17 +15,14 @@ const Footer = () => {
                 <strong>همیار اِی آی</strong>
               </Typography>
             </div>
-            <Typography variant="body1">
-              <strong>
-                <p>محتوا ساز</p>
-              </strong>
-            </Typography>
-            <Typography variant="body2">
-              <p className="text-gray-600">
-                ابزار های بلاگری و تولید محتوا. بهشتی برای کسب و کار های
-                اینترنتی.
-              </p>
-            </Typography>
+
+            <strong>
+              <p>محتوا ساز هوش مصنوعی</p>
+            </strong>
+
+            <p className="text-gray-600">
+              ابزار های بلاگری و تولید محتوا. بهشتی برای کسب و کار های اینترنتی.
+            </p>
           </div>
         </Grid>
         <Grid item xs={3}>

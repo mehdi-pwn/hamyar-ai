@@ -21,12 +21,10 @@ const Features = () => {
             همیار اِی آی: ابزار تولید محتوای هوش مصنوعی
           </strong>
         </Typography>
-        <Typography variant="body1">
-          <p className="text-gray-500">
-            همیار اِی آی، نیاز های محتوانویسان، بلاگرها، صاحبان کسب و کار های
-            مجازی و خیلی دیگه از آدمو رو برطرف میکنه!
-          </p>
-        </Typography>
+        <p className="text-gray-500">
+          همیار اِی آی، نیاز های محتوانویسان، بلاگرها، صاحبان کسب و کار های
+          مجازی و خیلی دیگه از آدمو رو برطرف میکنه!
+        </p>
       </div>
       <div className="h-fit grid grid-cols-2 gap-5 px-28 py-5 mt-20">
         <div className="bg-gradient-to-br from-blue-300 to-red-300 py-20 pl-20 rounded-lg shadow-lg">
