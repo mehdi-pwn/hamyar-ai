@@ -71,6 +71,7 @@ export default function Confirm() {
         localStorage.setItem("phone", null);
 
         signIn("credentials", {
+          //!
           phoneNumber,
           callbackUrl: isBuying ? "/price" : "/",
         });
@@ -101,6 +102,7 @@ export default function Confirm() {
     }
 
     if (status === "authenticated") {
+      //!
       router.push("/");
       return null;
     }

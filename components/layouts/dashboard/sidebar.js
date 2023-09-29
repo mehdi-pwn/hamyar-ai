@@ -180,14 +180,32 @@ const sub_routes = [
       {
         title: "مقاله نویس",
         icon: <FaShopware />,
-        paid: true,
         path: "/tool/article-content",
       },
       {
         title: "ایده ساز مقاله",
         icon: <FaShopware />,
-        paid: true,
         path: "/tool/article-ideas",
+      },
+      {
+        title: "تقویم محتوایی",
+        icon: <FaShopware />,
+        path: "/tool/content-calendar",
+      },
+      {
+        title: "مقدمه مقاله",
+        icon: <FaShopware />,
+        path: "/tool/article-overview",
+      },
+      {
+        title: "نتیجه گیری مقاله",
+        icon: <FaShopware />,
+        path: "/tool/article-conclusion",
+      },
+      {
+        title: "بازنویسی محتوا",
+        icon: <FaShopware />,
+        path: "/tool/content-rewrite",
       },
     ],
   },
@@ -198,8 +216,12 @@ const sub_routes = [
       {
         title: "عنوان پست",
         icon: <FaShopware />,
-        paid: true,
-        path: "/tool/instagram-post",
+        path: "/tool/instagram-title",
+      },
+      {
+        title: "کپشن پست",
+        icon: <FaShopware />,
+        path: "/tool/instagram-caption",
       },
     ],
   },
@@ -207,6 +229,12 @@ const sub_routes = [
     title: "ابزار های ویدیو",
     icon: <FaShopware />,
     menus: [
+      {
+        title: "عنوان ویدیو",
+        icon: <FaShopware />,
+        paid: true,
+        path: "/tool/video-title",
+      },
       {
         title: "توضیحات ویدیو",
         icon: <FaShopware />,
@@ -218,6 +246,24 @@ const sub_routes = [
         icon: <FaShopware />,
         paid: true,
         path: "/tool/video-script",
+      },
+    ],
+  },
+  {
+    title: "برندسازی وبسایت",
+    icon: <FaShopware />,
+    menus: [
+      {
+        title: "عنوان وبسایت",
+        icon: <FaShopware />,
+        paid: true,
+        path: "/tool/website-title",
+      },
+      {
+        title: "دامنه وبسایت",
+        icon: <FaShopware />,
+        paid: true,
+        path: "/tool/website-domain",
       },
     ],
   },

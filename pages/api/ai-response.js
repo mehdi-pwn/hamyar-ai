@@ -139,6 +139,12 @@ export default async function handler(req, res) {
   var prompt;
   if (req.method === "POST") {
     switch (req.body.tool) {
+      case "article-conclusion": {
+        const { content, tone, lang } = req.body;
+        prompt = `hello`;
+        await handlePrompt("article-conclusion", prompt);
+        break;
+      }
       case "article-content": {
         const { keyword, tone, lang } = req.body;
         prompt = `${keyword}`;

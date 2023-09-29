@@ -109,7 +109,7 @@ const Header = () => {
                   setProfileBarActive(
                     (prevProfileBarActive) => !prevProfileBarActive
                   );
-                  signOut({ callbackUrl: "/" });
+                  signOut({ callbackUrl: "/" }); //!
                 }}
               >
                 خروج از حساب کاربری

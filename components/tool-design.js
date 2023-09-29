@@ -46,6 +46,27 @@ export const KeywordInput = ({
     </Grid>
   );
 };
+export const ContentInput = ({
+  label = "متن مقاله",
+  placeholder = "",
+  value,
+  onChange,
+}) => {
+  return (
+    <Grid item xs={12} md={12}>
+      <FormControl fullWidth>
+        <TextField
+          label={label}
+          placeholder={placeholder}
+          variant="filled"
+          multiline
+          value={value}
+          onChange={onChange}
+        />
+      </FormControl>
+    </Grid>
+  );
+};
 export const ToneSelect = ({ value, onChange }) => {
   return (
     <FormControl fullWidth style={{ marginTop: "13px" }}>
@@ -75,8 +96,6 @@ export const LanguageSelect = ({ value, onChange }) => {
         style={{ marginTop: "17px" }}
       >
         <MenuItem value="persian">فارسی</MenuItem>
-        <MenuItem value="arabic">عربی</MenuItem>
-        <MenuItem value="english">انگلیسی</MenuItem>
       </Select>
     </FormControl>
   );

@@ -58,6 +58,7 @@ export default function Register() {
   };
 
   if (status === "authenticated") {
+    //!
     router.push("/");
     return null;
   }

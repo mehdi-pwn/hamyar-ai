@@ -6,6 +6,7 @@ const {
   KeywordInput,
   ToneAndLang,
   GenerateButton,
+  ContentInput,
 } = require("@components/tool-design");
 
 import Grid from "@mui/material/Grid";
@@ -16,9 +17,9 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const ArticleIdeas = () => {
+const ArticleOverview = () => {
   const [processing, setProcessing] = useState(false);
-  const [keyword, setKeyword] = useState("");
+  const [content, setContent] = useState("");
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
 
@@ -31,7 +32,7 @@ const ArticleIdeas = () => {
 
   const data = {
     tool: getToolName(),
-    keyword,
+    content,
     tone,
     lang,
   };
@@ -39,14 +40,15 @@ const ArticleIdeas = () => {
   return (
     <>
       <Page>
-        <Title>ایده ساز مقاله</Title>
-        <Description>پیدا کردن ایده برای مقاله</Description>
+        <Title>بخش مقدمه مقاله</Title>
+        <Description>
+          نوشتن بخش مقدمه مقاله با استفاده از مقاله کامل
+        </Description>
         <Form>
           <Grid container spacing={2}>
-            <KeywordInput
-              placeholder="مثلا: صبحانه"
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
+            <ContentInput
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
             />
             <ToneAndLang
               toneVal={tone}
@@ -63,4 +65,4 @@ const ArticleIdeas = () => {
   );
 };
 
-export default ArticleIdeas;
+export default ArticleOverview;
