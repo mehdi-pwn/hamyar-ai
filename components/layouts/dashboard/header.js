@@ -2,12 +2,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 import { useStateContext } from "@context/ContextProvider";
-import Image from "next/image";
 import Link from "next/link";
-import unknownUser from "@image/unknownUser.jpg";
-import { isLoggedIn } from "@utils/isLoggedIn";
-import { signOut } from "next-auth/react";
+
 import { CgProfile } from "react-icons/cg";
+import { logoutUser } from "@utils/logoutUser";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const HeaderButton = ({ icon, func }) => {
   return (
@@ -28,7 +28,9 @@ const Header = () => {
     profileBarRef,
   } = useStateContext();
 
-  const isLogged = isLoggedIn();
+  const router = useRouter();
+
+  const isLogged = true; //!
 
   return (
     <header className="w-full static bg-slate-800 h-16 flex flex-col justify-center">
@@ -91,11 +93,14 @@ const Header = () => {
               </Link>
               <button
                 className="text-center hover:bg-gray-300 rounded-lg py-2 px-3 text-red-500"
-                onClick={() => {
+                onClick={async () => {
                   setProfileBarActive(
                     (prevProfileBarActive) => !prevProfileBarActive
                   );
-                  signOut({ callbackUrl: "/" }); //!
+                  const logout = await logoutUser();
+                  if (logout) {
+                    return router.push("/");
+                  } else return Swal.fire("خطا در خروج از حساب کاربری");
                 }}
               >
                 خروج از حساب کاربری

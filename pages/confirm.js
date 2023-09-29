@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 import {
   FormContainer,
@@ -11,13 +10,21 @@ import {
 } from "@components/signin-design";
 import Logins from "@layout/logins";
 import Link from "next/link";
+import { verifyToken } from "@utils/verifyToken";
+import { useEffect } from "react";
 
 export default function Confirm() {
   const router = useRouter();
   const [code, setCode] = useState("");
   const [processing, setProcessing] = useState(false);
 
-  const { status } = useSession();
+  useEffect(() => {
+    async function checkVerified() {
+      const verify = await verifyToken();
+      if (verify) router.push("/");
+    }
+    checkVerified();
+  }, []);
 
   const phoneNumber = localStorage.getItem("phone");
 
@@ -70,11 +77,7 @@ export default function Confirm() {
         if (isBuying) localStorage.setItem("from:price", false);
         localStorage.setItem("phone", null);
 
-        signIn("credentials", {
-          //!
-          phoneNumber,
-          callbackUrl: isBuying ? "/price" : "/",
-        });
+        router.push("/");
       } else {
         setProcessing(false);
         console.log(JSON.stringify(responseData));
@@ -99,12 +102,6 @@ export default function Confirm() {
       setProcessing(false);
       console.error("Failed to check confirmation code:", error);
       return alert(error);
-    }
-
-    if (status === "authenticated") {
-      //!
-      router.push("/");
-      return null;
     }
   };
   const resendCode = async () => {

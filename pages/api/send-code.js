@@ -1,4 +1,5 @@
 import { query } from "@lib/db";
+import jwt from "jsonwebtoken";
 
 const isUserExists = async (phoneNumber) => {
   try {
@@ -274,12 +275,14 @@ export default async function handler(req, res) {
       try {
         const num = req.body.phoneNumber;
 
-        if (!num || isNaN(num) || num == undefined)
+        const isExist = await isUserExists(num);
+
+        if (!num || isNaN(num) || num == undefined || !isExist)
           return res.status(500).json({
             status: "fail",
           });
 
-        const user = await query(
+        const update = await query(
           `
         UPDATE users
         SET code = -1, code_datetime = null, code_tried = 0, code_allow_datetime = null
@@ -287,6 +290,22 @@ export default async function handler(req, res) {
         `,
           [num]
         );
+
+        const user = await query(
+          `
+        SELECT * FROM users WHERE phone = ?
+        `,
+          [num]
+        );
+
+        const { id, phone, name, plan } = user[0];
+
+        const token = jwt.sign(
+          { id, phone, name, plan },
+          process.env.AUTH_SECRET,
+          { expiresIn: "2h" }
+        );
+        res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly`);
         res.status(200).json({
           status: "success",
         });

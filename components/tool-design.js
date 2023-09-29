@@ -5,7 +5,6 @@ import Link from "next/link";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
-import { isLoggedIn } from "@utils/isLoggedIn";
 import Swal from "sweetalert2";
 import Typography from "@mui/material/Typography";
 
@@ -113,7 +112,7 @@ export const ToneAndLang = ({ toneVal, toneChange, langVal, langChange }) => {
   );
 };
 export const GenerateButton = ({ processing, onClick }) => {
-  const isLogged = isLoggedIn();
+  const isLogged = true; //!
   return (
     <>
       {!isLogged ? (

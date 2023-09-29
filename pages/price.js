@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
 import screenShot from "@image/app-screenshot.webp";
@@ -8,15 +7,16 @@ import { useRouter } from "next/router";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { Button } from "@components/main-design";
 import { GoArrowLeft } from "react-icons/go";
+import { verifyToken } from "@utils/verifyToken";
 
 const Price = () => {
   const router = useRouter();
 
-  const { data: session } = useSession();
   const handleBuy = async () => {
     try {
-      const userId = 1;
-      if (session) {
+      const verify = await verifyToken();
+      if (verify) {
+        return console.log(JSON.stringify(verify));
         const active = await fetch("/api/active-plan", {
           method: "POST",
           body: JSON.stringify({ userId }),

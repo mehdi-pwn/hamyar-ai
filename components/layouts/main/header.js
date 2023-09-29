@@ -2,13 +2,12 @@ import { MdOutlineDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 import { FaShopware } from "react-icons/fa";
 import { useStateContext } from "@context/ContextProvider";
-import Image from "next/image";
 import Link from "next/link";
-import unknownUser from "@image/unknownUser.jpg";
-import { isLoggedIn } from "@utils/isLoggedIn";
-import { signOut } from "next-auth/react";
 import { SigninButton } from "@layout/shared";
 import { CgProfile } from "react-icons/cg";
+import { logoutUser } from "@utils/logoutUser";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 const HeaderLink = ({ href, title }) => {
   return (
@@ -39,7 +38,9 @@ const Header = () => {
     profileBarRef,
   } = useStateContext();
 
-  const isLogged = isLoggedIn();
+  const router = useRouter();
+
+  const isLogged = true; //!
 
   return (
     <header className="w-full fixed bg-primary bg-opacity-10 backdrop-filter backdrop-blur-lg z-[9999] h-16 flex flex-col justify-center">
@@ -105,11 +106,14 @@ const Header = () => {
               </Link>
               <button
                 className="text-center hover:bg-gray-300 rounded-lg py-2 px-3 text-red-500"
-                onClick={() => {
+                onClick={async () => {
                   setProfileBarActive(
                     (prevProfileBarActive) => !prevProfileBarActive
                   );
-                  signOut({ callbackUrl: "/" }); //!
+                  const logout = await logoutUser();
+                  if (logout) {
+                    return router.push("/");
+                  } else return Swal.fire("خطا در خروج از حساب کاربری");
                 }}
               >
                 خروج از حساب کاربری

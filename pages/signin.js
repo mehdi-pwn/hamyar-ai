@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 import {
   FormContainer,
@@ -12,12 +11,21 @@ import {
 } from "@components/signin-design";
 import Logins from "@layout/logins";
 import Link from "next/link";
+import { verifyToken } from "@utils/verifyToken";
+import { useEffect } from "react";
 
 export default function Register() {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [processing, setProcessing] = useState(false);
-  const { status } = useSession();
+
+  useEffect(() => {
+    async function checkVerified() {
+      const verify = await verifyToken();
+      if (verify) router.push("/");
+    }
+    checkVerified();
+  }, []);
 
   const handleSubmit = async (e) => {
     setProcessing(true);
@@ -56,12 +64,6 @@ export default function Register() {
       return Swal.fire("خطا در ارسال کد فعالسازی");
     }
   };
-
-  if (status === "authenticated") {
-    //!
-    router.push("/");
-    return null;
-  }
 
   return (
     <FormContainer>

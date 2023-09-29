@@ -17,6 +17,12 @@
 
 #clear not-used imports
 
+#make auth api singular
+
+#handle api responses codes
+
+#handle redirect()
+
 
 sms:
 codes
