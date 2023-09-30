@@ -1,4 +1,6 @@
 import { query } from "@lib/db";
+import jwt from "jsonwebtoken";
+
 export default async function handler(req, res) {
   const token = req.cookies.token;
 
@@ -64,7 +66,7 @@ export default async function handler(req, res) {
         .status(200)
         .json({ status: "payment-error", message: data.message });
     } else {
-      const TOOL_USAGE_LIMITS = { "article-content": 10 }; ////
+      const WORDS = 5000; ////
 
       let today = new Date();
       let futureDate = new Date(today.getTime() + 31 * 24 * 60 * 60 * 1000);
@@ -79,14 +81,9 @@ export default async function handler(req, res) {
 
       const updateUserPlan = await query(
         `
-        UPDATE users SET plan = 2, plan_expire_date = ?, plan_history = ?, tool_limits = ? WHERE id = ?
+        UPDATE users SET plan = 2, plan_expire_date = ?, plan_history = ?, words = ? WHERE id = ?
         `,
-        [
-          expireDate,
-          JSON.stringify(oldHistory),
-          JSON.stringify(TOOL_USAGE_LIMITS),
-          userId,
-        ]
+        [expireDate, JSON.stringify(oldHistory), WORDS, userId]
       );
       return res.status(200).json(data);
     }

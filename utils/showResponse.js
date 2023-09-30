@@ -43,7 +43,7 @@ export const showResponse = async (result) => {
         confirmButtonText: "بستن",
         html: `<div>${result.response.text}</div>`,
       });
-      await saveResponse(1, result.prompt, result.response.text);
+      await saveResponse(result.prompt, result.response.text);
       break;
   }
 };

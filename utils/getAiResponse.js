@@ -1,4 +1,13 @@
+import { verifyToken } from "./verifyToken";
+
 export async function getAiResponse(data) {
+  const verify = await verifyToken();
+  if (!verify)
+    return {
+      result: "error",
+      title: "خطای اعتبار سنجی",
+      text: "شما از حساب کاربری خود خارج شدید. برای دریافت پاسخ هوش مصنوعی، مجددا وارد شوید",
+    };
   try {
     const JSONdata = JSON.stringify(data);
     const options = {

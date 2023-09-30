@@ -1,4 +1,7 @@
 import { query } from "@lib/db";
+import jwt from "jsonwebtoken";
+
+
 export default async function handler(req, res) {
   try {
     const token = req.cookies.token;

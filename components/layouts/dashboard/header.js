@@ -8,6 +8,8 @@ import { CgProfile } from "react-icons/cg";
 import { logoutUser } from "@utils/logoutUser";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import { verifyToken } from "@utils/verifyToken";
 
 const HeaderButton = ({ icon, func }) => {
   return (
@@ -30,7 +32,15 @@ const Header = () => {
 
   const router = useRouter();
 
-  const isLogged = true; //!
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    async function checkVerified() {
+      const verify = await verifyToken();
+      if (verify) setIsLogged(true);
+    }
+    checkVerified();
+  }, []);
 
   return (
     <header className="w-full static bg-slate-800 h-16 flex flex-col justify-center">
@@ -99,7 +109,7 @@ const Header = () => {
                   );
                   const logout = await logoutUser();
                   if (logout) {
-                    return router.push("/");
+                    router.push("/");
                   } else return Swal.fire("خطا در خروج از حساب کاربری");
                 }}
               >

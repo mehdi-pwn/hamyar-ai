@@ -1,5 +1,6 @@
 import { ChatGPTUnofficialProxyAPI } from "chatgpt";
 import { query } from "@lib/db";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   const gptAPI = new ChatGPTUnofficialProxyAPI({
@@ -28,9 +29,23 @@ export default async function handler(req, res) {
     );
   };
 
-  const getAiResponse = async (prompt) => {
+  const getAiResponse = async (prompt, userId, userWords = 0) => {
     try {
       const gptResponse = await gptAPI.sendMessage(prompt);
+
+      const responseText = gptResponse.text;
+      const responseWords = responseText.split(" ").length;
+
+      let newWords = userWords - responseWords;
+
+      if (newWords < 0) newWords = 0;
+
+      await query(
+        `
+      UPDATE users SET words = ? WHERE id = ?
+      `,
+        [newWords, userId]
+      );
 
       return res.status(200).json({
         status: "success",
@@ -38,11 +53,11 @@ export default async function handler(req, res) {
         prompt,
       });
     } catch (e) {
-      return error(e);
+      return error("خطا در پاسخ هوش مصنوعی");
     }
   };
 
-  const handlePrompt = async (toolName, prompt, userId) => {
+  const handlePrompt = async (prompt, userId) => {
     try {
       const userDB = await query(
         `
@@ -50,7 +65,6 @@ export default async function handler(req, res) {
         `,
         [userId]
       );
-
       if (userDB[0]) {
         const user = userDB[0];
 
@@ -77,7 +91,7 @@ export default async function handler(req, res) {
             userId
           );
 
-          await getAiResponse(prompt); //! TESTED UNTIL plan==1 and other plans should be tested (0, 2)
+          await getAiResponse(prompt, userId); //! TESTED UNTIL plan==1 and other plans should be tested (0, 2)
         } else if (plan == 2) {
           var today = new Date(),
             expireDate = user.plan_history;
@@ -109,20 +123,13 @@ export default async function handler(req, res) {
             });
           }
 
-          const toolLimits = JSON.parse(user.tool_limits);
-          var currentToolLimit = toolLimits[toolName];
-          if (currentToolLimit == 0) {
+          const words = parseInt(user.words);
+          if (words <= 0) {
             return res.status(200).json({
               status: "limit-0",
             });
           } else {
-            currentToolLimit--;
-            toolLimits[toolName] = currentToolLimit;
-            await query("UPDATE users SET tool_limits = ? WHERE id = ?", [
-              JSON.stringify(toolLimits),
-              userId,
-            ]);
-            return getAiResponse(prompt);
+            return getAiResponse(prompt, userId, words);
           }
         } else error("خطایی رخ داد");
       } else error("کاربر پیدا نشد");
@@ -138,23 +145,85 @@ export default async function handler(req, res) {
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.AUTH_SECRET);
-    } catch (error) {
+    } catch (e) {
       return error("خطای اعتبار سنجی کاربر");
     }
     const userId = decoded.id;
     switch (req.body.tool) {
       case "article-conclusion": {
         const { content, tone, lang } = req.body;
-        prompt = `hello`;
-        await handlePrompt("article-conclusion", prompt, userId);
+        prompt = `برای این مقاله، نتیجه گیری بنویس: ${content}`;
+        await handlePrompt(prompt, userId);
         break;
       }
       case "article-content": {
         const { keyword, tone, lang } = req.body;
-        prompt = `${keyword}`;
-        await handlePrompt("article-content", prompt, userId);
+        prompt = `برای این کلمات کلیدی، مقاله بنویس: ${keyword}`;
+        await handlePrompt(prompt, userId);
         break;
       }
+      case "article-ideas": {
+        const { keyword, tone, lang } = req.body;
+        prompt = `برای این کلمات کلیدی، ایده برای نوشتن مقاله بگو: ${keyword}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "article-overview": {
+        const { content, tone, lang } = req.body;
+        prompt = `بخش مقدمه برای این مقاله بنویس: ${content}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "content-rewrite": {
+        const { content, tone, lang } = req.body;
+        prompt = `این مقاله رو مجددا بنویس: ${content}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+
+      case "instagram-caption": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای این پست اینستاگرام، کپشن بنویس: ${description}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "instagram-title": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای این پست اینستاگرام، چند عنوان خوب پیشنهاد بده: ${description}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "video-description": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای این ویدیو، توضیحات بنویس: ${description}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "video-script": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای این ویدیو، فیلنامه بنویس: ${description}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "video-title": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای این ویدیو، چند عدد عنوان پیشنهاد بده: ${description}`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "website-domain": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای یک وبسایت در مورد ${description}، چند عدد دامنه خوب پیشنهاد بده`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+      case "website-title": {
+        const { description, tone, lang } = req.body;
+        prompt = `برای یک وبسایت در مورد ${description}، چند عدد عنوان خوب پیشنهاد بده`;
+        await handlePrompt(prompt, userId);
+        break;
+      }
+
       default: {
         error("ابزار هوش مصنوعی پیدا نشد");
       }

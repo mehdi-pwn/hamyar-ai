@@ -7,6 +7,8 @@ import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Swal from "sweetalert2";
 import Typography from "@mui/material/Typography";
+import { verifyToken } from "@utils/verifyToken";
+import { useEffect, useState } from "react";
 
 export const Page = ({ children }) => {
   return <div className="text-white text-center py-8 px-20">{children}</div>;
@@ -27,7 +29,7 @@ export const Form = ({ children }) => {
 };
 export const KeywordInput = ({
   label = "عنوان / کلمه کلیدی",
-  placeholder,
+  placeholder = "",
   value,
   onChange,
 }) => {
@@ -112,7 +114,16 @@ export const ToneAndLang = ({ toneVal, toneChange, langVal, langChange }) => {
   );
 };
 export const GenerateButton = ({ processing, onClick }) => {
-  const isLogged = true; //!
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
+
   return (
     <>
       {!isLogged ? (
