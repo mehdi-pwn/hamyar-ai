@@ -1,7 +1,16 @@
 import { query } from "@lib/db";
 export default async function handler(req, res) {
+  const token = req.cookies.token;
+
+  let decoded;
   try {
-    const userId = req.body.userId;
+    decoded = jwt.verify(token, process.env.AUTH_SECRET);
+  } catch (error) {
+    return res.status(200).json({ status: "fail", error: "no-auth" });
+  }
+
+  const userId = decoded.id;
+  try {
     const auth = req.body.auth;
 
     const user = await query(
@@ -55,7 +64,7 @@ export default async function handler(req, res) {
         .status(200)
         .json({ status: "payment-error", message: data.message });
     } else {
-      const TOOL_USAGE_LIMITS = { "article-content": 10 };
+      const TOOL_USAGE_LIMITS = { "article-content": 10 }; ////
 
       let today = new Date();
       let futureDate = new Date(today.getTime() + 31 * 24 * 60 * 60 * 1000);

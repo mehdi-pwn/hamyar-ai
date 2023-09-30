@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import { verifyToken } from "@utils/verifyToken";
 
 const NotVerified = ({
   errorMessage = "متاسفانه خرید، موفقیت آمیز نبوده و یا توسط کاربر لغو شده است.",
@@ -94,10 +96,16 @@ const Verified = ({ ref_id = 0 }) => {
 
 const Verify = async () => {
   const router = useRouter();
+  useEffect(() => {
+    async function checkVerified() {
+      const verify = await verifyToken();
+      if (!verify) router.push("/");
+    }
+    checkVerified();
+  }, []);
   //const { Authority, Status } = router.query;
   const Authority = 56;
   const Status = "NOK";
-  const userId = 1;
 
   if (!Authority || !Status) {
     return (
@@ -111,6 +119,8 @@ const Verify = async () => {
     return <NotVerified />;
   } else if (Status === "OK") {
     try {
+      const verify = await verifyToken();
+      const userId = verify.user.id;
       const verifyPayment = await fetch("/api/verify-payment", {
         method: "POST",
         body: JSON.stringify({ userId, auth: Authority }),

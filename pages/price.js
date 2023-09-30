@@ -16,7 +16,7 @@ const Price = () => {
     try {
       const verify = await verifyToken();
       if (verify) {
-        return console.log(JSON.stringify(verify));
+        const userId = verify.user.id;
         const active = await fetch("/api/active-plan", {
           method: "POST",
           body: JSON.stringify({ userId }),

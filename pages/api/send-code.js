@@ -32,6 +32,12 @@ export default async function handler(req, res) {
     case "send": {
       try {
         const num = req.body.phoneNumber;
+        const token = req.cookies.token;
+
+        try {
+          const decoded = jwt.verify(token, process.env.AUTH_SECRET);
+          return res.status(200).json({ status: "fail", error: "auth" });
+        } catch (error) {}
 
         if (!num || isNaN(num))
           return res.status(500).json({
@@ -78,6 +84,12 @@ export default async function handler(req, res) {
       break;
     }
     case "resend": {
+      const token = req.cookies.token;
+
+      try {
+        const decoded = jwt.verify(token, process.env.AUTH_SECRET);
+        return res.status(200).json({ status: "fail", error: "auth" });
+      } catch (error) {}
       try {
         const num = req.body.phoneNumber;
         if (!num || isNaN(num))
@@ -164,6 +176,12 @@ export default async function handler(req, res) {
     }
     case "verify": {
       const num = req.body.phoneNumber;
+      const token = req.cookies.token;
+
+      try {
+        const decoded = jwt.verify(token, process.env.AUTH_SECRET);
+        return res.status(200).json({ status: "fail", error: "auth" });
+      } catch (error) {}
 
       try {
         const userExists = await isUserExists(num);
@@ -272,6 +290,12 @@ export default async function handler(req, res) {
       break;
     }
     case "verified": {
+      const token = req.cookies.token;
+
+      try {
+        const decoded = jwt.verify(token, process.env.AUTH_SECRET);
+        return res.status(200).json({ status: "fail", error: "auth" });
+      } catch (error) {}
       try {
         const num = req.body.phoneNumber;
 

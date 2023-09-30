@@ -4,9 +4,12 @@ import MainLayout from "@layout/main/mainLayout";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
+import { verifyToken } from "@utils/verifyToken";
+
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 const NoPlan = () => (
   <div className="bg-slate-200 flex flex-col gap-3 items-center py-2 rounded-xl shadow-lg">
@@ -34,12 +37,18 @@ const PaidPlan = () => (
 );
 
 const Profile = () => {
+  const router = useRouter();
   const [fullName, setFullName] = useState("");
+  const [userData, setUserData] = useState({});
   const [isSaving, setIsSaving] = useState(false);
-  const plan = 2; //TODO:get user data here and also if not logged in: redirect
 
   useEffect(() => {
     async function getFullNameFromDB() {
+      const decoded = await verifyToken();
+
+      if (!decoded) router.push("/signin");
+      else if (decoded) setUserData(decoded.user);
+
       try {
         const getName = await fetch("/api/profile", {
           method: "POST",
@@ -48,7 +57,7 @@ const Profile = () => {
           },
           body: JSON.stringify({
             type: "get-name",
-            userId: 1,
+            userId: userData.id,
           }),
         });
         const gotName = await getName.json();
@@ -78,7 +87,7 @@ const Profile = () => {
         },
         body: JSON.stringify({
           type: "set-name",
-          userId: 1,
+          userId: userData.id,
           name: `${fullName}`,
         }),
       });
@@ -91,7 +100,7 @@ const Profile = () => {
       console.log(error);
       setIsSaving(false);
 
-      return Swal.fire("خطایی رخ nhn 2");
+      return Swal.fire("خطایی رخ داد");
     }
   };
   return (
@@ -125,7 +134,13 @@ const Profile = () => {
               <strong>پلن فعال</strong>
             </Typography>
           </div>
-          {plan == 0 ? <NoPlan /> : plan == 1 ? <FreePlan /> : <PaidPlan />}
+          {userData.plan == 0 ? (
+            <NoPlan />
+          ) : userData.plan == 1 ? (
+            <FreePlan />
+          ) : (
+            <PaidPlan />
+          )}
         </div>
       </div>
     </div>

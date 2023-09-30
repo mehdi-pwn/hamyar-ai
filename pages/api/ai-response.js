@@ -1,13 +1,11 @@
 import { ChatGPTUnofficialProxyAPI } from "chatgpt";
 import { query } from "@lib/db";
-import { getToken } from "next-auth/jwt";
 
 export default async function handler(req, res) {
   const gptAPI = new ChatGPTUnofficialProxyAPI({
     accessToken: process.env.OPENAI_ACCESS_TOKEN,
     apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
   });
-  const token = await getToken({ req });
 
   const error = (text = "") => {
     return res.status(500).json({
@@ -44,10 +42,8 @@ export default async function handler(req, res) {
     }
   };
 
-  const handlePrompt = async (toolName, prompt) => {
+  const handlePrompt = async (toolName, prompt, userId) => {
     try {
-      const userId = 1;
-
       const userDB = await query(
         `
         SELECT * FROM users WHERE id = ?
@@ -138,17 +134,25 @@ export default async function handler(req, res) {
 
   var prompt;
   if (req.method === "POST") {
+    const token = req.cookies.token;
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.AUTH_SECRET);
+    } catch (error) {
+      return error("خطای اعتبار سنجی کاربر");
+    }
+    const userId = decoded.id;
     switch (req.body.tool) {
       case "article-conclusion": {
         const { content, tone, lang } = req.body;
         prompt = `hello`;
-        await handlePrompt("article-conclusion", prompt);
+        await handlePrompt("article-conclusion", prompt, userId);
         break;
       }
       case "article-content": {
         const { keyword, tone, lang } = req.body;
         prompt = `${keyword}`;
-        await handlePrompt("article-content", prompt);
+        await handlePrompt("article-content", prompt, userId);
         break;
       }
       default: {

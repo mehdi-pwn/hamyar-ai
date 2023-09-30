@@ -20,18 +20,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { FaAngleDown } from "react-icons/fa";
 import { GoArrowLeft } from "react-icons/go";
-import { verifyToken } from "@utils/verifyToken";
-import { useEffect, useState } from "react";
 
 const Index = () => {
-  const [isLogged, setIsLogged] = useState(false);
-  useEffect(() => {
-    async function checkVerified() {
-      const verify = await verifyToken();
-      if (verify) setIsLogged(true);
-    }
-    checkVerified();
-  }, []);
   return (
     <div className="pt-16">
       <div className="h-screen flex flex-col justify-center items-center gap-24 px-28 -m-10">
