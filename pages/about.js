@@ -22,16 +22,20 @@ const About = () => {
         </div>
         <div className="flex justify-around gap-20 mt-5 pb-10">
           <div className="flex flex-col gap-10">
-            <div className="text-gray-600">
+            <div className="text-gray-500">
               <p>
-                <span className="text-black">پیشرفت شما: </span>
+                <span className="text-black dark:text-gray-300">
+                  پیشرفت شما:{" "}
+                </span>
                 ما در همیار اِی آی به شما اجازه میدیم که با تولید محتوای سریعتر،
                 سرعت رشد کسب و کار خودتونو بالا ببرین.
               </p>
             </div>
-            <div className="text-gray-600">
+            <div className="text-gray-500">
               <p>
-                <span className="text-black">قیمت معقول: </span>
+                <span className="text-black dark:text-gray-300">
+                  قیمت معقول:{" "}
+                </span>
                 در همیار اِی آی، از قیمتی معقول برای پلن الماس استفاده شده و
                 بنابراین کسب و کار هایی که تازه شروع به کار کرده اند، از قدرت
                 هوش مصنوعی در پیشرفت کسب و کارشان محروم نمی شوند.
@@ -39,17 +43,21 @@ const About = () => {
             </div>
           </div>
           <div className="flex flex-col gap-10">
-            <div className="text-gray-600">
+            <div className="text-gray-500">
               <p>
-                <span className="text-black">پرامپت حرفه ای: </span>
+                <span className="text-black dark:text-gray-300">
+                  پرامپت حرفه ای:{" "}
+                </span>
                 در همیار اِی آی، از پرامپت های پیچیده و منطقی (Logic) برای ساخت
                 محتوا استفاده می شود. این کار باعث بهبود نوشتن مقاله نسبت به
                 داده های دریافتی می شود.
               </p>
             </div>
-            <div className="text-gray-600">
+            <div className="text-gray-500">
               <p>
-                <span className="text-black">مشتری محور: </span>
+                <span className="text-black dark:text-gray-300">
+                  مشتری محور:{" "}
+                </span>
                 ما برای به حداکثر رساندن رضایت مشتری به تیکت های پیشنهادی و
                 انتقادی شما، اهمیت قائل هستیم و در صورتی که ایده خوبی برای میهن
                 اِی آی ارائه دهید، با شما ارتباط خواهیم گرفت و در صورت اجرایی

@@ -13,15 +13,13 @@ const DashboardLayout = ({ children }) => {
     }
   }, []);
 
-  const mainClass = `flex flex-col h-screen ${
-    themeMode === "dark" ? "dark" : "light"
-  }`;
-
   return (
-    <div className={mainClass}>
-      <Header />
-      <main className="flex-grow">{children}</main>
-      <Footer />
+    <div className={themeMode === "dark" ? "dark" : ""}>
+      <div className="flex flex-col min-h-screen dark:bg-dark">
+        <Header />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ import { verifyToken } from "@utils/verifyToken";
 
 const HeaderLink = ({ href, title }) => {
   return (
-    <Link href={href} className="text-black">
+    <Link href={href} className="text-black dark:text-white">
       <span>{title}</span>
     </Link>
   );
@@ -58,7 +58,7 @@ const Header = () => {
         <div className="flex justify-between items-center">
           <Link
             href="/"
-            className="flex flex-row text-2xl items-center font-extrabold text-black gap-3 mx-auto"
+            className="flex flex-row text-2xl items-center font-extrabold text-black gap-3 mx-auto dark:text-white"
           >
             <FaShopware /> <span>همیار اِی آی</span>
           </Link>

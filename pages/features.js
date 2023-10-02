@@ -6,7 +6,7 @@ import screenShot from "@image/app-screenshot.webp";
 import Typography from "@mui/material/Typography";
 
 import { HiBadgeCheck } from "react-icons/hi";
-import { Button } from "@components/main-design";
+import { Button, CTA } from "@components/main-design";
 
 const ToolCard = () => {
   return;
@@ -21,7 +21,7 @@ const Features = () => {
             همیار اِی آی: ابزار تولید محتوای هوش مصنوعی
           </strong>
         </Typography>
-        <p className="text-gray-500">
+        <p className="text-gray-500 dark:text-gray-400">
           همیار اِی آی، نیاز های محتوانویسان، بلاگرها، صاحبان کسب و کار های
           مجازی و خیلی دیگه از آدمو رو برطرف میکنه!
         </p>
@@ -44,13 +44,13 @@ const Features = () => {
           </div>
           <div className="font-bold">
             <Typography variant="h3">
-              <strong className="text-black">
+              <strong className="text-black dark:text-white">
                 برای محتوایی که میخوای منتشر کنی، ایده پیدا کن{" "}
               </strong>
             </Typography>
           </div>
           <div>
-            <p className="text-gray-600 mt-8 text-justify">
+            <p className="text-gray-600 dark:text-gray-400 mt-8 text-justify">
               توی همیار اِی آی، این امکان رو داری که با استفاده از ابزار های
               ایده ساز قدرت گرفته از هوش مصنوعی، برای پست های فضای مجازی و
               وبسایتت و یا حتی کانال آپارات یا یوتیوب، ایده پیدا کنی و ازشون
@@ -111,13 +111,13 @@ const Features = () => {
           </div>
           <div className="font-bold">
             <Typography variant="h3">
-              <strong className="text-black">
+              <strong className="text-black dark:text-white">
                 سریعتر از همیشه محتوات رو بساز
               </strong>
             </Typography>
           </div>
           <div>
-            <p className="text-gray-600 mt-8 text-justify">
+            <p className="text-gray-600 dark:text-gray-400 mt-8 text-justify">
               مقاله، مقدمه، نتیجه گیری، توضیحات ویدیو، کپشن اینستاگرام و روبیکا
               و خیلی ابزار دیگه، میتونن بهتون کمک کنن که خیلی سریع تر از مقاله
               نویسی به صورت دستی، محتواتون رو بسازین
@@ -138,6 +138,9 @@ const Features = () => {
             height={180}
           />
         </div>
+      </div>
+      <div className="h-fit px-28 py-5 my-20">
+        <CTA />
       </div>
       {/* todo:print 6 tool cards here as grid */}
     </div>

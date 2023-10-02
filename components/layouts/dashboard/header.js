@@ -13,7 +13,11 @@ import { verifyToken } from "@utils/verifyToken";
 
 const HeaderButton = ({ icon, func }) => {
   return (
-    <button onClick={func} type="button" className="p-2 rounded-full text-xl">
+    <button
+      onClick={func}
+      type="button"
+      className="p-2 rounded-full text-xl text-black dark:text-white"
+    >
       {icon}
     </button>
   );
@@ -43,7 +47,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-full static bg-slate-800 h-16 flex flex-col justify-center">
+    <header className="w-full static h-16 flex flex-col justify-center border-b border-gray-400 dark:border-gray-800">
       <div className="flex justify-between text-white p-2 relative">
         <div className="flex items-center">
           <HeaderButton

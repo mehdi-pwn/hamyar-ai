@@ -50,7 +50,7 @@ export default function Confirm() {
       code.length > 5
     ) {
       setProcessing(false);
-      return Swal.fire("Enter valid code");
+      return Swal.fire("کد وارد شده اشتباه است");
     }
 
     try {
@@ -83,19 +83,17 @@ export default function Confirm() {
         console.log(JSON.stringify(responseData));
         const error = responseData.error;
         if (error === "not-found") {
-          return Swal.fire("User not found");
+          return Swal.fire("کاربر پیدا نشد");
         } else if (error === "not-valid-number") {
-          return Swal.fire(
-            "Phone number or code is doesn't have a valid syntax"
-          );
+          return Swal.fire("فرمت تلفن همراه یا کد وارد شده، اشتباه است");
         } else if (error === "code-banned-5") {
           return Swal.fire(
-            "You cannot accept new code. Try again 5 minutes later"
+            "شما اجازه وارد کردن کد را برای 5 دقیقه آینده ندارید"
           );
         } else if (error === "code-expired") {
-          return Swal.fire("Code expired");
+          return Swal.fire("کد ارسال شده، منقضی شده است");
         } else if (error === "code-incorrect") {
-          return Swal.fire("Code incorrect");
+          return Swal.fire("کد وارد شده اشتباه است");
         } else alert(error);
       }
     } catch (error) {

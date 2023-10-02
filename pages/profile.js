@@ -67,7 +67,7 @@ const Profile = () => {
         } else Swal.fire("خطایی رخ داد");
       } catch (error) {
         console.log(error);
-        Swal.fire(error);
+        Swal.fire("خطایی رخ داد");
       }
     }
     getFullNameFromDB();

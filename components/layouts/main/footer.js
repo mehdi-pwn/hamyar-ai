@@ -20,7 +20,7 @@ const Footer = () => {
               <p>محتوا ساز هوش مصنوعی</p>
             </strong>
 
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-500">
               ابزار های بلاگری و تولید محتوا. بهشتی برای کسب و کار های اینترنتی.
             </p>
           </div>
@@ -29,16 +29,16 @@ const Footer = () => {
           <div className="flex flex-col gap-3 items-start">
             <strong>همیار اِی آی</strong>
             <ul className="flex flex-col gap-3 items-start mt-2">
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/about">درباره</Link>
               </li>
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/terms">شرایط استفاده</Link>
               </li>
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/price">خرید اشتراک</Link>
               </li>
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/signin">ورود به حساب کاربری</Link>
               </li>
             </ul>
@@ -48,17 +48,20 @@ const Footer = () => {
           <div className="flex flex-col gap-3 items-start">
             <strong>صفحات</strong>
             <ul className="flex flex-col gap-3 items-start mt-2">
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/">صفحه اصلی</Link>
               </li>
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/features">ویژگی ها</Link>
               </li>
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/tools">ابزار ها</Link>
               </li>
-              <li className="text-gray-600">
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
                 <Link href="/profile">پروفایل کاربری</Link>
+              </li>
+              <li className="text-gray-600 dark:text-gray-500 underline underline-offset-8">
+                <Link href="/ticket">پشتیبانی</Link>
               </li>
             </ul>
           </div>

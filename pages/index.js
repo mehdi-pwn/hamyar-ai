@@ -24,10 +24,10 @@ import { GoArrowLeft } from "react-icons/go";
 const Index = () => {
   return (
     <div className="pt-16">
-      <div className="h-screen flex flex-col justify-center items-center gap-24 px-28 -m-10">
+      <div className="h-fit flex flex-col justify-center items-center gap-24 px-28 mt-10">
         <motion.div
           whileHover={{ backgroundColor: "#3618d3", color: "white" }}
-          className="bg-primary px-5 py-3 text-center text-primary bg-opacity-30 rounded-full w-fit"
+          className="bg-primary px-5 py-3 text-center text-primary dark:text-white bg-opacity-30 rounded-full w-fit"
         >
           <p>
             &#x1F9E0; یک کلام: هوش مصنوعی، محتوا رو خیلی راحت تر و سریع تر
@@ -37,7 +37,7 @@ const Index = () => {
         <div className="flex flex-col items-center w-full">
           <div className="text-4xl text-center">
             <Typography variant="h1" component="h2" color="initial">
-              <div className="block font-ordibehesht">
+              <div className="block font-ordibehesht dark:text-white">
                 یه راه خیلی سریع و ساده
                 <br />
                 برای نوشتن
@@ -62,7 +62,7 @@ const Index = () => {
             </Typography>
           </div>
           <div className="mt-10 w-10/12">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               توی همیار اِی آی، میتونی با هوش مصنوعی، مقاله های عالی برای وبلاگ،
               شبکه های اجتماعی مثل ایتا و روبیکا و اینستاگرام، تبلیغات، سایت
               فروشگاهی و ... بسازی. یادت نره از بقیه جا نمونی.
@@ -83,7 +83,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-screen flex flex-col justify-center items-center gap-5">
+      <div className="h-fit flex flex-col justify-center items-center gap-5 mt-20">
         <div>
           <Chip
             label="ویدیوی دمو"
@@ -103,7 +103,7 @@ const Index = () => {
           height={180}
         />
       </div>
-      <div className="h-screen px-14 text-center">
+      <div className="h-fit px-14 text-center mt-20">
         <div className="py-5">
           <Typography variant="h3">
             <strong className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 text-transparent bg-clip-text">
@@ -179,7 +179,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-screen grid grid-cols-2 gap-5 px-28 py-5 mt-20">
+      <div className="h-fit grid grid-cols-2 gap-5 px-28 py-5 mt-20">
         <div className="bg-gradient-to-br from-blue-300 to-red-300 h-fit py-20 pl-20 pr-3 rounded-lg shadow-lg">
           <Image
             src={screenShot.src}
@@ -257,7 +257,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-screen py-5 -mt-20 px-20 text-center w-full">
+      <div className="h-fit py-5 -mt-20 px-20 text-center w-full mt-20">
         <div>
           <Typography variant="h2">
             <strong className="text-secondary">پرسش های متداول</strong>
@@ -295,24 +295,9 @@ const Index = () => {
               مدیریت محتوای خود قرار دهید.
             </AccordionDetails>
           </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<FaAngleDown />}
-              aria-label="Expand"
-              aria-controls="q1-content"
-              id="q1-header"
-            >
-              <Typography>آیا همیار اِی آی، API دارد؟</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              هنوز خیر! اما در آینده نزدیک، API همیار اِی آی به سایت اضافه شده و
-              برنامه نویسان و شکرت های حوزه هوش مصنوعی می توانند از آن استفاده
-              کنند.
-            </AccordionDetails>
-          </Accordion>
         </div>
       </div>
-      <div className="h-screen py-5 -mt-72 px-32 text-center w-full">
+      <div className="h-fit py-5 -mt-72 px-32 text-center w-full mt-20">
         <div className="rounded-2xl shadow-2xl bg-gradient-to-br bg-grad from-cyan-700 to-purple-700 py-10">
           <div className="flex flex-col gap-4 items-center">
             <div>

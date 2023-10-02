@@ -17,12 +17,14 @@ export const Page = ({ children }) => {
 export const Title = ({ children }) => {
   return (
     <Typography variant="h3">
-      <strong>{children}</strong>
+      <strong className="text-black dark:text-white">{children}</strong>
     </Typography>
   );
 };
 export const Description = ({ children }) => {
-  return <p className="mt-4 text-sm text-gray-300">{children}</p>;
+  return (
+    <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">{children}</p>
+  );
 };
 export const Form = ({ children }) => {
   return <div className="mt-6 text-white">{children}</div>;

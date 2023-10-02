@@ -38,7 +38,7 @@ export default function Register() {
       !phoneNumber.startsWith("09")
     ) {
       setProcessing(true);
-      return Swal.fire("Enter valid number");
+      return Swal.fire("لطفا یک شماره تلفن صحیح وارد نمایید");
     }
 
     try {
