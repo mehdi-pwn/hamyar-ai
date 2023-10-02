@@ -167,6 +167,11 @@ const Sidebar = () => {
           {sub_routes.map((item, index) => {
             return <SubMenu key={index} data={item} />;
           })}
+          <NavItem
+            path={"/ticket"}
+            icon={<FaShopware />}
+            title={"ارسال تیکت"}
+          />
         </ul>
       </div>
     </motion.div>

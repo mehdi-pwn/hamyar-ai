@@ -16,9 +16,9 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div className={themeMode == "dark" ? "dark" : "light"}>
-      <div className="flex relative min-h-screen dark:bg-main bg-light">
+      <div className="flex relative min-h-screen dark:bg-dark bg-light">
         {sidebarActive ? (
-          <div className="w-72 h-screen dark:bg-main fixed border-l border-gray-800 z-[9999]">
+          <div className="w-72 h-screen dark:bg-dark fixed border-l border-gray-800 z-[9999]">
             <Sidebar />
           </div>
         ) : (

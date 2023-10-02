@@ -31,7 +31,13 @@ const Price = () => {
             icon: "info",
             title: "شما در حال حاضر یک پلن فعال دارید",
             text: "برای خرید مجدد پلن، بایستی زمان پلن قبلی شما به اتمام رسیده باشد. در صورتی که میخواهید حتما در همین زمان، یک پلن دیگر را خریداری نمایید، لطفا به ادمین تیکت بزنید",
-            confirmButtonText: "بستن",
+            confirmButtonText: "ارسال تیکت",
+            showCancelButton: true,
+            cancelButtonText: "بستن",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              router.push("/ticket");
+            }
           });
         } else {
           const payRequest = await fetch("/api/request-payment", {

@@ -122,7 +122,8 @@ const Header = () => {
                   );
                   const logout = await logoutUser();
                   if (logout) {
-                    router.push("/");
+                    if (router.pathname === "/") window.location.reload();
+                    else router.push("/");
                   } else return Swal.fire("خطا در خروج از حساب کاربری");
                 }}
               >
