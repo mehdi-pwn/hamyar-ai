@@ -27,15 +27,12 @@ const Index = () => {
   return (
     <div className="pt-16">
       <div className="h-fit flex flex-col justify-center items-center gap-24 px-3 lg:px-20 mt-10">
-        <motion.div
-          whileHover={{ backgroundColor: "#3618d3", color: "white" }}
-          className="bg-primary px-5 py-3 text-center text-primary dark:text-white bg-opacity-30 rounded-full w-fit"
-        >
+        <div className="bg-primary hover:bg-blue-900 transition px-5 py-3 text-center text-primary hover:text-white dark:text-white bg-opacity-30 rounded-full w-fit">
           <p>
             &#x1F9E0; یک کلام: هوش مصنوعی، محتوا رو خیلی راحت تر و سریع تر
             میسازه!
           </p>
-        </motion.div>
+        </div>
         <div className="flex flex-col items-center w-full">
           <div className="text-4xl text-center">
             <Typography

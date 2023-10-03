@@ -2,9 +2,11 @@ import Header from "./header";
 import Footer from "./footer";
 import { useStateContext } from "@context/ContextProvider";
 import { useEffect } from "react";
+import Navbar from "./navbar";
 
 const DashboardLayout = ({ children }) => {
-  const { themeMode, setThemeMode } = useStateContext();
+  const { themeMode, setThemeMode, setNavbarActive, navbarActive } =
+    useStateContext();
 
   useEffect(() => {
     const localMode = localStorage.getItem("themeMode");
@@ -17,6 +19,7 @@ const DashboardLayout = ({ children }) => {
     <div className={themeMode === "dark" ? "dark" : ""}>
       <div className="flex flex-col min-h-screen dark:bg-dark">
         <Header />
+        {navbarActive && <Navbar />}
         <main className="flex-grow">{children}</main>
         <Footer />
       </div>

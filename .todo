@@ -28,6 +28,8 @@
 #add captcha to forms
 #check present tickets before send new one
 
+#send-code: check if code sent more than 2 minutes
+
 
 sms:
 codes

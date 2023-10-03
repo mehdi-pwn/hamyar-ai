@@ -4,6 +4,7 @@ const StateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [sidebarActive, setSidebarActive] = useState(true);
+  const [navbarActive, setNavbarActive] = useState(false);
   const [screenSize, setScreenSize] = useState(undefined);
   const [profileBarActive, setProfileBarActive] = useState(false);
   const [themeMode, setThemeMode] = useState("dark");
@@ -16,10 +17,17 @@ export const ContextProvider = ({ children }) => {
         setProfileBarActive(false);
       }
     };
+    const handleResize = () => setScreenSize(window.innerWidth);
 
+    window.addEventListener("resize", handleResize);
     window.addEventListener("mousedown", closeProfileBar);
 
-    return () => window.removeEventListener("mousedown", closeProfileBar);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("mousedown", closeProfileBar);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const setMode = (mode) => {
@@ -32,6 +40,8 @@ export const ContextProvider = ({ children }) => {
       value={{
         sidebarActive,
         setSidebarActive,
+        navbarActive,
+        setNavbarActive,
         screenSize,
         setScreenSize,
         themeMode,

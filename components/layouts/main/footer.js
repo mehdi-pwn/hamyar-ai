@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="w-full py-20 px-20 text-center border-t border-slate-300">
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <div className="flex flex-col gap-3 items-start">
             <div className="flex items-center gap-2">
               <FaShopware />
@@ -20,12 +20,12 @@ const Footer = () => {
               <p>محتوا ساز هوش مصنوعی</p>
             </strong>
 
-            <p className="text-gray-600 dark:text-gray-500">
+            <p className="text-gray-600 text-start dark:text-gray-500">
               ابزار های بلاگری و تولید محتوا. بهشتی برای کسب و کار های اینترنتی.
             </p>
           </div>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <div className="flex flex-col gap-3 items-start">
             <strong>همیار اِی آی</strong>
             <ul className="flex flex-col gap-3 items-start mt-2">
@@ -44,7 +44,7 @@ const Footer = () => {
             </ul>
           </div>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <div className="flex flex-col gap-3 items-start">
             <strong>صفحات</strong>
             <ul className="flex flex-col gap-3 items-start mt-2">

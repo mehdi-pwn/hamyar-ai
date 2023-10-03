@@ -11,7 +11,9 @@ import { verifyToken } from "@utils/verifyToken";
 import { useEffect, useState } from "react";
 
 export const Page = ({ children }) => {
-  return <div className="text-white text-center py-8 px-20">{children}</div>;
+  return (
+    <div className="text-white text-center py-8 p-5 lg:px-20">{children}</div>
+  );
 };
 
 export const Title = ({ children }) => {

@@ -3,7 +3,7 @@ import { useStateContext } from "@context/ContextProvider";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { subRoutes } from "./routes";
+import tools from "../../../assets/tools";
 import { FaBorderAll } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { IoIosArrowDown } from "react-icons/io";
@@ -99,17 +99,7 @@ const SubMenu = ({ data }) => {
 };
 
 const Sidebar = () => {
-  const { sidebarActive, setSidebarActive, screenSize, setScreenSize } =
-    useStateContext();
-  useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
-
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const { sidebarActive, setSidebarActive, screenSize } = useStateContext();
 
   useEffect(() => {
     if (screenSize <= 900) {
@@ -160,7 +150,7 @@ const Sidebar = () => {
           onClick={() =>
             setSidebarActive((prevSidebarActive) => !prevSidebarActive)
           }
-          className="text-xl rounded-full mt-1 ml-4 hover:bg-gray-700 md:hidden"
+          className="text-xl rounded-full mt-1 ml-4 hover:bg-gray-700 md:hidden text-black dark:text-white"
         >
           <MdOutlineCancel />
         </button>
@@ -177,7 +167,7 @@ const Sidebar = () => {
               ابزار ها
             </small>
           </div>
-          {subRoutes.map((item, index) => {
+          {tools.map((item, index) => {
             return <SubMenu key={index} data={item} />;
           })}
           <NavItem path={"/ticket"} icon={<GoReport />} title={"ارسال تیکت"} />
