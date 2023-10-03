@@ -8,9 +8,11 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { Button } from "@components/main-design";
 import { GoArrowLeft } from "react-icons/go";
 import { verifyToken } from "@utils/verifyToken";
+import { useStateContext } from "@context/ContextProvider";
 
 const Price = () => {
   const router = useRouter();
+  const { screenSize } = useStateContext();
 
   const handleBuy = async () => {
     try {
@@ -88,7 +90,7 @@ const Price = () => {
   };
   return (
     <div className="pt-16">
-      <div className="flex flex-col items-center gap-4 px-28 pt-16">
+      <div className="flex flex-col items-center gap-4 px-5 lg:px-28 pt-16">
         <h1 className="font-extrabold text-3xl"></h1>
         <Typography variant="h3">
           <span>
@@ -104,7 +106,7 @@ const Price = () => {
           خیال راحت خرید کنین!
         </p>
       </div>
-      <div className="flex gap-5 p-10 mt-10">
+      <div className="flex flex-col lg:flex-row gap-5 px-7 lg:px-10 mt-10">
         <div className="flex-grow">
           <div className="h-full bg-gradient-to-br from-blue-600 to-purple-600 border-4 border-amber-500 rounded-2xl flex flex-col items-center gap-3 p-4 text-white">
             <div className="text-center">
@@ -148,9 +150,9 @@ const Price = () => {
             </div>
           </div>
         </div>
-        <div className="flex-grow rounded-xl bg-gradient-to-br from-amber-300 to-green-300 flex flex-col items-center justify-center gap-10 pt-10 pb-8">
+        <div className="flex-grow rounded-xl bg-gradient-to-br from-amber-300 to-green-300 flex flex-col items-center justify-center gap-10 pt-10 pb-8 px-3">
           <div>
-            <Typography variant="h5">
+            <Typography variant={screenSize > 900 ? "h5" : "h6"}>
               <strong className="bg-gradient-to-l from-yellow-600 via-green-500 to-blue-600 text-white p-3 rounded-full">
                 همیار اِی آی: هوشِتو مصنوعی کن!
               </strong>

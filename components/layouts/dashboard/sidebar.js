@@ -2,10 +2,12 @@ import { motion } from "framer-motion";
 import { useStateContext } from "@context/ContextProvider";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FaShopware } from "react-icons/fa";
-import { MdOutlineCancel } from "react-icons/md";
-import { IoIosArrowDown } from "react-icons/io";
 import { useRouter } from "next/router";
+import { subRoutes } from "./routes";
+import { FaBorderAll } from "react-icons/fa";
+import { GoReport } from "react-icons/go";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdOutlineCancel } from "react-icons/md";
 
 const itemClass =
   "flex items-center gap-2 text-white rounded-md cursor-pointer font-medium hover:bg-slate-400 dark:hover:bg-slate-800 bg-opacity-8 px-3 py-2 mt-2";
@@ -151,7 +153,7 @@ const Sidebar = () => {
           onClick={handleCloseSideBar}
           className="flex flex-row text-2xl items-center font-extrabold text-black dark:text-white gap-3 mx-auto"
         >
-          <FaShopware /> <span>میهن اِی آی</span>
+          <FaBorderAll /> <span>میهن اِی آی</span>
         </Link>
         <button
           type="button"
@@ -167,7 +169,7 @@ const Sidebar = () => {
         <ul className="px-4 py-3">
           <NavItem
             path={"/tools"}
-            icon={<FaShopware />}
+            icon={<FaBorderAll />}
             title={"همه ابزار ها"}
           />
           <div className="mt-4 mr-3 -mb-1">
@@ -175,113 +177,14 @@ const Sidebar = () => {
               ابزار ها
             </small>
           </div>
-          {sub_routes.map((item, index) => {
+          {subRoutes.map((item, index) => {
             return <SubMenu key={index} data={item} />;
           })}
-          <NavItem
-            path={"/ticket"}
-            icon={<FaShopware />}
-            title={"ارسال تیکت"}
-          />
+          <NavItem path={"/ticket"} icon={<GoReport />} title={"ارسال تیکت"} />
         </ul>
       </div>
     </motion.div>
   );
 };
-const sub_routes = [
-  {
-    title: "ابزار های مقاله نویسی",
-    icon: <FaShopware />,
-    menus: [
-      {
-        title: "مقاله نویس",
-        icon: <FaShopware />,
-        path: "/tool/article-content",
-      },
-      {
-        title: "ایده ساز مقاله",
-        icon: <FaShopware />,
-        path: "/tool/article-ideas",
-      },
-      {
-        title: "تقویم محتوایی",
-        icon: <FaShopware />,
-        path: "/tool/content-calendar",
-      },
-      {
-        title: "مقدمه مقاله",
-        icon: <FaShopware />,
-        path: "/tool/article-overview",
-      },
-      {
-        title: "نتیجه گیری مقاله",
-        icon: <FaShopware />,
-        path: "/tool/article-conclusion",
-      },
-      {
-        title: "بازنویسی محتوا",
-        icon: <FaShopware />,
-        path: "/tool/content-rewrite",
-      },
-    ],
-  },
-  {
-    title: "ابزار های اینستاگرام",
-    icon: <FaShopware />,
-    menus: [
-      {
-        title: "عنوان پست",
-        icon: <FaShopware />,
-        path: "/tool/instagram-title",
-      },
-      {
-        title: "کپشن پست",
-        icon: <FaShopware />,
-        path: "/tool/instagram-caption",
-      },
-    ],
-  },
-  {
-    title: "ابزار های ویدیو",
-    icon: <FaShopware />,
-    menus: [
-      {
-        title: "عنوان ویدیو",
-        icon: <FaShopware />,
-        paid: true,
-        path: "/tool/video-title",
-      },
-      {
-        title: "توضیحات ویدیو",
-        icon: <FaShopware />,
-        paid: true,
-        path: "/tool/video-description",
-      },
-      {
-        title: "فیلمنامه ویدیو",
-        icon: <FaShopware />,
-        paid: true,
-        path: "/tool/video-script",
-      },
-    ],
-  },
-  {
-    title: "برندسازی وبسایت",
-    icon: <FaShopware />,
-    menus: [
-      {
-        title: "عنوان وبسایت",
-        icon: <FaShopware />,
-        paid: true,
-        path: "/tool/website-title",
-      },
-      {
-        title: "دامنه وبسایت",
-        icon: <FaShopware />,
-        paid: true,
-        path: "/tool/website-domain",
-      },
-    ],
-  },
-];
+
 export default Sidebar;

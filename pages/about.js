@@ -14,13 +14,13 @@ const About = () => {
           <strong>ساخته شده برای بلاگر ها</strong>
         </Typography>
       </div>
-      <div className="px-20">
+      <div className="px-5 lg:px-20">
         <div>
           <Typography variant="h4">
             <strong>وظایف همیار اِی آی</strong>
           </Typography>
         </div>
-        <div className="flex justify-around gap-20 mt-5 pb-10">
+        <div className="flex flex-col lg:flex-row justify-around gap-20 mt-5 pb-10">
           <div className="flex flex-col gap-10">
             <div className="text-gray-500">
               <p>

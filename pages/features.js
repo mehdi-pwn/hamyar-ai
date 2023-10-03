@@ -7,17 +7,20 @@ import Typography from "@mui/material/Typography";
 
 import { HiBadgeCheck } from "react-icons/hi";
 import { Button, CTA } from "@components/main-design";
+import { useStateContext } from "@context/ContextProvider";
 
 const ToolCard = () => {
   return;
 };
 
 const Features = () => {
+  const { screenSize } = useStateContext();
+
   return (
     <div className="pt-16">
-      <div className="flex flex-col justify-center items-center gap-2">
-        <Typography variant="h2">
-          <strong className="font-ordibehesht px-28 py-5 bg-gradient-to-l from-amber-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text">
+      <div className="flex flex-col justify-center items-center gap-2 px-4 lg:px-20">
+        <Typography variant="h2" component="h2">
+          <strong className="font-ordibehesht flex justify-center items-center bg-gradient-to-l from-amber-400 via-cyan-400 to-purple-400 text-transparent bg-clip-text">
             همیار اِی آی: ابزار تولید محتوای هوش مصنوعی
           </strong>
         </Typography>
@@ -26,12 +29,12 @@ const Features = () => {
           مجازی و خیلی دیگه از آدمو رو برطرف میکنه!
         </p>
       </div>
-      <div className="h-fit grid grid-cols-2 gap-5 px-28 py-5 mt-20">
-        <div className="bg-gradient-to-br from-blue-300 to-red-300 py-20 pl-20 rounded-lg shadow-lg">
+      <div className="h-fit flex flex-col lg:flex-row gap-5 px-4 lg:px-20 py-5 mt-20">
+        <div className="bg-gradient-to-br from-blue-300 to-red-300 p-3 lg:py-20 lg:pl-20 rounded-lg shadow-lg">
           <Image
             src={screenShot.src}
             alt="Mihan AI app dashboard screen shot"
-            className="rounded-e-2xl shadow-2xl -mt-14"
+            className="rounded-2xl lg:rounded-e-2xl shadow-2xl -mt-14"
             width={2000}
             height={180}
           />
@@ -102,7 +105,7 @@ const Features = () => {
           </div>
         </div>
       </div>
-      <div className="h-fit grid grid-cols-2 gap-5 px-28 py-5 my-20">
+      <div className="h-fit flex flex-col lg:flex-row gap-5 px-4 lg:px-20 py-5 my-20">
         <div className="flex flex-col">
           <div>
             <Typography variant="h6">
@@ -129,19 +132,17 @@ const Features = () => {
             </Button>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-purple-300 via-green-300 to-amber-300 pr-16 pt-20 pb-8 rounded-lg shadow-lg">
+        <div className="bg-gradient-to-br from-purple-300 via-green-300 to-amber-300 lg:pr-16 lg:pt-20 p-3 lg:pb-8 rounded-lg shadow-lg">
           <Image
             src={screenShot.src}
             alt="Mihan AI app dashboard screen shot"
-            className="rounded-s-2xl shadow-2xl"
+            className="rounded-2xl lg:rounded-s-2xl shadow-2xl mt-8"
             width={2000}
             height={180}
           />
         </div>
       </div>
-      <div className="h-fit px-28 py-5 my-20">
-        <CTA />
-      </div>
+      <CTA />
       {/* todo:print 6 tool cards here as grid */}
     </div>
   );

@@ -2,7 +2,7 @@ import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
 import Link from "next/link";
 import screenShot from "@image/app-screenshot.webp";
-import { Button as Btn, IndexToolCard } from "@components/main-design";
+import { Button as Btn, CTA, IndexToolCard } from "@components/main-design";
 import Chip from "@mui/material/Chip";
 import { motion } from "framer-motion";
 import Typical from "react-typical";
@@ -20,11 +20,13 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { FaAngleDown } from "react-icons/fa";
 import { GoArrowLeft } from "react-icons/go";
+import { useStateContext } from "@context/ContextProvider";
 
 const Index = () => {
+  const { screenSize } = useStateContext();
   return (
     <div className="pt-16">
-      <div className="h-fit flex flex-col justify-center items-center gap-24 px-28 mt-10">
+      <div className="h-fit flex flex-col justify-center items-center gap-24 px-3 lg:px-20 mt-10">
         <motion.div
           whileHover={{ backgroundColor: "#3618d3", color: "white" }}
           className="bg-primary px-5 py-3 text-center text-primary dark:text-white bg-opacity-30 rounded-full w-fit"
@@ -36,7 +38,11 @@ const Index = () => {
         </motion.div>
         <div className="flex flex-col items-center w-full">
           <div className="text-4xl text-center">
-            <Typography variant="h1" component="h2" color="initial">
+            <Typography
+              variant={screenSize > 900 ? "h1" : "h3"}
+              component="h2"
+              color="initial"
+            >
               <div className="block font-ordibehesht dark:text-white">
                 یه راه خیلی سریع و ساده
                 <br />
@@ -61,7 +67,7 @@ const Index = () => {
               </div>
             </Typography>
           </div>
-          <div className="mt-10 w-10/12">
+          <div className="mt-10 w-11/12 lg:w-10/12">
             <p className="text-gray-600 dark:text-gray-400">
               توی همیار اِی آی، میتونی با هوش مصنوعی، مقاله های عالی برای وبلاگ،
               شبکه های اجتماعی مثل ایتا و روبیکا و اینستاگرام، تبلیغات، سایت
@@ -83,17 +89,17 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-fit flex flex-col justify-center items-center gap-5 mt-20">
+      <div className="h-fit flex flex-col justify-center items-center gap-5 px-5 mt-20">
         <div>
           <Chip
-            label="ویدیوی دمو"
+            label="دموی وبسایت"
             color="success"
             size="small"
             variant="outlined"
           />
         </div>
         <h2 className="font-extrabold text-3xl">
-          قابلیت های همیار اِی آی رو توی این فیلم ببین
+          قابلیت های همیار اِی آی رو توی این گیف ببین
         </h2>
         <Image
           src={screenShot.src}
@@ -111,7 +117,7 @@ const Index = () => {
             </strong>
           </Typography>
         </div>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
           <IndexToolCard
             icon={<BsInstagram />}
             title={"فضای مجازی"}
@@ -150,8 +156,8 @@ const Index = () => {
             link2={"متن ساز سایت"}
             href2={"/tool/article-content"}
           />
-          <div className="col-span-2">
-            <div className="w-full h-72 rounded-2xl bg-gradient-to-br from-blue-800 to-purple-950 py-5 px-10 text-center flex items-center justify-between shadow-2xl">
+          <div className="lg:col-span-2">
+            <div className="w-full min-h-fit lg:h-72 rounded-2xl bg-gradient-to-br from-blue-800 to-purple-950 py-5 px-10 text-center flex flex-col gap-8 lg:flex-row items-center justify-between shadow-2xl">
               <div className="text-white text-start">
                 <Typography variant="h4">وقت تلف نکن،</Typography>
                 <Typography variant="h4">هوشِتو مصنوعی کن!</Typography>
@@ -168,9 +174,13 @@ const Index = () => {
                   </p>
                 </div>
               </div>
-              <div>
+              <div className="w-full lg:w-fit">
                 <Link href={"/signin"}>
-                  <Btn colors={"bg-white text-primary border-purple-500"}>
+                  <Btn
+                    colors={
+                      "bg-white text-primary border-purple-500 w-full lg:w-fit"
+                    }
+                  >
                     امتحان رایگان
                   </Btn>
                 </Link>
@@ -179,12 +189,12 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-fit grid grid-cols-2 gap-5 px-28 py-5 mt-20">
-        <div className="bg-gradient-to-br from-blue-300 to-red-300 h-fit py-20 pl-20 pr-3 rounded-lg shadow-lg">
+      <div className="h-fit flex flex-col lg:flex-row gap-5 px-5 lg:px-20 py-5 mt-20">
+        <div className="bg-gradient-to-br from-blue-300 to-red-300 h-fit p-5 lg:py-20 lg:pl-20 lg:pr-3 rounded-lg shadow-lg">
           <Image
             src={screenShot.src}
             alt="Mihan AI app dashboard screen shot"
-            className="rounded-2xl shadow-2xl -mr-20"
+            className="rounded-2xl shadow-2xl lg:-mr-20"
             width={1700}
             height={180}
           />
@@ -257,13 +267,13 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="h-fit py-5 -mt-20 px-20 text-center w-full mt-20">
+      <div className="h-fit py-5 p-5 lg:px-20 text-center w-full mt-20">
         <div>
-          <Typography variant="h2">
+          <Typography variant={screenSize > 900 ? "h2" : "h3"} component="h2">
             <strong className="text-secondary">پرسش های متداول</strong>
           </Typography>
         </div>
-        <div className="mt-5 w-2/3 mx-auto">
+        <div className="mt-5 w-full lg:w-2/3 mx-auto">
           <Accordion>
             <AccordionSummary
               expandIcon={<FaAngleDown />}
@@ -297,46 +307,7 @@ const Index = () => {
           </Accordion>
         </div>
       </div>
-      <div className="h-fit py-5 -mt-72 px-32 text-center w-full mt-20">
-        <div className="rounded-2xl shadow-2xl bg-gradient-to-br bg-grad from-cyan-700 to-purple-700 py-10">
-          <div className="flex flex-col gap-4 items-center">
-            <div>
-              <Typography variant="h3">
-                <strong className="font-ordibehesht text-white">
-                  هوشِتو مصنوعی کن
-                </strong>
-              </Typography>
-            </div>
-            <div>
-              <p className="text-gray-300">
-                قله های تولید محتوا رو با هوش مصنوعی، فتح کن. امتحانش می ارزه!
-              </p>
-            </div>
-            <div>
-              <Btn colors="bg-amber-500 border-transparent mt-5 flex gap-3 items-center">
-                امتحان رایگان
-                <GoArrowLeft />
-              </Btn>
-            </div>
-            <div className="flex justify-around gap-20 text-slate-200 mt-8">
-              <span className="flex gap-2 items-center">
-                <BsFillCheckCircleFill color="#00ff00" />
-                <span>پرامپت قوی</span>
-              </span>
-              <span className="flex gap-2 items-center">
-                {" "}
-                <BsFillCheckCircleFill color="#00ff00" />
-                <span>10+ ابزار هوش مصنوعی</span>
-              </span>
-              <span className="flex gap-2 items-center">
-                {" "}
-                <BsFillCheckCircleFill color="#00ff00" />
-                <span>دسترسی آنی</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CTA />
     </div>
   );
 };

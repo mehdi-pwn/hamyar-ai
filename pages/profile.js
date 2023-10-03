@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
 const NoPlan = () => (
-  <div className="bg-slate-200 flex flex-col gap-3 items-center py-2 rounded-xl shadow-lg">
+  <div className="bg-slate-200 flex flex-col gap-3 items-center p-2 rounded-xl shadow-lg">
     <span>شما هیچ پلن فعالی ندارید</span>
     <Link href={"/price"}>
       <Button colors={"bg-amber-500 border-none"}>خرید اشتراک</Button>
@@ -20,7 +20,7 @@ const NoPlan = () => (
   </div>
 );
 const FreePlan = () => (
-  <div className="bg-gradient-to-bl from-slate-200 to-gray-200 w-full flex flex-col gap-3 items-center py-2 rounded-xl shadow-lg">
+  <div className="bg-gradient-to-bl from-slate-200 to-gray-200 w-full flex flex-col gap-3 items-center p-2 rounded-xl shadow-lg">
     <span>
       پلن رایگان شما فعال است و می توانید از یکی از ابزار ها، برای یکبار استفاده
       کنید
@@ -31,7 +31,7 @@ const FreePlan = () => (
   </div>
 );
 const PaidPlan = () => (
-  <div className="bg-gradient-to-bl from-blue-500 to-purple-500 flex flex-col w-full items-center justify-center py-10 rounded-xl shadow-lg">
+  <div className="bg-gradient-to-bl from-blue-500 to-purple-500 flex flex-col w-full items-center justify-center p-10 rounded-xl shadow-lg">
     <span className="text-white">پلن الماس برای شما فعال است</span>
   </div>
 );
@@ -105,7 +105,7 @@ const Profile = () => {
   };
   return (
     <div className="pt-16">
-      <div className="flex gap-5 p-10">
+      <div className="flex flex-col lg:flex-row gap-20 lg:gap-5 p-10">
         <div className="flex-grow bg-slate-200 rounded-xl p-5 shadow-lg flex flex-col justify-center items-center gap-4">
           <Typography variant="h4">
             <strong>مشخصات کاربری</strong>

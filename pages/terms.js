@@ -3,11 +3,11 @@ import Typography from "@mui/material/Typography";
 const Terms = () => {
   return (
     <div className="pt-16">
-      <div className="px-20 py-16">
+      <div className="p-5 lg:px-20 py-16">
         <Typography variant="h5">
           <strong>شرایط استفاده از خدمات</strong>
         </Typography>
-        <p className="dark:text-gray-400">
+        <p className="dark:text-gray-400 text-justify">
           <br /> آخرین به روز رسانی: مهر 1402 <br />
           <br /> به وب سایت و ابزار آنلاین هوش مصنوعی همیار اِی آی ما خوش آمدید!
           قبل از استفاده از خدمات ما، لطفاً برای مطالعه و درک شرایط و ضوابط زیر

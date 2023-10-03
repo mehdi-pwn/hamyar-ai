@@ -23,6 +23,9 @@ module.exports = {
       fontFamily: {
         ordibehesht: "Ordibehesht",
       },
+      screens: {
+        lg: "900px",
+      },
     },
   },
   plugins: [],
