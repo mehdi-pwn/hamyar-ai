@@ -25,7 +25,7 @@ const Footer = () => {
             </p>
           </div>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={12} md={3}>
           <div className="flex flex-col gap-3 items-start">
             <strong>همیار اِی آی</strong>
             <ul className="flex flex-col gap-3 items-start mt-2">
@@ -44,7 +44,7 @@ const Footer = () => {
             </ul>
           </div>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={12} md={3}>
           <div className="flex flex-col gap-3 items-start">
             <strong>صفحات</strong>
             <ul className="flex flex-col gap-3 items-start mt-2">

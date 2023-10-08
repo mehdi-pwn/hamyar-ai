@@ -3,6 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useStateContext } from "@context/ContextProvider";
 import Link from "next/link";
 import {
+  ProfileButton,
   DarkModeToggle,
   ProfileNotification,
   SigninButton,
@@ -10,6 +11,8 @@ import {
 import { useEffect, useState } from "react";
 import { verifyToken } from "@utils/verifyToken";
 import { GrClose } from "react-icons/gr";
+import logo from "@image/logo.svg";
+import Image from "next/image";
 
 const HeaderLink = ({ href, title }) => {
   return (
@@ -46,7 +49,8 @@ const Header = () => {
             href="/"
             className="flex flex-row text-2xl items-center font-extrabold text-black gap-3 mx-auto dark:text-white"
           >
-            <FaShopware /> <span>همیار اِی آی</span>
+            <Image src={logo} alt="Hamyar AI Logo" width={40} height={40} />
+            <span>همیار اِی آی</span>
           </Link>
         </div>
         {screenSize > 820 && (

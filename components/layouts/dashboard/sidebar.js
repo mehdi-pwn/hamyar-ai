@@ -8,6 +8,8 @@ import { FaBorderAll } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineCancel } from "react-icons/md";
+import logo from "@image/logo.svg";
+import Image from "next/image";
 
 const itemClass =
   "flex items-center gap-2 text-white rounded-md cursor-pointer font-medium hover:bg-slate-400 dark:hover:bg-slate-800 bg-opacity-8 px-3 py-2 mt-2";
@@ -102,6 +104,7 @@ const Sidebar = () => {
   const { sidebarActive, setSidebarActive, screenSize } = useStateContext();
 
   useEffect(() => {
+    console.log(logo);
     if (screenSize <= 900) {
       setSidebarActive(false);
     } else {
@@ -143,7 +146,8 @@ const Sidebar = () => {
           onClick={handleCloseSideBar}
           className="flex flex-row text-2xl items-center font-extrabold text-black dark:text-white gap-3 mx-auto"
         >
-          <FaBorderAll /> <span>میهن اِی آی</span>
+          <Image src={logo} alt="Hamyar AI Logo" width={40} height={40} />
+          <span>میهن اِی آی</span>
         </Link>
         <button
           type="button"
