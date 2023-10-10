@@ -94,7 +94,7 @@ const Verified = ({ ref_id = 0 }) => {
   );
 };
 
-const Verify = async () => {
+const Verify = () => {
   const router = useRouter();
   useEffect(() => {
     async function checkVerified() {
