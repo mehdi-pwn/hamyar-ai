@@ -102,46 +102,50 @@ const Verify = () => {
       if (!verify) router.push("/");
     }
     checkVerified();
-  }, []);
-  //const { Authority, Status } = router.query;
-  const Authority = 56;
-  const Status = "NOK";
 
-  if (!Authority || !Status) {
-    return (
-      <p>
-        Access to this page without required data is not allowed. Go to{" "}
-        <Link href={"/price"}>price</Link> page to buy plan.
-      </p>
-    );
-  }
-  if (Status === "NOK") {
-    return <NotVerified />;
-  } else if (Status === "OK") {
-    try {
-      const verify = await verifyToken();
-      const userId = verify.user.id;
-      const verifyPayment = await fetch("/api/verify-payment", {
-        method: "POST",
-        body: JSON.stringify({ userId, auth: Authority }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const verified = await verifyPayment.json();
+    async function verifyPayment() {
+      //const { Authority, Status } = router.query;
+      const Authority = 56;
+      const Status = "NOK";
 
-      if (verified.status === "payment-error") {
-        return <NotVerified errorMessage={verified.message} />;
+      if (!Authority || !Status) {
+        return (
+          <p>
+            Access to this page without required data is not allowed. Go to{" "}
+            <Link href={"/price"}>price</Link> page to buy plan.
+          </p>
+        );
       }
+      if (Status === "NOK") {
+        return <NotVerified />;
+      } else if (Status === "OK") {
+        try {
+          const verify = await verifyToken();
+          const userId = verify.user.id;
+          const verifyPayment = await fetch("/api/verify-payment", {
+            method: "POST",
+            body: JSON.stringify({ userId, auth: Authority }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const verified = await verifyPayment.json();
 
-      return <Verified ref_id={verified.data.ref_id} />;
-    } catch (error) {
-      console.log("Error: " + error);
-      return Swal.fire(
-        "خطا در تایید تراکنش. در صورت کم شدن وجه، به طور خودکار پس از 48 ساعت به حسابتان باز خواهد گشت"
-      );
+          if (verified.status === "payment-error") {
+            return <NotVerified errorMessage={verified.message} />;
+          }
+
+          return <Verified ref_id={verified.data.ref_id} />;
+        } catch (error) {
+          console.log("Error: " + error);
+          return Swal.fire(
+            "خطا در تایید تراکنش. در صورت کم شدن وجه، به طور خودکار پس از 48 ساعت به حسابتان باز خواهد گشت"
+          );
+        }
+      }
     }
-  }
+    verifyPayment();
+  }, []);
 };
 Verify.Layout = MainLayout;
 export default Verify;
