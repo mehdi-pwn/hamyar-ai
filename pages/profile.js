@@ -1,11 +1,9 @@
 import { Button } from "@components/main-design";
 import MainLayout from "@layout/main/mainLayout";
-
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { verifyToken } from "@utils/verifyToken";
-
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Swal from "sweetalert2";

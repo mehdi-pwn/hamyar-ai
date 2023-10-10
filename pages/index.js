@@ -5,7 +5,6 @@ import screenShot from "@image/app-screenshot.webp";
 import { Button as Btn, CTA, IndexToolCard } from "@components/main-design";
 import Chip from "@mui/material/Chip";
 import { motion } from "framer-motion";
-
 import Typography from "@mui/material/Typography";
 import {
   BsFileEarmarkPost,

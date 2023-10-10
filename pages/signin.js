@@ -6,11 +6,10 @@ import {
   FormHeader,
   Form,
   NumericInput,
-  PasswordInput,
   SubmitForm,
 } from "@components/signin-design";
 import Logins from "@layout/logins";
-import Link from "next/link";
+import Cookies from "js-cookie";
 import { verifyToken } from "@utils/verifyToken";
 import { useEffect } from "react";
 
@@ -53,7 +52,7 @@ export default function Register() {
 
       if (responseData.status == "success") {
         console.log(responseData.code);
-        localStorage.setItem("phone", phoneNumber);
+        Cookies.set("phone", `${phoneNumber}`);
         router.push("/confirm");
       } else {
         setProcessing(false);

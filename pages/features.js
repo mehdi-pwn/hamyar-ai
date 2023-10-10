@@ -2,9 +2,7 @@ import MainLayout from "@layout/main/mainLayout";
 import Image from "next/image";
 import Link from "next/link";
 import screenShot from "@image/app-screenshot.webp";
-
 import Typography from "@mui/material/Typography";
-
 import { HiBadgeCheck } from "react-icons/hi";
 import { Button, CTA } from "@components/main-design";
 import { useStateContext } from "@context/ContextProvider";

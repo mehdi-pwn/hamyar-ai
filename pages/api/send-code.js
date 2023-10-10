@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         } catch (error) {}
 
         if (!num || isNaN(num))
-          return res.status(500).json({
+          return res.status(200).json({
             status: "fail",
             error: "no-phone",
           });
@@ -64,6 +64,7 @@ export default async function handler(req, res) {
         } else {
           const randomNumber = generateCode();
           const codeDateTime = new Date().toISOString().slice(0, 19);
+
           const code = await query(
             `
         UPDATE users SET code = ?, code_datetime = ? WHERE phone = ?
@@ -79,6 +80,7 @@ export default async function handler(req, res) {
         return res.status(500).json({
           status: "fail",
           error: "catch",
+          msg: error,
         });
       }
       break;
@@ -189,6 +191,7 @@ export default async function handler(req, res) {
           return res.status(200).json({
             status: "fail",
             error: "not-found",
+            num,
           });
 
         const code = req.body.code;

@@ -1,7 +1,5 @@
 const { Page, Title, Form, ContentInput } = require("@components/tool-design");
-
 import Grid from "@mui/material/Grid";
-
 import { useRouter } from "next/router";
 import FormControl from "@mui/material/FormControl";
 import { Button } from "@components/main-design";

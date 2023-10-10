@@ -1,4 +1,4 @@
-//import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import NextCors from "nextjs-cors";
 
 export default async function handler(req, res) {

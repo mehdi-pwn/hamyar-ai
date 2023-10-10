@@ -10,12 +10,12 @@ import {
 } from "@components/signin-design";
 import Logins from "@layout/logins";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import { verifyToken } from "@utils/verifyToken";
 import { useEffect } from "react";
 
 export default function Confirm() {
   const router = useRouter();
-  let phoneNumber = null;
   const [code, setCode] = useState("");
   const [processing, setProcessing] = useState(false);
 
@@ -25,24 +25,26 @@ export default function Confirm() {
       if (verify) router.push("/");
     }
     checkVerified();
-
-    phoneNumber = localStorage.getItem("phone");
-
-    if (
-      isNaN(phoneNumber) ||
-      !phoneNumber ||
-      phoneNumber.length != 11 ||
-      !phoneNumber.startsWith("09")
-    ) {
-      localStorage.setItem("phone", null);
-      return router.push("/signin");
-    }
   }, []);
 
   const handleSubmit = async (e) => {
+    if (!window) reutrn;
     setProcessing(true);
-
     e.preventDefault();
+
+    const phoneNumber = Cookies.get("phone");
+    if (
+      isNaN(parseInt(phoneNumber)) ||
+      !phoneNumber ||
+      phoneNumber.length != 11
+    ) {
+      console.log(isNaN(phoneNumber));
+      console.log(!phoneNumber);
+      console.log(phoneNumber.length);
+      console.log(phoneNumber);
+      //router.push("/signin");
+    }
+
     if (
       isNaN(code) ||
       !code ||
@@ -73,7 +75,7 @@ export default function Confirm() {
             "Content-Type": "application/json",
           },
         });
-
+        Cookies.remove("phone");
         router.push("/");
       } else {
         setProcessing(false);
@@ -149,7 +151,7 @@ export default function Confirm() {
           <SubmitForm disabled={processing} title="تایید" />
         </Form>
         <div className="mt-5">
-          <p onClick={resendCode} className="p-1text-black cursor-pointer">
+          <p onClick={resendCode} className="p-1 text-black cursor-pointer">
             ارسال دوباره کد
           </p>
         </div>
