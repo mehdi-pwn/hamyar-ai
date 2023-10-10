@@ -15,6 +15,7 @@ import { useEffect } from "react";
 
 export default function Confirm() {
   const router = useRouter();
+  let phoneNumber = null;
   const [code, setCode] = useState("");
   const [processing, setProcessing] = useState(false);
 
@@ -24,19 +25,19 @@ export default function Confirm() {
       if (verify) router.push("/");
     }
     checkVerified();
+
+    phoneNumber = localStorage.getItem("phone");
+
+    if (
+      isNaN(phoneNumber) ||
+      !phoneNumber ||
+      phoneNumber.length != 11 ||
+      !phoneNumber.startsWith("09")
+    ) {
+      localStorage.setItem("phone", null);
+      return router.push("/signin");
+    }
   }, []);
-
-  const phoneNumber = localStorage.getItem("phone");
-
-  if (
-    isNaN(phoneNumber) ||
-    !phoneNumber ||
-    phoneNumber.length != 11 ||
-    !phoneNumber.startsWith("09")
-  ) {
-    localStorage.setItem("phone", null);
-    return router.push("/signin");
-  }
 
   const handleSubmit = async (e) => {
     setProcessing(true);
@@ -72,10 +73,6 @@ export default function Confirm() {
             "Content-Type": "application/json",
           },
         });
-
-        const isBuying = localStorage.getItem("from:price");
-        if (isBuying) localStorage.setItem("from:price", false);
-        localStorage.setItem("phone", null);
 
         router.push("/");
       } else {

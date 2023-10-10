@@ -30,7 +30,7 @@ const ArticleIdeas = () => {
   };
 
   const data = {
-    tool: getToolName(),
+    tool: useRouter().pathname,
     keyword,
     tone,
     lang,

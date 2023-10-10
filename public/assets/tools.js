@@ -33,12 +33,12 @@ const tools = [
         icon: <IoMdBulb />,
         path: "/tool/article-ideas",
       },
-      {
-        title: "تقویم محتوایی",
-        description: "نوشتن تقویم محتوایی",
-        icon: <BsFillCalendarDateFill />,
-        path: "/tool/content-calendar",
-      },
+      // {
+      //   title: "تقویم محتوایی",
+      //   description: "نوشتن تقویم محتوایی",
+      //   icon: <BsFillCalendarDateFill />,
+      //   path: "/tool/content-calendar",
+      // },
       {
         title: "مقدمه مقاله",
         description: "نوشتن بخش مقدمه مقاله با بررسی متن مقاله",

@@ -31,7 +31,7 @@ const ContentRewrite = () => {
   };
 
   const data = {
-    tool: getToolName(),
+    tool: useRouter().pathname,
     content,
     tone,
     lang,

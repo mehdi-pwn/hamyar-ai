@@ -5,7 +5,7 @@ import screenShot from "@image/app-screenshot.webp";
 import { Button as Btn, CTA, IndexToolCard } from "@components/main-design";
 import Chip from "@mui/material/Chip";
 import { motion } from "framer-motion";
-import Typical from "react-typical";
+
 import Typography from "@mui/material/Typography";
 import {
   BsFileEarmarkPost,
@@ -44,22 +44,8 @@ const Index = () => {
                 یه راه خیلی سریع و ساده
                 <br />
                 برای نوشتن
-                <strong className="relative inline-block mr-3 bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
-                  <Typical
-                    className="font-ordibehesht"
-                    steps={[
-                      "مقاله",
-                      1000,
-                      "پست اینستاگرام",
-                      1000,
-                      "فیلمنامه",
-                      1000,
-                      "داستان",
-                      1000,
-                    ]}
-                    wrapper="h2"
-                    loop={Infinity}
-                  />
+                <strong className="relative inline-block mr-3 font-ordibehesht bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
+                  مقاله
                 </strong>
               </div>
             </Typography>

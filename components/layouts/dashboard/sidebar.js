@@ -3,7 +3,7 @@ import { useStateContext } from "@context/ContextProvider";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import tools from "../../../assets/tools";
+import tools from "../../../public/assets/tools";
 import { FaBorderAll } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { IoIosArrowDown } from "react-icons/io";

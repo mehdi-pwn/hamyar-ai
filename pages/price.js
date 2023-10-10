@@ -42,13 +42,16 @@ const Price = () => {
             }
           });
         } else {
-          const payRequest = await fetch("/api/request-payment", {
-            method: "POST",
-            body: JSON.stringify({ userId }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const payRequest = await fetch(
+            "/api/request-payment",
+            {
+              method: "POST",
+              body: JSON.stringify({ userId }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
           const paymentData = await payRequest.json();
 
           if (paymentData.status === "not-found")
@@ -78,7 +81,6 @@ const Price = () => {
           cancelButtonText: "بستن",
         }).then((result) => {
           if (result.isConfirmed) {
-            localStorage.setItem("from:price", true);
             router.push("/signin");
           }
         });

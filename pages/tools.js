@@ -1,5 +1,5 @@
 import Link from "next/link";
-import tools from "../assets/tools";
+import tools from "../public/assets/tools";
 import Typography from "@mui/material/Typography";
 
 const Tools = () => {

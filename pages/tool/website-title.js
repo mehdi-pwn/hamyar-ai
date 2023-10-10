@@ -30,7 +30,7 @@ const WebsiteTitle = () => {
   };
 
   const data = {
-    tool: getToolName(),
+    tool: useRouter().pathname,
     description,
     tone,
     lang,

@@ -31,7 +31,7 @@ const ArticleOverview = () => {
   };
 
   const data = {
-    tool: getToolName(),
+    tool: useRouter().pathname,
     content,
     tone,
     lang,

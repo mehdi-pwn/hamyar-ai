@@ -30,7 +30,7 @@ const VideoScript = () => {
   };
 
   const data = {
-    tool: getToolName(),
+    tool: useRouter().pathname,
     description,
     tone,
     lang,
