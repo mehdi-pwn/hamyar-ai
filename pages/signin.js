@@ -64,7 +64,7 @@ export default function Register() {
       }
     } catch (error) {
       setProcessing(false);
-      return Swal.fire("خطا در ارسال کد فعالسازی", error);
+      return Swal.fire("خطا در ارسال کد فعالسازی", "ارور 2");
     }
   };
 
