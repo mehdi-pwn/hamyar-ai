@@ -38,11 +38,7 @@ export default function Confirm() {
       !phoneNumber ||
       phoneNumber.length != 11
     ) {
-      console.log(isNaN(phoneNumber));
-      console.log(!phoneNumber);
-      console.log(phoneNumber.length);
-      console.log(phoneNumber);
-      //router.push("/signin");
+      router.push("/signin");
     }
 
     if (
