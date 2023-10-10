@@ -35,7 +35,7 @@ export function NumericInput({ placeholder, labeled = "", value, onChange }) {
         type="number"
         id={id}
         placeholder={placeholder}
-        className="w-full rounded-lg text-base font-semibold placeholder:text-gray-400 shadow-lg py-4 px-3 focus:outline-none focus:shadow-xl dark:text-black"
+        className="w-full rounded-lg text-base font-semibold placeholder:text-gray-400 shadow-lg py-4 px-3 focus:outline-none focus:shadow-xl text-black"
         value={value}
         onChange={onChange}
       />

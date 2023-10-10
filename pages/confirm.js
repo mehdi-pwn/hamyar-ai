@@ -149,15 +149,12 @@ export default function Confirm() {
           <SubmitForm disabled={processing} title="تایید" />
         </Form>
         <div className="mt-5">
-          <p
-            onClick={resendCode}
-            className="p-1 dark:text-black cursor-pointer"
-          >
+          <p onClick={resendCode} className="p-1text-black cursor-pointer">
             ارسال دوباره کد
           </p>
         </div>
         <div className="text-base mt-3">
-          <span className="dark:text-black">شماره تلفنتان اشتباه است؟</span>
+          <span className="text-black">شماره تلفنتان اشتباه است؟</span>
           &nbsp;
           <Link
             className="text-primary underline underline-offset-8"
