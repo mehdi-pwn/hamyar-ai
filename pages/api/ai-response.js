@@ -53,7 +53,7 @@ export default async function handler(req, res) {
         prompt,
       });
     } catch (e) {
-      return error("خطا در پاسخ هوش مصنوعی");
+      return error("خطا در پاسخ هوش مصنوعی" + e);
     }
   };
 
@@ -225,7 +225,7 @@ export default async function handler(req, res) {
       }
 
       default: {
-        error("ابزار هوش مصنوعی پیدا نشد");
+        error("ابزار هوش مصنوعی پیدا نشد " + req.body.tool);
       }
     }
   } else {

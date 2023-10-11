@@ -30,7 +30,7 @@ const InstagramCaption = () => {
   };
 
   const data = {
-    tool: useRouter().pathname,
+    tool: useRouter().pathname.split("/").pop(),
     description,
     tone,
     lang,

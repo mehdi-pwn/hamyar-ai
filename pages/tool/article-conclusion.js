@@ -31,7 +31,7 @@ const ArticleConclusion = () => {
   };
 
   const data = {
-    tool: useRouter().pathname,
+    tool: useRouter().pathname.split("/").pop(),
     content,
     tone,
     lang,

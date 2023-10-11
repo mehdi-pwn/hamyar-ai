@@ -15,6 +15,8 @@
 
 #disable items if not logged in
 
+#show text after sometime passed on ai request to notify user process may be longer than expected
+
 #clear not-used imports
 
 #make auth api singular

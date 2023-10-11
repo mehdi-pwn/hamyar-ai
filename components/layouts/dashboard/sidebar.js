@@ -104,7 +104,6 @@ const Sidebar = () => {
   const { sidebarActive, setSidebarActive, screenSize } = useStateContext();
 
   useEffect(() => {
-    console.log(logo);
     if (screenSize <= 900) {
       setSidebarActive(false);
     } else {
