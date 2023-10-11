@@ -2,7 +2,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useStateContext } from "@context/ContextProvider";
 import { useEffect, useState } from "react";
 import { verifyToken } from "@utils/verifyToken";
-import { DarkModeToggle, SigninButton } from "@layout/shared";
+import {
+  DarkModeToggle,
+  SigninButton,
+  ProfileButton,
+  ProfileNotification,
+} from "@layout/shared";
 
 const Header = () => {
   const { setSidebarActive, profileBarActive, profileBarRef } =
