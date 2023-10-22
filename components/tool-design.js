@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import Typography from "@mui/material/Typography";
 import { verifyToken } from "@utils/verifyToken";
 import { useEffect, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
+import { motion } from "framer-motion";
 
 export const Page = ({ children }) => {
   return (
@@ -37,6 +39,16 @@ export const KeywordInput = ({
   value,
   onChange,
 }) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
+  console.log(isLogged);
   return (
     <Grid item xs={12} md={12}>
       <FormControl fullWidth>
@@ -46,6 +58,7 @@ export const KeywordInput = ({
           variant="filled"
           value={value}
           onChange={onChange}
+          disabled={isLogged ? false : true}
         />
       </FormControl>
     </Grid>
@@ -57,6 +70,15 @@ export const ContentInput = ({
   value,
   onChange,
 }) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
   return (
     <Grid item xs={12} md={12}>
       <FormControl fullWidth>
@@ -67,12 +89,22 @@ export const ContentInput = ({
           multiline
           value={value}
           onChange={onChange}
+          disabled={isLogged ? false : true}
         />
       </FormControl>
     </Grid>
   );
 };
 export const ToneSelect = ({ value, onChange }) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
   return (
     <FormControl fullWidth style={{ marginTop: "13px" }}>
       <InputLabel style={{ fontSize: "20px" }}>استایل متن</InputLabel>
@@ -83,13 +115,26 @@ export const ToneSelect = ({ value, onChange }) => {
         onChange={onChange}
         style={{ marginTop: "17px" }}
       >
-        <MenuItem value="s1">رسمی</MenuItem>
-        <MenuItem value="s2">شوخ</MenuItem>
+        <MenuItem value="s1" disabled={isLogged ? false : true}>
+          رسمی
+        </MenuItem>
+        <MenuItem value="s2" disabled={isLogged ? false : true}>
+          شوخ
+        </MenuItem>
       </Select>
     </FormControl>
   );
 };
 export const LanguageSelect = ({ value, onChange }) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
   return (
     <FormControl fullWidth style={{ marginTop: "13px" }}>
       <InputLabel style={{ fontSize: "20px" }}>زبان</InputLabel>
@@ -100,7 +145,9 @@ export const LanguageSelect = ({ value, onChange }) => {
         onChange={onChange}
         style={{ marginTop: "17px" }}
       >
-        <MenuItem value="persian">فارسی</MenuItem>
+        <MenuItem value="persian" disabled={isLogged ? false : true}>
+          فارسی
+        </MenuItem>
       </Select>
     </FormControl>
   );
@@ -115,6 +162,37 @@ export const ToneAndLang = ({ toneVal, toneChange, langVal, langChange }) => {
         <ToneSelect value={toneVal} onChange={toneChange} />
       </Grid>
     </>
+  );
+};
+export const AdvancedOptions = ({ children }) => {
+  const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState(false);
+
+  return (
+    <div className="mx-auto py-2">
+      <button
+        className="flex gap-2 items-center text-gray-700 dark:text-gray-400"
+        onClick={() => setAdvancedOptionsOpen(!advancedOptionsOpen)}
+      >
+        تنظیمات پیشرفته
+        <IoIosArrowDown
+          className={` ${advancedOptionsOpen && "rotate-180"} duration-200`}
+        />
+      </button>
+      <motion.div
+        animate={
+          advancedOptionsOpen
+            ? {
+                height: "fit-content",
+              }
+            : {
+                height: 0,
+              }
+        }
+        className="flex pl-5 flex-col overflow-hidden"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2">{children}</div>
+      </motion.div>
+    </div>
   );
 };
 export const GenerateButton = ({ processing, onClick }) => {

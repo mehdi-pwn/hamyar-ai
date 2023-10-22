@@ -152,7 +152,9 @@ export default function Confirm() {
           </p>
         </div>
         <div className="text-base mt-3">
-          <span className="text-black">شماره تلفنتان اشتباه است؟</span>
+          <span className="text-black">
+            شماره {Cookies.get("phone")} اشتباه است؟
+          </span>
           &nbsp;
           <Link
             className="text-primary underline underline-offset-8"

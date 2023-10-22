@@ -5,7 +5,7 @@ const isUserExists = async (phoneNumber) => {
   try {
     const user = await query(
       `
-        SELECT * FROM users WHERE phone = ?
+        SELECT id FROM users WHERE phone = ?
         `,
       [phoneNumber]
     );
@@ -16,7 +16,7 @@ const isUserExists = async (phoneNumber) => {
       return false;
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(401).json({
       status: "fail",
       error,
     });
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
         try {
           const decoded = jwt.verify(token, process.env.AUTH_SECRET);
-          return res.status(200).json({ status: "fail", error: "auth" });
+          return res.status(401).json({ status: "fail", error: "auth" });
         } catch (error) {}
 
         if (!num || isNaN(num))
@@ -90,19 +90,19 @@ export default async function handler(req, res) {
 
       try {
         const decoded = jwt.verify(token, process.env.AUTH_SECRET);
-        return res.status(200).json({ status: "fail", error: "auth" });
+        return res.status(401).json({ status: "fail", error: "auth" });
       } catch (error) {}
       try {
         const num = req.body.phoneNumber;
         if (!num || isNaN(num))
-          return res.status(500).json({
+          return res.status(401).json({
             status: "fail",
             error: "no-phone",
           });
 
         const userExists = await isUserExists(num);
         if (!userExists)
-          return res.status(200).json({
+          return res.status(401).json({
             status: "fail",
             error: "not-found",
           });
@@ -129,7 +129,7 @@ export default async function handler(req, res) {
           const newer = earlierAllowCodeDateTime.getTime();
 
           if (now < newer) {
-            return res.status(200).json({
+            return res.status(403).json({
               status: "fail",
               error: "code-banned-5",
             });
@@ -182,13 +182,13 @@ export default async function handler(req, res) {
 
       try {
         const decoded = jwt.verify(token, process.env.AUTH_SECRET);
-        return res.status(200).json({ status: "fail", error: "auth" });
+        return res.status(401).json({ status: "fail", error: "auth" });
       } catch (error) {}
 
       try {
         const userExists = await isUserExists(num);
         if (!userExists)
-          return res.status(200).json({
+          return res.status(401).json({
             status: "fail",
             error: "not-found",
             num,
@@ -197,7 +197,7 @@ export default async function handler(req, res) {
         const code = req.body.code;
 
         if (!num || isNaN(num) || !code || isNaN(code))
-          return res.status(500).json({
+          return res.status(403).json({
             status: "fail",
             error: "not-valid-num",
           });
@@ -225,7 +225,7 @@ export default async function handler(req, res) {
           const newer = earlierAllowCodeDateTime.getTime();
 
           if (now < newer) {
-            return res.status(200).json({
+            return res.status(403).json({
               status: "fail",
               error: "code-banned-5",
             });
@@ -245,7 +245,7 @@ export default async function handler(req, res) {
         const timeDiff = nowTime - oldTime;
 
         if (timeDiff > 120000) {
-          return res.status(200).json({
+          return res.status(403).json({
             status: "fail",
             error: "code-expired",
           });
@@ -267,7 +267,7 @@ export default async function handler(req, res) {
             UPDATE users SET code_tried = ?, code_allow_datetime = ? WHERE phone = ?`,
               [codeTried, later5minsString, num]
             );
-            return res.status(200).json({
+            return res.status(403).json({
               status: "fail",
               error: "code-banned-5",
             });
@@ -297,7 +297,7 @@ export default async function handler(req, res) {
 
       try {
         const decoded = jwt.verify(token, process.env.AUTH_SECRET);
-        return res.status(200).json({ status: "fail", error: "auth" });
+        return res.status(401).json({ status: "fail", error: "auth" });
       } catch (error) {}
       try {
         const num = req.body.phoneNumber;
@@ -320,7 +320,7 @@ export default async function handler(req, res) {
 
         const user = await query(
           `
-        SELECT * FROM users WHERE phone = ?
+        SELECT id,phone,name,plan FROM users WHERE phone = ?
         `,
           [num]
         );

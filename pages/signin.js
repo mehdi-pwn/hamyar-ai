@@ -51,7 +51,7 @@ export default function Register() {
       const responseData = await response.json();
 
       if (responseData.status == "success") {
-        console.log(responseData.code);
+        alert(responseData.code);
         Cookies.set("phone", `${phoneNumber}`);
         router.push("/confirm");
       } else {

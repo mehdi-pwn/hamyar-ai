@@ -50,7 +50,7 @@ const NotVerified = ({
     </div>
   );
 };
-const Verified = ({ ref_id = 0 }) => {
+const Verified = ({ trans_id = 0, ref_id = 0, payment_time = 0 }) => {
   return (
     <div className="flex items-center justify-center h-screen bg-slate-200">
       <div className="rounded-lg py-8 px-4 shadow-lg bg-white">
@@ -69,7 +69,11 @@ const Verified = ({ ref_id = 0 }) => {
                 پلن طلایی همیار اِی آی هم اکنون برای شما فعال شده و می توانید از
                 ابزار ها استفاده کنید
                 <br />
+                شماره تراکنش: {trans_id}
+                <br />
                 شماره پیگیری بانک: {ref_id}
+                <br />
+                زمان پرداخت: {payment_time}
               </Typography>
             </div>
             <div className="w-full">

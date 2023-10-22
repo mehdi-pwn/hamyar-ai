@@ -28,6 +28,7 @@
     "stylis": "^4.3.0",
     "stylis-plugin-rtl": "^2.1.1",
     "sweetalert2": "^11.7.28",
-    "tailwindcss": "3.3.3"
+    "tailwindcss": "3.3.3",
+    "winston": "^3.11.0"
   }
 }

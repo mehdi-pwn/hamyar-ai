@@ -6,6 +6,7 @@ const {
   KeywordInput,
   ToneAndLang,
   GenerateButton,
+  AdvancedOptions,
 } = require("@components/tool-design");
 
 import Grid from "@mui/material/Grid";
@@ -54,7 +55,7 @@ const ArticleContent = () => {
               lang={lang}
               langChange={(e) => setLang(e.target.value)}
             />
-
+            <AdvancedOptions>POV + article LENGTH</AdvancedOptions>
             <GenerateButton processing={processing} onClick={handleClick} />
           </Grid>
         </Form>

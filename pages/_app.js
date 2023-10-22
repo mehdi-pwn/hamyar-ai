@@ -1,7 +1,7 @@
 import RTL from "@layout/rtl";
 import DashboardLayout from "@layout/dashboard/dashboardLayout";
-import "@styles/global.css";
 import { ContextProvider } from "@context/ContextProvider";
+import "@styles/global.css";
 
 export default function MyApp({ Component, ...pageProps }) {
   const Layout = Component.Layout || DashboardLayout;

@@ -50,7 +50,7 @@ const SubMenu = ({ data }) => {
   return (
     <>
       <li
-        className="flex justify-between items-center text-white rounded-md cursor-pointer font-medium hover:bg-slate-400 hover:dark:bg-slate-800 bg-opacity-8 px-3 py-2 mt-2"
+        className="flex justify-between items-center text-white rounded-md cursor-pointer font-medium hover:bg-slate-400 dark:hover:bg-slate-800 bg-opacity-8 px-3 py-2 mt-2"
         onClick={() => setSubMenuOpen(!subMenuOpen)}
       >
         <div className="flex items-center gap-2">

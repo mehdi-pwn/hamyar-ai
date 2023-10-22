@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   try {
     decoded = jwt.verify(token, process.env.AUTH_SECRET);
   } catch (error) {
-    return res.status(200).json({ status: "fail", error: "no-auth" });
+    return res.status(401).json({ status: "fail", error: "no-auth" });
   }
 
   const userId = decoded.id;

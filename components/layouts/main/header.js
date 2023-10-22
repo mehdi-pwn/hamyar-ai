@@ -1,4 +1,3 @@
-import { FaShopware } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useStateContext } from "@context/ContextProvider";
 import Link from "next/link";

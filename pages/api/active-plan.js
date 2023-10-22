@@ -1,7 +1,6 @@
 import { query } from "@lib/db";
 import jwt from "jsonwebtoken";
 
-
 export default async function handler(req, res) {
   try {
     const token = req.cookies.token;
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
     const userId = decoded.id;
     const user = await query(
       `
-        SELECT * FROM users WHERE id = ?
+        SELECT plan FROM users WHERE id = ?
         `,
       [userId]
     );

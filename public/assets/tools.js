@@ -12,7 +12,6 @@ import {
 import {
   BsFillCameraVideoFill,
   BsPencilFill,
-  BsFillCalendarDateFill,
   BsFillFilePostFill,
 } from "react-icons/bs";
 import { CgWebsite } from "react-icons/cg";

@@ -1,39 +1,15 @@
-#is /tools and /tool seo and user friendly?
-#cancel operation function: if ai response from any ai source is not compeleted or have error, cancel latest operation
-#if any tool limit ended, user can charge it in two way: ticket and buy new credits | convert another credits from other non-used tools
-#banip user on many code requests
-#clear !.. if statemnts
-#ui:/confirm: show number + boxed_number?
-
-#localStorage and window not defined on foirst load
-
-#handle sql SELECTs (remove *s) to get less data
-
-#someties next auth loads data more than expected time, so check if data === "loading" and handle relative things
-
-#when clicking on Try For Free btns, check if loggedin->/tools else->/signin
-
-#disable items if not logged in
-
-#show text after sometime passed on ai request to notify user process may be longer than expected
-
-#clear not-used imports
-
-#make auth api singular
-
-#handle api responses codes
-
-#handle redirect()
-
-#animate-spin not showing up
-
-#add captcha to forms
-#check present tickets before send new one
-
-#send-code: check if code sent more than 2 minutes
-
-
+v1:
 sms:
 codes
 notify ending plan (cron_job)
 verify payment success
+
+v2:
+#fix icon colors
+#send-code: check if code sent more than 2 minutes
+#check present tickets before send new one + captcha?
+#show text after sometime passed on ai request to notify user process may be longer than expected
+
+
+v3:
+#VERIFING SESSION ON getStaticProp - then: when clicking on Try For Free btns, check if loggedin->/tools else->/signin

@@ -7,13 +7,7 @@ import { HiBadgeCheck } from "react-icons/hi";
 import { Button, CTA } from "@components/main-design";
 import { useStateContext } from "@context/ContextProvider";
 
-const ToolCard = () => {
-  return;
-};
-
 const Features = () => {
-  const { screenSize } = useStateContext();
-
   return (
     <div className="pt-16">
       <div className="flex flex-col justify-center items-center gap-2 px-4 lg:px-20">

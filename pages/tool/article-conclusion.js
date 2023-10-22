@@ -3,7 +3,6 @@ const {
   Title,
   Description,
   Form,
-  KeywordInput,
   ToneAndLang,
   GenerateButton,
   ContentInput,

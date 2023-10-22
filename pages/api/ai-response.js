@@ -1,6 +1,155 @@
 import { ChatGPTUnofficialProxyAPI } from "chatgpt";
 import { query } from "@lib/db";
 import jwt from "jsonwebtoken";
+import logger from "@utils/logger";
+
+const BAD_WORDS = [
+  "Blood",
+  "Bloodbath",
+  "Crucifixion",
+  "Bloody",
+  "Flesh",
+  "Bruises",
+  "Car crash",
+  "Corpse",
+  "Crucified",
+  "Cutting",
+  "Decapitate",
+  "Infested",
+  "Gruesome",
+  "Kill",
+  "Infected",
+  "Sadist",
+  "Slaughter",
+  "Teratoma",
+  "Tryphophobia",
+  "Wound",
+  "Cronenberg",
+  "Khorne",
+  "Cannibal",
+  "Cannibalism",
+  "Visceral",
+  "Guts",
+  "Bloodshot",
+  "Gory",
+  "Killing",
+  "Surgery",
+  "Vivisection",
+  "Massacre",
+  "Hemoglobin",
+  "Suicide",
+  "Female Body Parts",
+  "ahegao",
+  "pinup",
+  "ballgag",
+  "Playboy",
+  "Bimbo",
+  "pleasure",
+  "bodily fluids",
+  "pleasures",
+  "boudoir",
+  "rule34",
+  "brothel",
+  "seducing",
+  "dominatrix",
+  "seductive",
+  "erotic seductive",
+  "fuck",
+  "sensual",
+  "Hardcore",
+  "sexy",
+  "Hentai",
+  "Shag",
+  "horny",
+  "shibari",
+  "incest",
+  "Smut",
+  "jav",
+  "succubus",
+  "Jerk off king at pic",
+  "thot",
+  "kinbaku",
+  "transparent",
+  "legs spread",
+  "twerk",
+  "making love",
+  "voluptuous",
+  "naughty",
+  "wincest",
+  "orgy",
+  "Sultry",
+  "XXX",
+  "Bondage",
+  "Bdsm",
+  "Dog collar",
+  "Slavegirl",
+  "Transparent and Translucent",
+  "Arse",
+  "Labia",
+  "Ass",
+  "Mammaries",
+  "Human centipede",
+  "Badonkers",
+  "Minge",
+  "Massive chests",
+  "Big Ass",
+  "Mommy Milker",
+  "Booba",
+  "Nipple",
+  "Booty",
+  "Oppai",
+  "Bosom",
+  "Organs",
+  "Breasts",
+  "Ovaries",
+  "Busty",
+  "Penis",
+  "Clunge",
+  "Phallus",
+  "Crotch",
+  "sexy female",
+  "Dick",
+  "Skimpy",
+  "Girth",
+  "Thick",
+  "Honkers",
+  "Vagina",
+  "Hooters",
+  "Veiny",
+  "Knob",
+  "no clothes",
+  "Speedo",
+  "au naturale",
+  "no shirt",
+  "bare chest",
+  "nude",
+  "barely dressed",
+  "bra",
+  "risqué",
+  "clear",
+  "scantily",
+  "clad",
+  "cleavage",
+  "stripped",
+  "full frontal unclothed",
+  "invisible clothes",
+  "wearing nothing",
+  "lingerie with no shirt",
+  "naked",
+  "without clothes on",
+  "negligee",
+  "zero clothes",
+  "Taboo",
+  "Fascist",
+  "Nazi",
+  "Prophet Mohammed",
+  "Slave",
+  "Coon",
+  "Honkey",
+  "Arrested",
+  "Jail",
+  "Handcuffs",
+];
 
 export default async function handler(req, res) {
   const gptAPI = new ChatGPTUnofficialProxyAPI({
@@ -8,60 +157,21 @@ export default async function handler(req, res) {
     apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
   });
 
-  const error = (text = "") => {
-    return res.status(500).json({
-      status: "error",
-      title: "متاسفانه خطایی رخ داد",
-      text: text,
-    });
-  };
-
-  const addToHistory = async (oldData, newData, userId) => {
-    let old = JSON.parse(oldData);
-    old.push(newData);
-    const stringed = JSON.stringify(old);
-
-    const add = await query(
-      `
-        UPDATE users SET plan_history = ? WHERE id = ?
-        `,
-      [stringed, userId]
-    );
-  };
-
-  const getAiResponse = async (prompt, userId, userWords = 0) => {
-    try {
-      const gptResponse = await gptAPI.sendMessage(prompt);
-
-      const responseText = gptResponse.text;
-      const responseWords = responseText.split(" ").length;
-
-      let newWords = userWords - responseWords;
-
-      if (newWords < 0) newWords = 0;
-
-      await query(
-        `
-      UPDATE users SET words = ? WHERE id = ?
-      `,
-        [newWords, userId]
-      );
-
-      return res.status(200).json({
-        status: "success",
-        response: gptResponse,
-        prompt,
-      });
-    } catch (e) {
-      return error("خطا در پاسخ هوش مصنوعی" + e);
-    }
-  };
-
   const handlePrompt = async (prompt, userId) => {
     try {
+      if (
+        BAD_WORDS.some((word) =>
+          prompt.toLowerCase().includes(word.toLowerCase())
+        )
+      ) {
+        logger.info("User " + userId + " used bad word. Prompt: " + prompt);
+        return error(
+          "متن ورودی شما دارای کلمات ممنوعه است. لطفا متن خود را اصلاح نموده و مجدد امتحان نمایید"
+        );
+      }
       const userDB = await query(
         `
-        SELECT * FROM users WHERE id = ?
+        SELECT plan,plan_history,words FROM users WHERE id = ?
         `,
         [userId]
       );
@@ -71,27 +181,35 @@ export default async function handler(req, res) {
         const plan = parseInt(user.plan);
 
         if (plan == 0) {
-          return res.status(200).json({
+          return res.status(403).json({
             status: "no-plan",
           });
         } else if (plan == 1) {
-          var updatePlan = await query(
-            `
-        UPDATE users SET plan = 1 WHERE id = ?
-        `,
-            [userId]
-          );
+          const res = await getAiResponse(prompt, userId);
+          if (!res) {
+            return error("خطای دریافت اطلاعات از هوش مصنوعی");
+          } else {
+            await query(
+              `
+              UPDATE users SET plan = 1 WHERE id = ?
+              `,
+              [userId]
+            );
 
-          addToHistory(
-            user.plan_history,
-            {
-              date: new Date().toISOString().slice(0, 19).replace("T", " "),
-              msg: "plan-1:end",
-            },
-            userId
-          );
-
-          await getAiResponse(prompt, userId); //! TESTED UNTIL plan==1 and other plans should be tested (0, 2)
+            addToHistory(
+              user.plan_history,
+              {
+                date: new Date().toISOString().slice(0, 19).replace("T", " "),
+                msg: "plan-1:end",
+              },
+              userId
+            );
+            return res.status(200).json({
+              status: "success",
+              prompt,
+              response: res,
+            });
+          }
         } else if (plan == 2) {
           var today = new Date(),
             expireDate = user.plan_history;
@@ -112,24 +230,44 @@ export default async function handler(req, res) {
               },
               userId
             );
-            var updatePlan = await query(
+            await query(
               `
 						UPDATE users SET plan = 0, plan_expire_date = NULL WHERE id = ?
 						`,
               [userId]
             );
-            return res.status(200).json({
+            return res.status(403).json({
               status: "no-plan",
             });
           }
 
-          const words = parseInt(user.words);
-          if (words <= 0) {
-            return res.status(200).json({
+          const userWords = parseInt(user.words);
+          if (userWords <= 0) {
+            return res.status(403).json({
               status: "limit-0",
             });
           } else {
-            return getAiResponse(prompt, userId, words);
+            const res = await getAiResponse(prompt, userId);
+            if (!res) {
+              return error("خطای دریافت اطلاعات از هوش مصنوعی");
+            } else {
+              const responseWords = res.split(" ").length;
+              let newWords = userWords - responseWords;
+
+              if (newWords < 0) newWords = 0;
+
+              await query(
+                `
+      UPDATE users SET words = ? WHERE id = ?
+      `,
+                [newWords, userId]
+              );
+              return res.status(200).json({
+                status: "success",
+                prompt,
+                response: res,
+              });
+            }
           }
         } else error("خطایی رخ داد");
       } else error("کاربر پیدا نشد");
@@ -137,6 +275,39 @@ export default async function handler(req, res) {
       console.log("Error in prompt handling: " + e);
       return error(e);
     }
+  };
+
+  const getAiResponse = async (prompt, userId) => {
+    try {
+      const gptResponse = await gptAPI.sendMessage(prompt, {
+        timeoutMs: 3 * 60 * 1000,
+      });
+      const responseText = gptResponse.text;
+      return responseText;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const error = (text = "") => {
+    return res.status(500).json({
+      status: "error",
+      title: "متاسفانه خطایی رخ داد",
+      text: text,
+    });
+  };
+
+  const addToHistory = async (oldData, newData, userId) => {
+    let old = JSON.parse(oldData);
+    old.push(newData);
+    const stringed = JSON.stringify(old);
+
+    const add = await query(
+      `
+        UPDATE users SET plan_history = ? WHERE id = ?
+        `,
+      [stringed, userId]
+    );
   };
 
   var prompt;

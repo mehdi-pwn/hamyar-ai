@@ -8,19 +8,19 @@ export default async function handler(req, res) {
   try {
     decoded = jwt.verify(token, process.env.AUTH_SECRET);
   } catch (error) {
-    return res.status(200).json({ status: "fail", error: "no-auth" });
+    return res.status(401).json({ status: "fail", error: "no-auth" });
   }
   const userId = decoded.id;
   try {
     const user = await query(
       `
-        SELECT * FROM users WHERE id = ?
+        SELECT plan FROM users WHERE id = ?
         `,
       [userId]
     );
 
     if (!user[0]) {
-      return res.status(200).json({
+      return res.status(403).json({
         status: "not-found",
       });
     }

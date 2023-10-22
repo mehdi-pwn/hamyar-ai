@@ -3,9 +3,8 @@ const {
   Title,
   Description,
   Form,
-  KeywordInput,
   ToneAndLang,
-  GenerateButton,
+
   ContentInput,
 } = require("@components/tool-design");
 

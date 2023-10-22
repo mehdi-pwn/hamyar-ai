@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   if (req.method !== "POST")
-    return res.status(500).json({ status: "fail", error: "Invalid request" });
+    return res.status(400).json({ status: "fail", error: "Invalid request" });
 
   const token = req.cookies.token;
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.AUTH_SECRET);
   } catch (error) {
-    return res.status(200).json({ status: "fail", error: "no-auth" });
+    return res.status(401).json({ status: "fail", error: "no-auth" });
   }
   const userId = decoded.id;
 
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
           });
         }
       } catch (error) {
-        return res.status(200).json({ status: "fail", error });
+        return res.status(500).json({ status: "fail", error });
       }
       break;
     }
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
           status: "success",
         });
       } catch (error) {
-        return res.status(200).json({ status: "fail", error });
+        return res.status(500).json({ status: "fail", error });
       }
       break;
     }
