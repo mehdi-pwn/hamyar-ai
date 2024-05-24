@@ -5,6 +5,7 @@ sms:
   notify ending plan (cron_job)
 
 v2:
+add mojeze-bazgasht file importing system by webpack5
 remained todos across app code
 marketing of free usage
 very beautiful buy and verified_payment page(+ usage limits)
