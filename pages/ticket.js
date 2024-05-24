@@ -1,4 +1,4 @@
-const { Page, Title, Form, ContentInput } from "@components/tool-design";
+import { Page, Title, Form, ContentInput } from "@components/tool-design";
 import Grid from "@mui/material/Grid";
 import { useRouter } from "next/router";
 import FormControl from "@mui/material/FormControl";
