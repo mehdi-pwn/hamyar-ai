@@ -49,7 +49,7 @@ export default function Confirm() {
       code.length > 5
     ) {
       setProcessing(false);
-      return Swal.fire("کد وارد شده اشتباه است");
+      return Swal.fire({ icon: "warning", title: "کد وارد شده اشتباه است" });
     }
 
     try {
@@ -72,7 +72,7 @@ export default function Confirm() {
           },
         });
         Cookies.remove("phone");
-        router.push("/");
+        router.push("/tools");
       } else {
         setProcessing(false);
         console.log(JSON.stringify(responseData));

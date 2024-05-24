@@ -37,7 +37,10 @@ export default function Register() {
       !phoneNumber.startsWith("09")
     ) {
       setProcessing(true);
-      return Swal.fire("لطفا یک شماره تلفن صحیح وارد نمایید");
+      return Swal.fire({
+        icon: "warning",
+        title: "لطفا یک شماره تلفن صحیح وارد نمایید",
+      });
     }
 
     try {
@@ -56,14 +59,12 @@ export default function Register() {
         router.push("/confirm");
       } else {
         setProcessing(false);
-        return Swal.fire(
-          "خطا در ارسال کد فعالسازی",
-          JSON.stringify(responseData)
-        );
+        console.log(JSON.stringify(responseData));
+        return Swal.fire({ icon: "error", title: "خطا در ارسال کد فعالسازی" });
       }
     } catch (error) {
       setProcessing(false);
-      return Swal.fire("خطا در ارسال کد فعالسازی", "ارور 2");
+      return Swal.fire({ icon: "error", title: "خطا در ارسال کد فعالسازی" });
     }
   };
 

@@ -46,11 +46,11 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(
-      "https://api.novinopay.com/payment/ipg/v2/verification",
+      "https://api.zarinpal.com/pg/v4/payment/verify.json",
       {
         method: "POST",
         body: {
-          merchant_id: "test",
+          merchant_id: process.env.ZARINPAL_MERCHANT,
           amount: 500000,
           authority: auth,
         },
@@ -65,11 +65,11 @@ export default async function handler(req, res) {
       return res
         .status(200)
         .json({ status: "payment-error", message: data.message });
-    } else {
+    } else if (data.status == 100) {
       const WORDS = 5000; ////
 
       let today = new Date();
-      let futureDate = new Date(today.getTime() + 31 * 24 * 60 * 60 * 1000);
+      let futureDate = new Date(today.getTime() + 31 * 24 * 60 * 60 * 1000); //TODO: Marketing
       let expireDate = futureDate.toISOString().slice(0, 10);
 
       let oldHistory = JSON.parse(user.plan_history);
@@ -85,6 +85,8 @@ export default async function handler(req, res) {
         `,
         [expireDate, JSON.stringify(oldHistory), WORDS, userId]
       );
+      return res.status(200).json(data);
+    } else if (code == 101) {
       return res.status(200).json(data);
     }
   } catch (error) {

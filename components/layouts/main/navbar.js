@@ -48,7 +48,11 @@ const Navbar = () => {
                 if (logout) {
                   if (router.pathname === "/") window.location.reload();
                   else router.push("/");
-                } else return Swal.fire("خطا در خروج از حساب کاربری");
+                } else
+                  return Swal.fire({
+                    icon: "error",
+                    title: "خطا در خروج از حساب کاربری",
+                  });
               }}
             ></button>
           </>

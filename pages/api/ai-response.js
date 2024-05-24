@@ -153,7 +153,7 @@ const BAD_WORDS = [
 
 export default async function handler(req, res) {
   const gptAPI = new ChatGPTUnofficialProxyAPI({
-    accessToken: process.env.OPENAI_ACCESS_TOKEN,
+    accessToken: process.env.OPENAI_ACCESS_TOKEN, //https://chat.openai.com/api/auth/session
     apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
   });
 
@@ -190,8 +190,9 @@ export default async function handler(req, res) {
             return error("خطای دریافت اطلاعات از هوش مصنوعی");
           } else {
             await query(
+              //* CHANGE PLAN=0 IF NEEDED FOR DEVELOPEMENT
               `
-              UPDATE users SET plan = 1 WHERE id = ?
+              UPDATE users SET plan = 0 WHERE id = ?
               `,
               [userId]
             );
@@ -207,7 +208,7 @@ export default async function handler(req, res) {
             return res.status(200).json({
               status: "success",
               prompt,
-              response: res,
+              response: await getAiResponse(prompt),
             });
           }
         } else if (plan == 2) {
@@ -265,7 +266,7 @@ export default async function handler(req, res) {
               return res.status(200).json({
                 status: "success",
                 prompt,
-                response: res,
+                response: await getAiResponse(prompt),
               });
             }
           }

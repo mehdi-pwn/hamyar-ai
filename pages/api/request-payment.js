@@ -43,13 +43,15 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(
-      "https://api.novinopay.com/payment/ipg/v2/request",
+      "https://api.zarinpal.com/pg/v4/payment/request.json",
       {
         method: "POST",
         body: {
-          merchant_id: "test",
-          amount: 500000,
-          callback_url: "http://localhost:3000/verify",
+          merchant_id: process.env.ZARINPAL_MERCHANT,
+          amount: 50000,
+          currency: "IRT",
+          description: "خرید پلن حرفه ای میهن اِی آی",
+          callback_url: process.env.ZARINPAL_CALLBACK,
         },
         headers: {
           "Content-Type": "application/json",

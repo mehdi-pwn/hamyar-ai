@@ -92,7 +92,7 @@ const Profile = () => {
       setIsSaving(false);
       const updated = await update.json();
       if (updated.status === "success") {
-        Swal.fire("با موفقیت ثبت گردید");
+        Swal.fire({ icon: "success", title: "با موفقیت ثبت گردید" });
       } else return Swal.fire("خطایی رخ داد");
     } catch (error) {
       console.log(error);

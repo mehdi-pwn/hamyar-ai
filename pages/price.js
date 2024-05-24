@@ -42,33 +42,38 @@ const Price = () => {
             }
           });
         } else {
-          const payRequest = await fetch(
-            "/api/request-payment",
-            {
-              method: "POST",
-              body: JSON.stringify({ userId }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          const payRequest = await fetch("/api/request-payment", {
+            method: "POST",
+            body: JSON.stringify({ userId }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
           const paymentData = await payRequest.json();
 
           if (paymentData.status === "not-found")
-            return Swal.fire(
-              "کاربر پیدا نشد.",
-              "لطفا از حساب کاربری خود خارج شده و مجددا وارد شوید. در صورتی که مجددا این خطا را مشاهده کردید، افزونه های خود را غیر فعال کرده و یا در بخش پشتیبانی، تیکت بزنید"
-            );
+            return Swal.fire({
+              icon: "error",
+              title: "کاربر پیدا نشد.",
+              text: "لطفا از حساب کاربری خود خارج شده و مجددا وارد شوید. در صورتی که مجددا این خطا را مشاهده کردید، افزونه های خود را غیر فعال کرده و یا در بخش پشتیبانی، تیکت بزنید",
+            });
           if (paymentData.status === "active")
-            return Swal.fire("شما در حال حاضر یک پلن فعال دارید");
+            return Swal.fire({
+              icon: "info",
+              title: "شما در حال حاضر یک پلن فعال دارید",
+            });
 
           if (paymentData.code === 100) {
-            //const paymentUrl = paymentData.data.payment_url;
-            //router.push(paymentUrl);
+            //continue
+            const paymentAuth = paymentData.data.authority;
+            router.push("https://www.zarinpal.com/pg/StartPay/" + paymentAuth);
             console.log(paymentData);
           } else {
             console.log(paymentData);
-            Swal.fire("خطا در ارتباط با درگاه پرداخت");
+            Swal.fire({
+              icon: "warning",
+              title: "خطا در ارتباط با درگاه پرداخت",
+            });
           }
         }
       } else {

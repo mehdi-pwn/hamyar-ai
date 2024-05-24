@@ -22,11 +22,40 @@ const isUserExists = async (phoneNumber) => {
     });
   }
 };
-const generateCode = () =>
-  Math.floor(Math.random() * 100000)
-    .toString()
-    .slice(-5);
+const generateCode = () => {
+  let min = 10000;
+  let max = 99999;
+  let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomNumber.toString().padStart(5, "0");
+};
+const sendMessage = async (number, code) => {
+  const sms_reciever = number.replace(/^0+/, "+98");
 
+  if (process.env.SEND_CODE_DEBUG === "false") {
+    const sms = await fetch("https://api.sms.ir/v1/send/verify", {
+      body: JSON.stringify({
+        templateId: process.env.SMS_IDENT,
+        mobile: sms_reciever,
+        parameters: [
+          {
+            name: "code",
+            value: code,
+          },
+        ],
+      }),
+      headers: {
+        Accept: "application/json",
+        "x-api-key": process.env.SMS_API_KEY,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+    const sms_result = await sms.json();
+
+    return sms_result;
+  }
+};
 export default async function handler(req, res) {
   switch (req.body.request) {
     case "send": {
@@ -48,7 +77,14 @@ export default async function handler(req, res) {
         const userExists = await isUserExists(num);
         if (!userExists) {
           const randomNumber = generateCode();
-          const codeDateTime = new Date().toISOString().slice(0, 19);
+          const codeDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+          const sms_result = await sendMessage(num, randomNumber);
+          if (sms_result.status != 1)
+            return res.status(500).json({
+              status: "fail",
+              error: "sms-fail",
+            });
 
           const results = await query(
             `
@@ -59,11 +95,35 @@ export default async function handler(req, res) {
           );
           res.status(200).json({
             status: "success",
-            code: randomNumber,
           });
         } else {
+          const user = await query(
+            `
+          SELECT code_datetime, code_allow_datetime FROM users WHERE phone = ?
+          `,
+            [num]
+          );
+          let oldCodeTime = moment(user[0].code_datetime).unix();
+          let nowTime = moment().unix();
+
+          const timeDiff = nowTime - oldCodeTime;
+
+          if (timeDiff < 120) {
+            return res.status(200).json({
+              status: "success",
+              noCode: "true",
+            });
+          }
+
           const randomNumber = generateCode();
-          const codeDateTime = new Date().toISOString().slice(0, 19);
+          const codeDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+          const sms_result = await sendMessage(num, randomNumber);
+          if (sms_result.status != 1)
+            return res.status(500).json({
+              status: "fail",
+              error: "sms-fail",
+            });
 
           const code = await query(
             `
@@ -73,7 +133,6 @@ export default async function handler(req, res) {
           );
           res.status(200).json({
             status: "success",
-            code: randomNumber,
           });
         }
       } catch (error) {
@@ -114,41 +173,24 @@ export default async function handler(req, res) {
           [num]
         );
 
-        const codeAllowDateTime = user[0].code_allow_datetime;
+        const earlierAllowCodeDateTime = moment(
+          user[0].code_allow_datetime
+        ).unix();
+        let nowTime1 = moment().unix();
 
-        if (!codeAllowDateTime) {
-          const earlierAllowCodeDateTime = new Date(codeAllowDateTime);
-
-          const earlierUTCHours = earlierAllowCodeDateTime.getUTCHours();
-          earlierAllowCodeDateTime.setUTCHours(earlierUTCHours + 3);
-          earlierAllowCodeDateTime.setUTCMinutes(
-            earlierAllowCodeDateTime.getUTCMinutes() + 30
-          );
-
-          const now = new Date().getTime();
-          const newer = earlierAllowCodeDateTime.getTime();
-
-          if (now < newer) {
-            return res.status(403).json({
-              status: "fail",
-              error: "code-banned-5",
-            });
-          }
+        if (nowTime1 < earlierAllowCodeDateTime + 3 * 3600 + 30 * 60) {
+          return res.status(200).json({
+            status: "fail",
+            error: "code-banned-5",
+          });
         }
 
-        const oldCodeDate = user[0].code_datetime;
-        const oldDateObject = new Date(oldCodeDate);
+        let oldCodeTime = moment(user[0].code_datetime).unix();
+        let nowTimeResend = moment().unix();
 
-        const oldUTCHours = oldDateObject.getUTCHours();
-        oldDateObject.setUTCHours(oldUTCHours + 3);
-        oldDateObject.setUTCMinutes(oldDateObject.getUTCMinutes() + 30); //! THIS SECTION MIGHT BE NEEDED TO CHANGE AFTER PRODUCTION
+        const timeDiffResend = nowTimeResend - oldCodeTime;
 
-        const nowTime = new Date().getTime();
-        const oldTime = oldDateObject.getTime();
-
-        const timeDiff = nowTime - oldTime;
-
-        if (timeDiff < 120000) {
+        if (timeDiff < 120) {
           return res.status(200).json({
             status: "fail",
             error: "code-not-expired",
@@ -156,7 +198,15 @@ export default async function handler(req, res) {
         }
 
         const randomNumber = generateCode();
-        const codeDateTime = new Date().toISOString().slice(0, 19);
+        const codeDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+        const sms_result = await sendMessage(num, randomNumber);
+        if (sms_result.status != 1)
+          return res.status(500).json({
+            status: "fail",
+            error: "sms-fail",
+          });
+
         const results = await query(
           `
         UPDATE users SET code = ?, code_datetime = ?, code_tried = 0, code_allow_datetime = NULL WHERE phone = ?
@@ -165,7 +215,6 @@ export default async function handler(req, res) {
         );
         res.status(200).json({
           status: "success",
-          code: randomNumber,
         });
       } catch (error) {
         console.log(error);
@@ -210,42 +259,21 @@ export default async function handler(req, res) {
           [num]
         );
 
-        const codeAllowDateTime = user[0].code_allow_datetime;
+        let earlierAllowCodeTime = moment(user[0].code_allow_datetime).unix();
+        let nowTime1 = moment().unix();
 
-        if (!codeAllowDateTime) {
-          const earlierAllowCodeDateTime = new Date(codeAllowDateTime);
-
-          const earlierUTCHours = earlierAllowCodeDateTime.getUTCHours();
-          earlierAllowCodeDateTime.setUTCHours(earlierUTCHours + 3);
-          earlierAllowCodeDateTime.setUTCMinutes(
-            earlierAllowCodeDateTime.getUTCMinutes() + 30
-          );
-
-          const now = new Date().getTime();
-          const newer = earlierAllowCodeDateTime.getTime();
-
-          if (now < newer) {
-            return res.status(403).json({
-              status: "fail",
-              error: "code-banned-5",
-            });
-          }
+        if (nowTime1 < earlierAllowCodeTime + 3 * 3600 + 30 * 60) {
+          return res.status(200).json({
+            status: "fail",
+            error: "code-banned-5",
+          });
         }
 
-        const oldCodeDate = user[0].code_datetime;
-        const oldDateObject = new Date(oldCodeDate);
+        let oldCodeTime = moment(user[0].code_datetime).unix();
+        let nowTime = moment().unix();
 
-        const oldUTCHours = oldDateObject.getUTCHours();
-        oldDateObject.setUTCHours(oldUTCHours + 3);
-        oldDateObject.setUTCMinutes(oldDateObject.getUTCMinutes() + 30); //! THIS SECTION MIGHT BE NEEDED TO CHANGE AFTER PRODUCTION
-
-        const nowTime = new Date().getTime();
-        const oldTime = oldDateObject.getTime();
-
-        const timeDiff = nowTime - oldTime;
-
-        if (timeDiff > 120000) {
-          return res.status(403).json({
+        if (nowTime - oldCodeTime > 120) {
+          return res.status(200).json({
             status: "fail",
             error: "code-expired",
           });
@@ -256,16 +284,16 @@ export default async function handler(req, res) {
             status: "success",
           });
         } else {
-          var codeTried = user[0].code_tried;
-          ++codeTried;
+          const codeTried = user[0].code_tried + 1;
           if (codeTried > 3) {
-            let later5Mins = new Date(new Date().getTime() + 5 * 60000);
-            let later5minsString = later5Mins.toISOString().slice(0, 19);
+            const later5Mins = moment()
+              .add(5, "minutes")
+              .format("YYYY-MM-DD HH:mm:ss");
 
             await query(
               `
             UPDATE users SET code_tried = ?, code_allow_datetime = ? WHERE phone = ?`,
-              [codeTried, later5minsString, num]
+              [codeTried, later5Mins, num]
             );
             return res.status(403).json({
               status: "fail",

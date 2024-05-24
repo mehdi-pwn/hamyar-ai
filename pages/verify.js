@@ -108,9 +108,7 @@ const Verify = () => {
     checkVerified();
 
     async function verifyPayment() {
-      //const { Authority, Status } = router.query;
-      const Authority = 56;
-      const Status = "NOK";
+      const { Authority, Status } = router.query;
 
       if (!Authority || !Status) {
         return (
@@ -142,9 +140,11 @@ const Verify = () => {
           return <Verified ref_id={verified.data.ref_id} />;
         } catch (error) {
           console.log("Error: " + error);
-          return Swal.fire(
-            "خطا در تایید تراکنش. در صورت کم شدن وجه، به طور خودکار پس از 48 ساعت به حسابتان باز خواهد گشت"
-          );
+          return Swal.fire({
+            icon: "error",
+            title:
+              "خطا در تایید تراکنش. در صورت کم شدن وجه، به طور خودکار پس از 48 ساعت به حسابتان باز خواهد گشت",
+          });
         }
       }
     }

@@ -34,10 +34,11 @@ const Ticket = () => {
       const sent = await sendMessage.json();
 
       if (sent.status === "success") {
-        Swal.fire(
-          "تیکت شما با موفقیت ثبت شد.",
-          "نتیجه به زودی از طریق پیامک ارسال خواهد شد"
-        );
+        Swal.fire({
+          icon: "success",
+          title: "تیکت شما با موفقیت ثبت شد.",
+          text: "نتیجه به زودی از طریق پیامک ارسال خواهد شد",
+        });
       } else {
         console.log(JSON.stringify(sent));
         Swal.fire("خطا در ارسال تیکت");

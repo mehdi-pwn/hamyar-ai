@@ -1,15 +1,35 @@
+test
 v1:
+tools response display improvement (currently in console.log())
 sms:
-codes
-notify ending plan (cron_job)
-verify payment success
+  notify ending plan (cron_job)
 
 v2:
+remained todos across app code
+marketing of free usage
+very beautiful buy and verified_payment page(+ usage limits)
+beautify signin... pages
+captcha handling in /ticket
+better buy handling (check for having package already or no)
 #fix icon colors
 #send-code: check if code sent more than 2 minutes
 #check present tickets before send new one + captcha?
 #show text after sometime passed on ai request to notify user process may be longer than expected
+add logger to app
 
 
 v3:
 #VERIFING SESSION ON getStaticProp - then: when clicking on Try For Free btns, check if loggedin->/tools else->/signin
+make jwt checking like mojeze-bazgasht
+better error handling of signin...s
+convert signin method from /api/send-code to /apit/[action].js and totally api requests improvement and also api clean code management and remove unnecesery
+import of packages checking and removing not usefuls
+better error handling (better swal functions, error() functions, more beautiful UI)
+
+v4:
+better ticket sys
+
+v5:
+UI/UX improvement
+
+
