@@ -1,4 +1,4 @@
-const {
+import {
   Page,
   Title,
   Description,
@@ -7,15 +7,13 @@ const {
   ToneAndLang,
   GenerateButton,
   AdvancedOptions,
-} = require("@components/tool-design");
+} from "@components/tool-design";
 
 import Grid from "@mui/material/Grid";
 import { getAiResponse } from "@utils/getAiResponse";
-import { getToolName } from "@utils/getToolName";
 import { showResponse } from "@utils/showResponse";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Swal from "sweetalert2";
 
 const ArticleContent = () => {
   const [processing, setProcessing] = useState(false);

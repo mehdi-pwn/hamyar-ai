@@ -1,4 +1,4 @@
-const {
+import {
   Page,
   Title,
   Description,
@@ -6,7 +6,7 @@ const {
   KeywordInput,
   ToneAndLang,
   GenerateButton,
-} = require("@components/tool-design");
+} from "@components/tool-design";
 
 import Grid from "@mui/material/Grid";
 import { getAiResponse } from "@utils/getAiResponse";

@@ -1,14 +1,12 @@
-const {
+import {
   Page,
   Title,
   Description,
   Form,
-
   ToneAndLang,
   GenerateButton,
   ContentInput,
-} = require("@components/tool-design");
-
+} from "@components/tool-design";
 import Grid from "@mui/material/Grid";
 import { getAiResponse } from "@utils/getAiResponse";
 import { getToolName } from "@utils/getToolName";

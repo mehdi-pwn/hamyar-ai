@@ -4,7 +4,7 @@ import { useStateContext } from "@context/ContextProvider";
 import { useEffect } from "react";
 import Navbar from "./navbar";
 
-const DashboardLayout = ({ children }) => {
+const MainLayout = ({ children }) => {
   const { themeMode, setThemeMode, setNavbarActive, navbarActive } =
     useStateContext();
 
@@ -27,4 +27,4 @@ const DashboardLayout = ({ children }) => {
   );
 };
 
-export default DashboardLayout;
+export default MainLayout;
