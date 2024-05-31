@@ -6,6 +6,8 @@ import {
   ToneAndLang,
   GenerateButton,
   ContentInput,
+  TextInput,
+  SingleOutputWords,
 } from "@components/tool-design";
 import Grid from "@mui/material/Grid";
 import { getAiResponse } from "@utils/getAiResponse";
@@ -18,6 +20,9 @@ import Swal from "sweetalert2";
 const ContentRewrite = () => {
   const [processing, setProcessing] = useState(false);
   const [content, setContent] = useState("");
+  const [words, setWords] = useState("second");
+  const [pov, setPov] = useState("");
+  const [writer, setWriter] = useState("");
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
 
@@ -32,7 +37,11 @@ const ContentRewrite = () => {
     tool: useRouter().pathname.split("/").pop(),
     content,
     tone,
+    pov,
     lang,
+    words,
+
+    writer,
   };
 
   return (
@@ -45,6 +54,22 @@ const ContentRewrite = () => {
             <ContentInput
               value={content}
               onChange={(e) => setContent(e.target.value)}
+            />
+            <TextInput
+              label="زاویه دید"
+              placeholder="مثلا اول شخص"
+              value={pov}
+              onChange={(e) => setPov(e.target.value)}
+            />
+            <TextInput
+              label="استایل نویسنده"
+              placeholder="مثلا احمد شاملو"
+              value={writer}
+              onChange={(e) => setWriter(e.target.value)}
+            />
+            <SingleOutputWords
+              value={words}
+              onChange={(e) => setWords(e.target.value)}
             />
             <ToneAndLang
               toneVal={tone}

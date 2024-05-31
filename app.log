@@ -1,1 +1,7 @@
 {"level":"info","message":"User 1 used bad word"}
+{"level":"info","message":"USER_NUM:09214718226 tried to login. Succes.","timestamp":"2024-05-29T06:21:30.691Z"}
+{"level":"info","message":"USER_NUM:09214718226 tried to verify. Succes. CODE:93267","timestamp":"2024-05-29T06:21:43.496Z"}
+{"level":"info","message":"USER_NUM:09214718226 verified.","timestamp":"2024-05-29T06:21:44.103Z"}
+{"level":"info","message":"TOOL:article-ideas just used","timestamp":"2024-05-29T06:22:52.967Z"}
+{"level":"info","message":"TOOL:article-ideas just used","timestamp":"2024-05-29T06:23:33.832Z"}
+{"level":"info","message":"TOOL:article-ideas just used","timestamp":"2024-05-29T06:31:27.812Z"}

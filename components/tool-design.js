@@ -33,6 +33,37 @@ export const Description = ({ children }) => {
 export const Form = ({ children }) => {
   return <div className="mt-6 text-white">{children}</div>;
 };
+export const TextInput = ({
+  label = "",
+  placeholder = "",
+  value,
+  onChange,
+}) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
+  console.log(isLogged);
+  return (
+    <Grid item xs={12} md={12}>
+      <FormControl fullWidth>
+        <TextField
+          label={label}
+          placeholder={placeholder}
+          variant="filled"
+          value={value}
+          onChange={onChange}
+          disabled={isLogged ? false : true}
+        />
+      </FormControl>
+    </Grid>
+  );
+};
 export const KeywordInput = ({
   label = "عنوان / کلمه کلیدی",
   placeholder = "",
@@ -60,6 +91,87 @@ export const KeywordInput = ({
           onChange={onChange}
           disabled={isLogged ? false : true}
         />
+      </FormControl>
+    </Grid>
+  );
+};
+export const SingleOutputWords = ({
+  label = "حدود کلمات خروجی",
+  placeholder = "مثلا: 50",
+  value,
+  onChange,
+}) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
+  console.log(isLogged);
+  return (
+    <Grid item xs={12} md={12}>
+      <FormControl fullWidth>
+        <TextField
+          type="number"
+          label={label}
+          placeholder={placeholder}
+          variant="filled"
+          value={value}
+          onChange={onChange}
+          disabled={isLogged ? false : true}
+        />
+      </FormControl>
+    </Grid>
+  );
+};
+export const OutputWords = ({
+  label = "رنج کلمات خروجی",
+  lowValue,
+  onLowValueChange,
+  highValue,
+  onHighValueChange,
+}) => {
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    async function getToken() {
+      const verify = await verifyToken();
+      if (!verify) setIsLogged(false);
+      else if (verify) setIsLogged(true);
+    }
+    getToken();
+  }, []);
+  console.log(isLogged);
+  return (
+    <Grid item xs={12} md={12}>
+      <FormControl fullWidth>
+        <p>{label}</p>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              type="number"
+              label={"کلمه کمتر"}
+              placeholder={"مثلا: 100"}
+              variant="filled"
+              value={lowValue}
+              onChange={onLowValueChange}
+              disabled={isLogged ? false : true}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              type="number"
+              label={"کلمه بیشتر"}
+              placeholder={"مثلا: 150"}
+              variant="filled"
+              value={highValue}
+              onChange={onHighValueChange}
+              disabled={isLogged ? false : true}
+            />
+          </Grid>
+        </Grid>
       </FormControl>
     </Grid>
   );

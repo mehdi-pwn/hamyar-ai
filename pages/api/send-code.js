@@ -1,5 +1,7 @@
 import { query } from "@lib/db";
+import logger from "@utils/logger";
 import jwt from "jsonwebtoken";
+import moment from "moment";
 
 const isUserExists = async (phoneNumber) => {
   try {
@@ -75,16 +77,21 @@ export default async function handler(req, res) {
           });
 
         const userExists = await isUserExists(num);
+
         if (!userExists) {
           const randomNumber = generateCode();
           const codeDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
           const sms_result = await sendMessage(num, randomNumber);
-          if (sms_result.status != 1)
+          if (sms_result.status != 1) {
+            logger.info(
+              `USER_NUM:${num} tried to register. But failed: sms not sent.`
+            );
             return res.status(500).json({
               status: "fail",
               error: "sms-fail",
             });
+          }
 
           const results = await query(
             `
@@ -93,6 +100,7 @@ export default async function handler(req, res) {
         `,
             [num, randomNumber, codeDateTime]
           );
+          logger.info(`USER_NUM:${num} tried to register. Success`);
           res.status(200).json({
             status: "success",
           });
@@ -109,6 +117,9 @@ export default async function handler(req, res) {
           const timeDiff = nowTime - oldCodeTime;
 
           if (timeDiff < 120) {
+            logger.info(
+              `USER_NUM:${num} tried to login. But failed: old code not expired`
+            );
             return res.status(200).json({
               status: "success",
               noCode: "true",
@@ -119,11 +130,15 @@ export default async function handler(req, res) {
           const codeDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
           const sms_result = await sendMessage(num, randomNumber);
-          if (sms_result.status != 1)
+          if (sms_result.status != 1) {
+            logger.info(
+              `USER_NUM:${num} tried to login. But failed: sms not sent.`
+            );
             return res.status(500).json({
               status: "fail",
               error: "sms-fail",
             });
+          }
 
           const code = await query(
             `
@@ -131,11 +146,13 @@ export default async function handler(req, res) {
         `,
             [randomNumber, codeDateTime, num]
           );
+          logger.info(`USER_NUM:${num} tried to login. Succes.`);
           res.status(200).json({
             status: "success",
           });
         }
       } catch (error) {
+        logger.info(`USER_NUM:${num} tried to signin. But failed: ${error}`);
         return res.status(500).json({
           status: "fail",
           error: "catch",
@@ -160,11 +177,15 @@ export default async function handler(req, res) {
           });
 
         const userExists = await isUserExists(num);
-        if (!userExists)
+        if (!userExists) {
+          logger.info(
+            `USER_NUM:${num} tried to resend-code. But failed: User not found.`
+          );
           return res.status(401).json({
             status: "fail",
             error: "not-found",
           });
+        }
         //check if is not banned at the time
         const user = await query(
           `
@@ -191,6 +212,9 @@ export default async function handler(req, res) {
         const timeDiffResend = nowTimeResend - oldCodeTime;
 
         if (timeDiff < 120) {
+          logger.info(
+            `USER_NUM:${num} tried to resend-code. But failed: old code not expired.`
+          );
           return res.status(200).json({
             status: "fail",
             error: "code-not-expired",
@@ -201,11 +225,15 @@ export default async function handler(req, res) {
         const codeDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
         const sms_result = await sendMessage(num, randomNumber);
-        if (sms_result.status != 1)
+        if (sms_result.status != 1) {
+          logger.info(
+            `USER_NUM:${num} tried to resend-code. But failed: sms not sent.`
+          );
           return res.status(500).json({
             status: "fail",
             error: "sms-fail",
           });
+        }
 
         const results = await query(
           `
@@ -213,11 +241,15 @@ export default async function handler(req, res) {
         `,
           [randomNumber, codeDateTime, num]
         );
+        logger.info(`USER_NUM:${num} tried to resend-code. Success.`);
         res.status(200).json({
           status: "success",
         });
       } catch (error) {
         console.log(error);
+        logger.info(
+          `USER_NUM:${num} tried to resend-code. But failed: ${error}`
+        );
         return res.status(500).json({
           status: "fail",
           error,
@@ -263,6 +295,9 @@ export default async function handler(req, res) {
         let nowTime1 = moment().unix();
 
         if (nowTime1 < earlierAllowCodeTime + 3 * 3600 + 30 * 60) {
+          logger.info(
+            `USER_NUM:${num} tried to verify. But failed: code-banned-5`
+          );
           return res.status(200).json({
             status: "fail",
             error: "code-banned-5",
@@ -273,6 +308,9 @@ export default async function handler(req, res) {
         let nowTime = moment().unix();
 
         if (nowTime - oldCodeTime > 120) {
+          logger.info(
+            `USER_NUM:${num} tried to verify. But failed: code-expired`
+          );
           return res.status(200).json({
             status: "fail",
             error: "code-expired",
@@ -280,6 +318,7 @@ export default async function handler(req, res) {
         }
 
         if (code == user[0].code) {
+          logger.info(`USER_NUM:${num} tried to verify. Succes. CODE:${code}`);
           res.status(200).json({
             status: "success",
           });
@@ -295,6 +334,9 @@ export default async function handler(req, res) {
             UPDATE users SET code_tried = ?, code_allow_datetime = ? WHERE phone = ?`,
               [codeTried, later5Mins, num]
             );
+            logger.info(
+              `USER_NUM:${num} tried to verify. But failed: Code entered more than 3 times and user banned for 5 mins`
+            );
             return res.status(403).json({
               status: "fail",
               error: "code-banned-5",
@@ -305,6 +347,9 @@ export default async function handler(req, res) {
             UPDATE users SET code_tried = ? WHERE phone = ?`,
               [codeTried, num]
             );
+            logger.info(
+              `USER_NUM:${num} tried to verify. But failed: Incorrect code: ${code}`
+            );
             return res.status(200).json({
               status: "fail",
               error: "code-incorrect",
@@ -313,6 +358,7 @@ export default async function handler(req, res) {
         }
       } catch (error) {
         console.log(error);
+        logger.info(`USER_NUM:${num} tried to verify. But failed: ${error}`);
         return res.status(500).json({
           status: "fail",
           error,
@@ -361,16 +407,30 @@ export default async function handler(req, res) {
           { expiresIn: "2h" }
         );
         res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly`);
+        logger.info(`USER_NUM:${num} verified.`);
+
         res.status(200).json({
           status: "success",
         });
       } catch (error) {
         console.log(error);
+        logger.info(
+          `USER_NUM:${num} tried to be verified. But failed: ${error}`
+        );
+
         return res.status(500).json({ status: "fail", error });
       }
       break;
     }
     default: {
+      let ipAddress = req.headers["x-real-ip"];
+      if (!ipAddress) {
+        ipAddress = req.headers["x-forwarded-for"]?.split(",")[0];
+      }
+      logger.info(
+        `Auth api rejected due to invalid inner request. IP:${ipAddress}`
+      );
+
       res.status(500).json({
         status: "fail",
         message: "no request detected",

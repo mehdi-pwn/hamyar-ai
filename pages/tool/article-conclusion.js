@@ -6,6 +6,7 @@ import {
   ToneAndLang,
   GenerateButton,
   ContentInput,
+  OutputWords,
 } from "@components/tool-design";
 
 import Grid from "@mui/material/Grid";
@@ -19,6 +20,8 @@ import Swal from "sweetalert2";
 const ArticleConclusion = () => {
   const [processing, setProcessing] = useState(false);
   const [content, setContent] = useState("");
+  const [lowWords, setLowWords] = useState("");
+  const [highWords, setHighWords] = useState("");
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
 
@@ -34,6 +37,8 @@ const ArticleConclusion = () => {
     content,
     tone,
     lang,
+    lowWords,
+    highWords,
   };
 
   return (
@@ -46,6 +51,12 @@ const ArticleConclusion = () => {
             <ContentInput
               value={content}
               onChange={(e) => setContent(e.target.value)}
+            />
+            <OutputWords
+              lowValue={lowWords}
+              onLowValueChange={(e) => setLowWords(e.target.value)}
+              highValue={lowWords}
+              onHighValueChange={(e) => setHighWords(e.target.value)}
             />
             <ToneAndLang
               toneVal={tone}

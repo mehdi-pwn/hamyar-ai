@@ -33,7 +33,13 @@ const Ticket = () => {
       });
       const sent = await sendMessage.json();
 
-      if (sent.status === "success") {
+      if (sent.status === "fail") {
+        Swal.fire({
+          icon: "error",
+          title: "خطا در ارسال تیکت",
+          text: "شما در 24 ساعت گذشته، به اندازه کافی تیکت ارسال کرده اید و توانایی ارسال تیکت بیشتر را ندارید",
+        });
+      } else if (sent.status === "success") {
         Swal.fire({
           icon: "success",
           title: "تیکت شما با موفقیت ثبت شد.",

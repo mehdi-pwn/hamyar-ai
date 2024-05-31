@@ -4,6 +4,8 @@ import { TfiWrite, TfiVideoClapper } from "react-icons/tfi";
 import { AiFillInstagram } from "react-icons/ai";
 import { IoMdBulb } from "react-icons/io";
 import { FaGripLines } from "react-icons/fa";
+import { MdDescription } from "react-icons/md";
+import { MdOutlineHttp } from "react-icons/md";
 import {
   MdOutlineDescription,
   MdSubtitles,
@@ -41,7 +43,7 @@ const tools = [
       {
         title: "مقدمه مقاله",
         description: "نوشتن بخش مقدمه مقاله با بررسی متن مقاله",
-        icon: <GrOverview />,
+        icon: <MdDescription />,
         path: "/tool/article-overview",
       },
       {
@@ -113,7 +115,7 @@ const tools = [
       {
         title: "دامنه وبسایت",
         description: "پیشنهاد دامنه وبسایت با بررسی موضوع وباسیت",
-        icon: <GrDomain />,
+        icon: <MdOutlineHttp />,
         path: "/tool/website-domain",
       },
     ],

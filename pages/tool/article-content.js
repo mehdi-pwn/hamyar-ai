@@ -18,6 +18,7 @@ import { useState } from "react";
 const ArticleContent = () => {
   const [processing, setProcessing] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [minWords, setMinWords] = useState("");
   const [tone, setTone] = useState("s1");
   const [lang, setLang] = useState("persian");
 
@@ -33,6 +34,7 @@ const ArticleContent = () => {
     keyword,
     tone,
     lang,
+    minWords,
   };
 
   return (
@@ -46,6 +48,11 @@ const ArticleContent = () => {
               placeholder="مثلا: چگونه یک وبلاگ بسازیم"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
+            />
+            <SingleOutputWords
+              label="حداقل کلمات مقاله"
+              value={minWords}
+              onChange={(e) => setMinWords(e.target.value)}
             />
             <ToneAndLang
               toneVal={tone}

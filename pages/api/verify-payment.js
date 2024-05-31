@@ -1,4 +1,5 @@
 import { query } from "@lib/db";
+import logger from "@utils/logger";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
@@ -23,6 +24,9 @@ export default async function handler(req, res) {
     );
 
     if (!user[0]) {
+      logger.info(
+        `USER:${userId} tried to buy package. But failed: no account`
+      );
       return res.status(403).json({
         status: "not-found",
       });
@@ -40,9 +44,12 @@ export default async function handler(req, res) {
       const isExpireDatePassed = today > date;
 
       if (!isExpireDatePassed)
-        return res.status(200).json({
-          status: "active",
-        });
+        logger.info(
+          `USER:${userId} tried to buy package. But failed: already have the package`
+        );
+      return res.status(200).json({
+        status: "active",
+      });
     }
 
     const response = await fetch(
@@ -62,6 +69,9 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (data.status != 100 || data.status != 101) {
+      logger.info(
+        `USER:${userId} tried to buy package. But failed: payment failed (!100|!101)`
+      );
       return res
         .status(200)
         .json({ status: "payment-error", message: data.message });
@@ -79,6 +89,10 @@ export default async function handler(req, res) {
         endDate: expireDate,
       });
 
+      logger.info(
+        `USER:${userId} tried to buy package. Succes. Added ${WORDS} words.`
+      );
+
       const updateUserPlan = await query(
         `
         UPDATE users SET plan = 2, plan_expire_date = ?, plan_history = ?, words = ? WHERE id = ?
@@ -87,10 +101,14 @@ export default async function handler(req, res) {
       );
       return res.status(200).json(data);
     } else if (code == 101) {
+      logger.info(
+        `USER:${userId} tried to buy package (second request). Returned`
+      );
       return res.status(200).json(data);
     }
   } catch (error) {
     console.log(error);
+    logger.info(`USER:${userId} tried to buy package. Failed: ${error}`);
     return res.status(500).json({ status: "fail", error });
   }
 }

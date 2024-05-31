@@ -59,8 +59,10 @@ export default function Register() {
         router.push("/confirm");
       } else {
         setProcessing(false);
-        console.log(JSON.stringify(responseData));
-        return Swal.fire({ icon: "error", title: "خطا در ارسال کد فعالسازی" });
+        return Swal.fire({
+          icon: "error",
+          title: "خطا در ارسال کد فعالسازی",
+        });
       }
     } catch (error) {
       setProcessing(false);

@@ -33,7 +33,7 @@ const Card = ({ icon, title, description, path }) => {
   return (
     <Link href={path}>
       <div className="flex flex-col h-36 sm:h-40 lg:h-56 gap-2 p-5 rounded-lg bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-200">
-        <div className="text-2xl">{icon}</div>
+        <div className="text-2xl text-gray-700 dark:text-gray-200">{icon}</div>
         <div>
           <Typography variant="h6">
             <strong>{title}</strong>

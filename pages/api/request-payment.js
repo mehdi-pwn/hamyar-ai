@@ -1,4 +1,5 @@
 import { query } from "@lib/db";
+import logger from "@utils/logger";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
@@ -20,6 +21,10 @@ export default async function handler(req, res) {
     );
 
     if (!user[0]) {
+      logger.info(
+        `USER:${userId} tried to make a new buy request. Failed. User not found.`
+      );
+
       return res.status(403).json({
         status: "not-found",
       });
@@ -36,10 +41,14 @@ export default async function handler(req, res) {
       );
       const isExpireDatePassed = today > date;
 
-      if (!isExpireDatePassed)
+      if (!isExpireDatePassed) {
+        logger.info(
+          `USER:${userId} tried to make a new buy request. Failed. User already have paid plan.`
+        );
         return res.status(200).json({
           status: "active",
         });
+      }
     }
 
     const response = await fetch(
@@ -59,8 +68,12 @@ export default async function handler(req, res) {
       }
     );
     const data = await response.json();
+    logger.info(`USER:${userId} tried to make a new buy request. Success.`);
     res.status(200).json(data);
   } catch (error) {
+    logger.info(
+      `USER:${userId} tried to make a new buy request. Failed. Catch error: ${error}`
+    );
     return res.status(500).json({
       status: "fail",
       error,

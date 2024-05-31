@@ -84,7 +84,7 @@ const Index = () => {
           قابلیت های همیار اِی آی رو توی این گیف ببین
         </h2>
         <Image
-          src={screenShot.src}
+          src={screenShot}
           alt="Mihan AI app dashboard screen shot"
           className="rounded-xl"
           width={800}

@@ -1,23 +1,31 @@
-test
+
 v1:
 tools response display improvement (currently in console.log())
 sms:
   notify ending plan (cron_job)
 
 v2:
-add mojeze-bazgasht file importing system by webpack5
 remained todos across app code
-marketing of free usage
-very beautiful buy and verified_payment page(+ usage limits)
-beautify signin... pages
-captcha handling in /ticket
-better buy handling (check for having package already or no)
-#fix icon colors
-#send-code: check if code sent more than 2 minutes
-#check present tickets before send new one + captcha?
 #show text after sometime passed on ai request to notify user process may be longer than expected
-add logger to app
 
+now: ai settings or header ai model
+DB_ADDS:
+USER -> db_id(number (2))
+v2.5:
+apply super prompts to current tools (+ variables) (3tools/day|time)
+
+v2.6:
+add ZARIB for each ai model + add model selector to header (+ profile)
+add image ai tools
+add ai setting for profiles (model, ai(temp, top_p), limit_output_words, )
+
+v2.7:
+find best free usage marketing mode
+add free marketing method
+UI/UX of response showing
+
+v2.9:
+add optional prompts, 
 
 v3:
 #VERIFING SESSION ON getStaticProp - then: when clicking on Try For Free btns, check if loggedin->/tools else->/signin
@@ -26,11 +34,15 @@ better error handling of signin...s
 convert signin method from /api/send-code to /apit/[action].js and totally api requests improvement and also api clean code management and remove unnecesery
 import of packages checking and removing not usefuls
 better error handling (better swal functions, error() functions, more beautiful UI)
+better error system: api responses - success, error, warning ,,, error messages,...
 
 v4:
 better ticket sys
+add 10 tools
 
 v5:
-UI/UX improvement
+UI/UX improvement(very beautiful buy and verified_payment page(+ usage limits)
+beautify signin... pages)
+add 10 tools
 
 
